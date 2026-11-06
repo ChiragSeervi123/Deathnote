@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>DEATH NOTE — The Judgment · An unofficial fan tribute</title>
+    <meta
+      name="description"
+      content="An unofficial, non-commercial cinematic fan tribute to Death Note: the story, its characters, the rules of the notebook, and a thank-you to its creators, Tsugumi Ohba and Takeshi Obata."
+    />
+    <meta name="theme-color" content="#080808" />
+    <meta name="color-scheme" content="dark" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DEATH NOTE — The Judgment (unofficial fan tribute)" />
+    <meta
+      property="og:description"
+      content="A cinematic, interactive exhibition celebrating Death Note — made by fans, not affiliated with the rights holders."
+    />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <style>
+      /* Boot screen: visible before any JS executes; removed by main.tsx. */
+      html,
+      body {
+        background: #080808;
+        margin: 0;
+      }
+      #boot {
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: grid;
+        place-items: center;
+        background: #080808;
+        color: #858585;
+        font: 500 11px/1 ui-monospace, Consolas, monospace;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        transition: opacity 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+      }
+      #boot.boot--done {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #boot .boot__line {
+        width: 120px;
+        height: 1px;
+        margin: 18px auto 0;
+        background: linear-gradient(90deg, transparent, #9f171f, transparent);
+        animation: boot-scan 1.6s ease-in-out infinite;
+      }
+      @keyframes boot-scan {
+        0%,
+        100% {
+          opacity: 0.2;
+          transform: scaleX(0.3);
+        }
+        50% {
+          opacity: 1;
+          transform: scaleX(1);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #boot .boot__line {
+          animation: none;
+          opacity: 0.6;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="boot" aria-hidden="true">
+      <div>
+        <div>Opening the notebook</div>
+        <div class="boot__line"></div>
+      </div>
+    </div>
+    <div id="root"></div>
+    <noscript>
+      <div style="max-width: 40rem; margin: 15vh auto; padding: 0 1.5rem; color: #e8e3d8; font: 18px/1.6 Georgia, serif">
+        <h1 style="font-weight: 400">DEATH NOTE — The Judgment</h1>
+        <p>
+          This unofficial fan tribute is an interactive experience and needs JavaScript. It is not affiliated with
+          or endorsed by Tsugumi Ohba, Takeshi Obata, Shueisha, Madhouse or any rights holder.
+        </p>
+      </div>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

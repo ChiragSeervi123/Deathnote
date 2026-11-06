@@ -1,0 +1,98 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-stage);
+  overflow: hidden;
+  background: var(--c-obsidian);
+  pointer-events: none;
+}
+
+.backdrop__layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s var(--ease-in-out);
+}
+.backdrop__layer[data-on='true'] {
+  opacity: 1;
+}
+
+/* Desk lamp pool in the dark. */
+.backdrop__layer--obsidian {
+  background:
+    radial-gradient(ellipse 55% 45% at 30% 72%, rgb(200 149 90 / 0.16), transparent 70%),
+    radial-gradient(ellipse 80% 60% at 80% 10%, rgb(82 106 145 / 0.08), transparent 70%),
+    #090909;
+}
+
+/* Shinigami realm: dead sun behind haze, grey dust. */
+.backdrop__layer--ash {
+  background:
+    radial-gradient(circle at 68% 30%, rgb(215 210 196 / 0.16) 0 3.5%, rgb(215 210 196 / 0.05) 9%, transparent 26%),
+    radial-gradient(ellipse 120% 50% at 50% 100%, rgb(70 68 64 / 0.55), transparent 70%),
+    linear-gradient(to bottom, #121212, #1b1a18 60%, #0d0d0c);
+}
+
+/* Kira: hard red key light from the right. */
+.backdrop__layer--crimson {
+  background:
+    radial-gradient(ellipse 50% 70% at 88% 45%, rgb(159 23 31 / 0.42), transparent 70%),
+    radial-gradient(ellipse 70% 90% at 70% 60%, rgb(74 10 16 / 0.6), transparent 75%),
+    #080606;
+}
+
+/* L / investigation: cold monitor glow from the left. */
+.backdrop__layer--cold {
+  background:
+    radial-gradient(ellipse 45% 60% at 12% 50%, rgb(82 106 145 / 0.38), transparent 70%),
+    repeating-linear-gradient(to bottom, rgb(142 166 207 / 0.035) 0 1px, transparent 1px 4px),
+    linear-gradient(110deg, #0b0e14, #070809 70%);
+}
+
+/* Near / paper: a pale vertical shaft. */
+.backdrop__layer--paper {
+  background:
+    linear-gradient(90deg, rgb(232 227 216 / 0.13) 0 22%, rgb(232 227 216 / 0.04) 34%, transparent 46%),
+    #0a0a0a;
+}
+
+/* Dusk: low amber horizon. */
+.backdrop__layer--dusk {
+  background:
+    radial-gradient(ellipse 120% 40% at 50% 92%, rgb(176 92 42 / 0.4), transparent 70%),
+    linear-gradient(to bottom, #07080b, #120b09 70%, #1a0e09);
+}
+
+/* Gold: sodium light, corporate night, warehouse dust. */
+.backdrop__layer--gold {
+  background:
+    linear-gradient(115deg, transparent 40%, rgb(200 149 90 / 0.12) 52%, transparent 64%),
+    radial-gradient(ellipse 60% 50% at 70% 20%, rgb(200 149 90 / 0.14), transparent 70%),
+    #0a0907;
+}
+
+.backdrop__numeral {
+  position: absolute;
+  right: -2vw;
+  bottom: -9vw;
+  font-family: var(--font-display);
+  font-size: 42vw;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--c-paper);
+  opacity: 0.025;
+  letter-spacing: -0.04em;
+}
+
+.backdrop__grain {
+  position: absolute;
+  inset: -50%;
+  opacity: 0.09;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.backdrop__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 45%, rgb(0 0 0 / 0.7) 100%);
+}

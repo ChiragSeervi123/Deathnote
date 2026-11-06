@@ -1,0 +1,33 @@
+import type { QualityTier } from '@/scenes/shared/quality';
+
+/**
+ * Developer / QA switches read once from the URL:
+ *   ?debug              performance overlay + window.__DN__
+ *   ?webgl=0            force the 2D fallback
+ *   ?quality=high|balanced|performance
+ *   ?motion=reduce|full
+ *   ?gate=0             skip the spoiler gate (testing only)
+ */
+export interface UrlFlags {
+  debug: boolean;
+  webgl: boolean;
+  quality: QualityTier | null;
+  motion: 'reduce' | 'full' | null;
+  gate: boolean;
+}
+
+function read(): UrlFlags {
+  const p =
+    typeof window === 'undefined' ? new URLSearchParams() : new URLSearchParams(window.location.search);
+  const q = p.get('quality');
+  const m = p.get('motion');
+  return {
+    debug: p.has('debug'),
+    webgl: p.get('webgl') !== '0',
+    quality: q === 'high' || q === 'balanced' || q === 'performance' ? q : null,
+    motion: m === 'reduce' || m === 'full' ? m : null,
+    gate: p.get('gate') !== '0',
+  };
+}
+
+export const urlFlags: UrlFlags = read();

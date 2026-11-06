@@ -1,0 +1,383 @@
+/* ------------------------------------------------------------------ */
+/* Cinematic chapters                                                  */
+/* ------------------------------------------------------------------ */
+
+.chapter {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.chapter__track {
+  position: relative;
+  height: calc(var(--len, 6) * 100svh);
+}
+
+.chapter__stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Beat anchors ------------------------------------------------------- */
+
+.beat {
+  position: absolute;
+  width: min(34rem, calc(100vw - 2 * var(--gutter)));
+}
+
+.beat--left,
+.beat--right {
+  top: 50%;
+  translate: 0 -50%;
+}
+.beat--left {
+  left: var(--gutter);
+}
+.beat--right {
+  right: calc(var(--gutter) + 2.5rem);
+}
+.beat--center {
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: min(46rem, calc(100vw - 2 * var(--gutter)));
+  text-align: center;
+}
+.beat--upper-left {
+  top: 18%;
+  left: var(--gutter);
+}
+.beat--upper-right {
+  top: 18%;
+  right: calc(var(--gutter) + 2.5rem);
+}
+.beat--lower-left {
+  bottom: 13%;
+  left: var(--gutter);
+}
+.beat--lower-right {
+  bottom: 13%;
+  right: calc(var(--gutter) + 2.5rem);
+}
+.beat--lower-center {
+  bottom: 12%;
+  left: 50%;
+  translate: -50% 0;
+  text-align: center;
+}
+
+.beat__inner {
+  opacity: 0;
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+
+/* A soft local scrim keeps short lines legible over any frame without boxing them. */
+.beat__inner::before {
+  content: '';
+  position: absolute;
+  inset: -3rem -4rem;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgb(8 8 8 / 0.55), rgb(8 8 8 / 0));
+  pointer-events: none;
+}
+
+/* Beat typography ---------------------------------------------------- */
+
+.beat__text {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.005em;
+  color: var(--c-paper);
+  text-wrap: balance;
+  text-shadow: 0 1px 24px rgb(0 0 0 / 0.6);
+}
+
+.beat--statement .beat__text {
+  font-size: var(--step-4);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.beat--rule .beat__inner {
+  padding-left: var(--space-s);
+  border-left: 1px solid var(--c-blood-bright);
+}
+.beat--rule .beat__text {
+  font-size: var(--step-3);
+}
+
+.beat--caption .beat__text,
+.beat--aside .beat__text {
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  color: var(--c-text-2);
+}
+
+.beat__meta {
+  display: flex;
+  gap: 0.8em;
+  align-items: center;
+  margin-bottom: var(--space-2xs);
+  color: var(--c-paper-dim);
+}
+
+/* Chapter title beat -------------------------------------------------- */
+
+.beat--title {
+  width: min(48rem, calc(100vw - 2 * var(--gutter)));
+}
+
+.beat__kicker {
+  display: flex;
+  gap: 1em;
+  align-items: baseline;
+  margin-bottom: var(--space-xs);
+  color: var(--c-paper-dim);
+}
+.beat__num {
+  color: var(--c-blood-bright);
+}
+
+.beat__title {
+  font-size: var(--step-7);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--c-paper);
+  text-shadow: 0 2px 40px rgb(0 0 0 / 0.55);
+}
+.beat__title:focus {
+  outline: none;
+}
+.beat__title:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 8px;
+}
+
+.beat__subtitle {
+  max-width: 30rem;
+  margin-top: var(--space-s);
+  font-size: var(--step-0);
+  color: var(--c-text-2);
+}
+.beat--right.beat--title,
+.beat--right .beat__subtitle {
+  margin-left: auto;
+}
+.beat--right.beat--title {
+  text-align: right;
+}
+.beat--right.beat--title .beat__kicker {
+  justify-content: flex-end;
+}
+
+/* Hero (prologue title) ---------------------------------------------- */
+
+.hero {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-s);
+}
+.hero__kicker {
+  letter-spacing: 0.32em;
+}
+.hero__title {
+  display: grid;
+  justify-items: center;
+  font-size: var(--step-8);
+  font-weight: 300;
+  line-height: 0.86;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.hero__word {
+  display: inline-block;
+}
+.hero__sub {
+  margin-top: var(--space-xs);
+  font-size: var(--step-3);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--c-paper-dim);
+}
+.hero__chapter {
+  display: flex;
+  align-items: center;
+  gap: 1em;
+  margin-top: var(--space-m);
+}
+.hero__chapter [role='heading']:focus {
+  outline: none;
+}
+.hero__rule {
+  display: inline-block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--c-blood-bright);
+}
+
+/* Canon badges -------------------------------------------------------- */
+
+.canon-badge {
+  display: inline-block;
+  padding: 0.2em 0.55em;
+  border: 1px solid currentColor;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+  vertical-align: 0.1em;
+}
+.canon-badge--manga {
+  color: var(--c-amber);
+}
+.canon-badge--anime {
+  color: var(--c-cold-bright);
+}
+.canon-badge--both {
+  color: var(--c-paper-dim);
+}
+.canon-badge--fake {
+  color: var(--c-blood-bright);
+}
+
+/* ------------------------------------------------------------------ */
+/* Dossier (case file after a cinematic chapter)                       */
+/* ------------------------------------------------------------------ */
+
+.dossier {
+  position: relative;
+  padding: var(--space-3xl) var(--gutter);
+  background: linear-gradient(to bottom, rgb(8 8 8 / 0), rgb(8 8 8 / 0.92) 18%, rgb(8 8 8 / 0.92) 82%, rgb(8 8 8 / 0));
+}
+.dossier__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-l);
+  max-width: 72rem;
+  margin: 0 auto;
+}
+@media (min-width: 960px) {
+  .dossier__inner {
+    grid-template-columns: 14rem minmax(0, 1fr) 18rem;
+    align-items: start;
+  }
+}
+.dossier__body {
+  display: grid;
+  gap: var(--space-s);
+  max-width: var(--measure);
+  color: var(--c-text-2);
+}
+.dossier__body p:first-child {
+  color: var(--c-paper);
+}
+.dossier__canon {
+  font-size: var(--step--1);
+}
+.dossier__facts {
+  display: grid;
+  gap: var(--space-s);
+  margin: 0;
+  padding-left: var(--space-s);
+  border-left: 1px solid var(--c-line);
+}
+.dossier__fact dd {
+  margin: 0.2em 0 0;
+  font-size: var(--step--1);
+  color: var(--c-paper);
+}
+
+/* ------------------------------------------------------------------ */
+/* Long-form chapters (archive)                                        */
+/* ------------------------------------------------------------------ */
+
+.longform {
+  position: relative;
+  min-height: 100svh;
+  padding: var(--space-4xl) var(--gutter) var(--space-3xl);
+}
+.longform__header {
+  max-width: 72rem;
+  margin: 0 auto var(--space-2xl);
+}
+.longform__num {
+  margin-right: 1em;
+  color: var(--c-blood-bright);
+}
+.longform__title {
+  margin-top: var(--space-xs);
+  font-size: var(--step-7);
+  font-weight: 300;
+  line-height: 0.92;
+}
+.longform__title:focus {
+  outline: none;
+}
+.longform__subtitle {
+  margin-top: var(--space-s);
+  font-size: var(--step-1);
+  color: var(--c-text-2);
+}
+.longform__body {
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+/* ------------------------------------------------------------------ */
+/* Small screens: beats move to the lower third, full width             */
+/* ------------------------------------------------------------------ */
+
+@media (max-width: 760px) {
+  .beat,
+  .beat--title,
+  .beat--center {
+    left: var(--gutter);
+    right: var(--gutter);
+    top: auto;
+    bottom: calc(10svh + 3.5rem);
+    width: auto;
+    translate: none;
+    text-align: left;
+  }
+  .beat--center .beat__inner,
+  .beat--title .beat__inner {
+    text-align: left;
+  }
+  .beat--center .hero,
+  .beat:has(.hero) {
+    text-align: center;
+  }
+  .beat:has(.hero) {
+    top: 50%;
+    bottom: auto;
+    translate: 0 -50%;
+  }
+  .beat--right.beat--title {
+    text-align: left;
+  }
+  .beat--right.beat--title .beat__kicker {
+    justify-content: flex-start;
+  }
+  .beat__inner::before {
+    inset: -2rem -1.5rem;
+    background: radial-gradient(closest-side, rgb(8 8 8 / 0.75), rgb(8 8 8 / 0));
+  }
+  .beat__text {
+    font-size: var(--step-2);
+  }
+  .beat--statement .beat__text {
+    font-size: var(--step-3);
+  }
+}

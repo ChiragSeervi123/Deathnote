@@ -1,0 +1,30 @@
+.skip-link {
+  position: fixed;
+  top: var(--space-xs);
+  left: var(--space-xs);
+  z-index: var(--z-skip);
+  padding: 0.8em 1.2em;
+  background: var(--c-paper);
+  color: var(--c-ink);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline-color: var(--c-blood-bright);
+}
+
+/* Global veil used by long chapter jumps (src/animation/scroll/scrollTo.ts). */
+.veil {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-dialog);
+  background: var(--c-obsidian);
+  opacity: 0;
+  pointer-events: none;
+}

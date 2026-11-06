@@ -1,0 +1,33 @@
+.notfound {
+  display: grid;
+  align-content: center;
+  gap: var(--space-m);
+  min-height: 100svh;
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--gutter);
+}
+.notfound:focus {
+  outline: none;
+}
+.notfound .mono-label {
+  color: var(--c-blood-bright);
+}
+.notfound__title {
+  font-size: var(--step-6);
+  font-weight: 300;
+  line-height: 0.95;
+}
+.notfound__text {
+  max-width: 34rem;
+  color: var(--c-text-2);
+}
+.notfound__detail {
+  color: var(--c-text-3);
+}
+.notfound__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-s);
+}

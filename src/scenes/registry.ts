@@ -1,5 +1,22 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
 import type { SceneKey } from '@/chapters/types';
+import { grade as grade_realm } from './realm/grade';
+import { grade as grade_light } from './light/grade';
+import { grade as grade_kira } from './kira/grade';
+import { grade as grade_lroom } from './lroom/grade';
+import { grade as grade_investigation } from './investigation/grade';
+import { grade as grade_misa } from './misa/grade';
+import { grade as grade_confinement } from './confinement/grade';
+import { grade as grade_yotsuba } from './yotsuba/grade';
+import { grade as grade_rain } from './rain/grade';
+import { grade as grade_wammy } from './wammy/grade';
+import { grade as grade_newkira } from './newkira/grade';
+import { grade as grade_strategy } from './strategy/grade';
+import { grade as grade_warehouse } from './warehouse/grade';
+import { grade as grade_fall } from './fall/grade';
+import { grade as grade_archive } from './archive/grade';
+import { grade as grade_eyes } from './eyes/grade';
+import { grade as grade_legacy } from './legacy/grade';
 
 /** Colour grade applied by the compositor per scene (linear space). */
 export interface Grade {
@@ -17,14 +34,6 @@ export interface SceneEntry {
   Component: LazyExoticComponent<ComponentType> | null;
   grade: Grade;
 }
-
-const neutral: Grade = {
-  exposure: 1,
-  contrast: 1,
-  saturation: 1,
-  tint: [1, 1, 1],
-  lift: [0, 0, 0],
-};
 
 /**
  * Scene catalogue. A scene is listed with `Component: null` until it is
@@ -52,23 +61,23 @@ export const SCENES: Record<SceneKey, SceneEntry> = {
       lift: [0.003, 0.002, 0.002],
     },
   },
-  realm: { Component: null, grade: neutral },
-  light: { Component: null, grade: neutral },
-  kira: { Component: null, grade: neutral },
-  'l-room': { Component: null, grade: neutral },
-  investigation: { Component: null, grade: neutral },
-  misa: { Component: null, grade: neutral },
-  confinement: { Component: null, grade: neutral },
-  yotsuba: { Component: null, grade: neutral },
-  rain: { Component: null, grade: neutral },
-  wammy: { Component: null, grade: neutral },
-  'new-kira': { Component: null, grade: neutral },
-  strategy: { Component: null, grade: neutral },
-  warehouse: { Component: null, grade: neutral },
-  fall: { Component: null, grade: neutral },
-  archive: { Component: null, grade: neutral },
-  eyes: { Component: null, grade: neutral },
-  legacy: { Component: null, grade: neutral },
+  realm: { Component: lazy(() => import('./realm/RealmScene')), grade: grade_realm },
+  light: { Component: lazy(() => import('./light/LightScene')), grade: grade_light },
+  kira: { Component: lazy(() => import('./kira/KiraScene')), grade: grade_kira },
+  'l-room': { Component: lazy(() => import('./lroom/LRoomScene')), grade: grade_lroom },
+  investigation: { Component: lazy(() => import('./investigation/InvestigationScene')), grade: grade_investigation },
+  misa: { Component: lazy(() => import('./misa/MisaScene')), grade: grade_misa },
+  confinement: { Component: lazy(() => import('./confinement/ConfinementScene')), grade: grade_confinement },
+  yotsuba: { Component: lazy(() => import('./yotsuba/YotsubaScene')), grade: grade_yotsuba },
+  rain: { Component: lazy(() => import('./rain/RainScene')), grade: grade_rain },
+  wammy: { Component: lazy(() => import('./wammy/WammyScene')), grade: grade_wammy },
+  'new-kira': { Component: lazy(() => import('./newkira/NewKiraScene')), grade: grade_newkira },
+  strategy: { Component: lazy(() => import('./strategy/StrategyScene')), grade: grade_strategy },
+  warehouse: { Component: lazy(() => import('./warehouse/WarehouseScene')), grade: grade_warehouse },
+  fall: { Component: lazy(() => import('./fall/FallScene')), grade: grade_fall },
+  archive: { Component: lazy(() => import('./archive/ArchiveScene')), grade: grade_archive },
+  eyes: { Component: lazy(() => import('./eyes/EyesScene')), grade: grade_eyes },
+  legacy: { Component: lazy(() => import('./legacy/LegacyScene')), grade: grade_legacy },
 };
 
 export function isSceneBuilt(key: SceneKey | null): key is SceneKey {

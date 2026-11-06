@@ -96,9 +96,20 @@ void main() {
 }
 `;
 
-type Props = ThreeElements['mesh'] & { width?: number; height?: number; intensity?: number; rain?: number };
+type Props = ThreeElements['mesh'] & {
+  width?: number;
+  height?: number;
+  intensity?: number;
+  rain?: number;
+};
 
-export function RainWindow({ width = 6, height = 3.4, intensity = 1.6, rain = 1, ...props }: Props) {
+export function RainWindow({
+  width = 6,
+  height = 3.4,
+  intensity = 1.6,
+  rain = 1,
+  ...props
+}: Props) {
   const assets = useMemo(() => {
     const geometry = new THREE.PlaneGeometry(width, height);
     const material = new THREE.ShaderMaterial({

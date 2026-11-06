@@ -10,7 +10,8 @@ export function formatEpisodes(nums: readonly number[]): string {
       prev = n;
       continue;
     }
-    if (start !== undefined && prev !== undefined) parts.push(start === prev ? `${start}` : `${start}–${prev}`);
+    if (start !== undefined && prev !== undefined)
+      parts.push(start === prev ? `${start}` : `${start}–${prev}`);
     start = n;
     prev = n;
   }

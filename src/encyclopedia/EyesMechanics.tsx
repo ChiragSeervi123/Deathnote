@@ -49,8 +49,9 @@ function SightDiagram() {
       <svg viewBox="0 0 620 300" role="img" aria-labelledby="eyes-fig-title eyes-fig-desc">
         <title id="eyes-fig-title">What the Eyes see</title>
         <desc id="eyes-fig-desc">
-          Five people seen through the Shinigami Eyes. Four have a name and a remaining lifespan floating above their
-          heads. The fourth person, a notebook owner, shows a name but no lifespan.
+          Five people seen through the Shinigami Eyes. Four have a name and a remaining lifespan
+          floating above their heads. The fourth person, a notebook owner, shows a name but no
+          lifespan.
         </desc>
         <defs>
           <linearGradient id="eyes-fade" x1="0" y1="0" x2="0" y2="1">
@@ -64,7 +65,10 @@ function SightDiagram() {
           return (
             <g key={i} transform={`translate(${f.x} 0)`}>
               <circle cx="0" cy={top + 22} r="20" fill="#0d0c0b" />
-              <path d={`M-34 300 C-34 ${top + 70} -26 ${top + 48} 0 ${top + 48} C26 ${top + 48} 34 ${top + 70} 34 300 Z`} fill="#0d0c0b" />
+              <path
+                d={`M-34 300 C-34 ${top + 70} -26 ${top + 48} 0 ${top + 48} C26 ${top + 48} 34 ${top + 70} 34 300 Z`}
+                fill="#0d0c0b"
+              />
               <rect x="-34" y={top - 40} width="68" height="7" fill="#e8e3d8" opacity="0.85" />
               {f.life ? (
                 <text x="0" y={top - 14} textAnchor="middle" className="eyes-figure__num">
@@ -80,8 +84,8 @@ function SightDiagram() {
         })}
       </svg>
       <figcaption>
-        Illustration: names are shown as bars and numbers are invented. A notebook owner’s lifespan cannot be seen — the
-        blank space that gives Light away to Misa.
+        Illustration: names are shown as bars and numbers are invented. A notebook owner’s lifespan
+        cannot be seen — the blank space that gives Light away to Misa.
       </figcaption>
     </figure>
   );
@@ -105,7 +109,8 @@ function PriceDiagram() {
         <span className="price__lost" style={{ width: '75%' }} />
       </div>
       <figcaption>
-        Each trade costs half of whatever life remains. Misa traded twice, keeping a quarter of the life she had.
+        Each trade costs half of whatever life remains. Misa traded twice, keeping a quarter of the
+        life she had.
       </figcaption>
     </figure>
   );
@@ -119,8 +124,9 @@ export function EyesMechanics() {
     <div className="eyes">
       <div className="lf-intro">
         <p>
-          A Shinigami sees every human’s name and remaining lifespan at a glance. A human who owns a notebook can have
-          the same sight — the Shinigami Eyes — in exchange for half of their remaining life.
+          A Shinigami sees every human’s name and remaining lifespan at a glance. A human who owns a
+          notebook can have the same sight — the Shinigami Eyes — in exchange for half of their
+          remaining life.
         </p>
       </div>
 
@@ -129,12 +135,17 @@ export function EyesMechanics() {
         <div className="eyes__explain">
           <h3 className="eyes__h">The trade</h3>
           <ol className="eyes__steps">
-            <li>Only an owner can make the deal — someone who has merely borrowed a notebook cannot.</li>
             <li>
-              The price is half of the owner’s remaining life. Whoever loses the Eyes by giving up the notebook can trade
-              again, paying half of what is left.
+              Only an owner can make the deal — someone who has merely borrowed a notebook cannot.
             </li>
-            <li>The Eyes reveal names and lifespans — but not the lifespan of anyone who owns a notebook.</li>
+            <li>
+              The price is half of the owner’s remaining life. Whoever loses the Eyes by giving up
+              the notebook can trade again, paying half of what is left.
+            </li>
+            <li>
+              The Eyes reveal names and lifespans — but not the lifespan of anyone who owns a
+              notebook.
+            </li>
             <li>A face is now enough: the owner no longer needs to learn a name.</li>
           </ol>
           <PriceDiagram />
@@ -159,7 +170,8 @@ export function EyesMechanics() {
         <ul>
           {related.map((r) => (
             <li key={r.id}>
-              <span className="rule__ref mono-label">{r.ref}</span> <CanonBadge canon={r.canon} fake={r.fake} />
+              <span className="rule__ref mono-label">{r.ref}</span>{' '}
+              <CanonBadge canon={r.canon} fake={r.fake} />
               <strong> {r.title}.</strong> {r.plain}
               <Sources sources={r.sources} />
             </li>

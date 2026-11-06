@@ -253,3 +253,32 @@
 .tribute .site-footer__nav a {
   color: var(--t-ink);
 }
+
+/* On-record facts ---------------------------------------------------------- */
+.t-record {
+  margin-top: var(--space-l);
+  padding-top: var(--space-s);
+  border-top: 1px solid var(--t-rule);
+}
+.t-facts {
+  display: grid;
+  gap: 0.55em;
+  margin: var(--space-xs) 0 0;
+  padding-left: 1.1em;
+  font-family: var(--font-body);
+  font-size: var(--step--1);
+  line-height: 1.55;
+  color: #3e3a35;
+}
+.t-facts__src a {
+  color: var(--t-graphite);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-decoration: none;
+}
+.t-facts__src a:hover {
+  text-decoration: underline;
+}
+.t-work .t-facts {
+  max-width: 40rem;
+}

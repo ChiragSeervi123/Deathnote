@@ -96,7 +96,13 @@ export default function PrologueScene() {
   const profile = QUALITY_PROFILES[tier];
   const nbState = useMemo(() => createNotebookState(5), []);
   const tmp = useMemo(
-    () => ({ hand: new THREE.Vector3(), nb: new THREE.Vector3(), cam: new THREE.Vector3(), tgt: new THREE.Vector3(), e: new THREE.Euler() }),
+    () => ({
+      hand: new THREE.Vector3(),
+      nb: new THREE.Vector3(),
+      cam: new THREE.Vector3(),
+      tgt: new THREE.Vector3(),
+      e: new THREE.Euler(),
+    }),
     [],
   );
 
@@ -109,7 +115,12 @@ export default function PrologueScene() {
 
     // --- Ryuk -----------------------------------------------------------
     const release = range(p, 0.445, 0.47);
-    ryuk.pose(f.time, lerp(-0.05, -0.22, range(p, 0.38, 0.5)), lerp(0, 0.18, release), 0.55 + 0.45 * smoothstep(0.2, 0.36, p));
+    ryuk.pose(
+      f.time,
+      lerp(-0.05, -0.22, range(p, 0.38, 0.5)),
+      lerp(0, 0.18, release),
+      0.55 + 0.45 * smoothstep(0.2, 0.36, p),
+    );
     // Billboard yaw so the flat silhouette always faces the lens.
     if (ryukGroup.current) {
       const dx = cam.position.x - ryukGroup.current.position.x;
@@ -129,11 +140,16 @@ export default function PrologueScene() {
       const drift = Math.sin(t * Math.PI);
       const startX = tmp.hand.x;
       const x = lerp(startX, WORLD.landing[0], smoothstep(0, 1, t)) + drift * 1.4;
-      const z = lerp(tmp.hand.z, WORLD.landing[2], smoothstep(0, 1, t)) + Math.sin(t * 9) * 0.6 * drift;
+      const z =
+        lerp(tmp.hand.z, WORLD.landing[2], smoothstep(0, 1, t)) + Math.sin(t * 9) * 0.6 * drift;
       nb.position.set(x, y, z);
       const land = smoothstep(0.86, 0.92, p);
       const spin = t * 26;
-      tmp.e.set(spin * 0.9 * (1 - land), spin * 0.37 * (1 - land) + land * 0.65, spin * 0.61 * (1 - land));
+      tmp.e.set(
+        spin * 0.9 * (1 - land),
+        spin * 0.37 * (1 - land) + land * 0.65,
+        spin * 0.61 * (1 - land),
+      );
       nb.rotation.copy(tmp.e);
     }
 
@@ -193,13 +209,25 @@ export default function PrologueScene() {
 
   return (
     <>
-      <PerspectiveCamera ref={camRef} makeDefault fov={38} near={0.08} far={2600} position={[-40, R + 16, 62]} />
+      <PerspectiveCamera
+        ref={camRef}
+        makeDefault
+        fov={38}
+        near={0.08}
+        far={2600}
+        position={[-40, R + 16, 62]}
+      />
       <fogExp2 ref={fogRef} attach="fog" args={['#1d1c1a', 0.0105]} />
       <SkyDome blendRef={blend} />
 
       {/* Realm lighting */}
       <group ref={realmLights}>
-        <directionalLight ref={sunRef} position={[18, R + 10, -100]} color="#c2bcae" intensity={1.5} />
+        <directionalLight
+          ref={sunRef}
+          position={[18, R + 10, -100]}
+          color="#c2bcae"
+          intensity={1.5}
+        />
         <hemisphereLight ref={realmHemi} args={['#45433e', '#121110', 0.65]} />
       </group>
       {/* Human world lighting */}
@@ -221,7 +249,16 @@ export default function PrologueScene() {
         <RyukSilhouette ref={ryukRef} />
       </group>
       {ashCount > 0 ? (
-        <Motes count={ashCount} box={ASH_BOX} position={ASH_POS} drift={ASH_DRIFT} color="#b8b2a4" size={34} opacity={0.42} seed={9} />
+        <Motes
+          count={ashCount}
+          box={ASH_BOX}
+          position={ASH_POS}
+          drift={ASH_DRIFT}
+          color="#b8b2a4"
+          size={34}
+          opacity={0.42}
+          seed={9}
+        />
       ) : null}
 
       <CloudLayers quality={profile.particles} />
@@ -231,7 +268,11 @@ export default function PrologueScene() {
       <group ref={nbRef} scale={WORLD.notebookScale}>
         {/* Centre the model on its own origin so it tumbles around its middle. */}
         <group position={[-0.74, -0.08, 0]}>
-          <NotebookModel state={nbState} textureSize={Math.min(1024, profile.textureSize)} castShadow={profile.shadows} />
+          <NotebookModel
+            state={nbState}
+            textureSize={Math.min(1024, profile.textureSize)}
+            castShadow={profile.shadows}
+          />
         </group>
       </group>
     </>

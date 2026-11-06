@@ -23,9 +23,18 @@ export function Pencil(props: ThreeElements['group']) {
       cone,
       tip,
       band,
-      bodyMat: new THREE.MeshPhysicalMaterial({ color: '#141416', roughness: 0.28, clearcoat: 0.6, clearcoatRoughness: 0.25 }),
+      bodyMat: new THREE.MeshPhysicalMaterial({
+        color: '#141416',
+        roughness: 0.28,
+        clearcoat: 0.6,
+        clearcoatRoughness: 0.25,
+      }),
       woodMat: new THREE.MeshStandardMaterial({ color: '#c49a6c', roughness: 0.75 }),
-      graphiteMat: new THREE.MeshStandardMaterial({ color: '#2a2a2c', roughness: 0.35, metalness: 0.4 }),
+      graphiteMat: new THREE.MeshStandardMaterial({
+        color: '#2a2a2c',
+        roughness: 0.35,
+        metalness: 0.4,
+      }),
       bandMat: new THREE.MeshStandardMaterial({ color: '#8f7a52', roughness: 0.4, metalness: 0.8 }),
     };
   }, []);

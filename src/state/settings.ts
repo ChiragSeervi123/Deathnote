@@ -34,7 +34,11 @@ export const useSettings = create<SettingsState>()(
       name: 'dn-settings',
       version: 1,
       storage: createJSONStorage(() => safeStorage),
-      partialize: (s) => ({ quality: s.quality, motion: s.motion, spoilerAccepted: s.spoilerAccepted }),
+      partialize: (s) => ({
+        quality: s.quality,
+        motion: s.motion,
+        spoilerAccepted: s.spoilerAccepted,
+      }),
       merge: (persisted, current) => {
         const p = (persisted ?? {}) as Partial<SettingsState>;
         return {

@@ -115,12 +115,25 @@ export function NotebookIndex() {
   );
 }
 
-function IndexItem({ id, active, onGo }: { id: ChapterId; active: boolean; onGo: (id: ChapterId) => void }) {
+function IndexItem({
+  id,
+  active,
+  onGo,
+}: {
+  id: ChapterId;
+  active: boolean;
+  onGo: (id: ChapterId) => void;
+}) {
   const c = CHAPTER_BY_ID.get(id);
   if (!c) return null;
   return (
     <li className={`notebook-list__item${active ? ' is-active' : ''}`}>
-      <button type="button" className="notebook-list__button" aria-current={active ? 'location' : undefined} onClick={() => onGo(id)}>
+      <button
+        type="button"
+        className="notebook-list__button"
+        aria-current={active ? 'location' : undefined}
+        onClick={() => onGo(id)}
+      >
         <span className="notebook-list__num">{formatChapterNumber(c.number)}</span>
         <span className="notebook-list__title">{c.title}</span>
         {active ? <span className="notebook-list__here">you are here</span> : null}

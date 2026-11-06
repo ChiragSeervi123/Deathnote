@@ -13,7 +13,13 @@ function fullscreenTriangle(): THREE.BufferGeometry {
   return g;
 }
 
-const NEUTRAL: Grade = { exposure: 1, contrast: 1, saturation: 1, tint: [1, 1, 1], lift: [0, 0, 0] };
+const NEUTRAL: Grade = {
+  exposure: 1,
+  contrast: 1,
+  saturation: 1,
+  tint: [1, 1, 1],
+  lift: [0, 0, 0],
+};
 
 function applyGrade(u: Record<string, THREE.IUniform>, suffix: 'A' | 'B', g: Grade): void {
   (u[`uGrade${suffix}`]!.value as THREE.Vector3).set(g.exposure, g.contrast, g.saturation);
@@ -81,8 +87,16 @@ export function Compositor() {
     u.uTime!.value = state.clock.elapsedTime;
     u.uDimA!.value = hasA ? a.dim : b.dim;
     u.uDimB!.value = hasB ? b.dim : a.dim;
-    applyGrade(u, 'A', hasA && a.key ? SCENES[a.key].grade : hasB && b.key ? SCENES[b.key].grade : NEUTRAL);
-    applyGrade(u, 'B', hasB && b.key ? SCENES[b.key].grade : hasA && a.key ? SCENES[a.key].grade : NEUTRAL);
+    applyGrade(
+      u,
+      'A',
+      hasA && a.key ? SCENES[a.key].grade : hasB && b.key ? SCENES[b.key].grade : NEUTRAL,
+    );
+    applyGrade(
+      u,
+      'B',
+      hasB && b.key ? SCENES[b.key].grade : hasA && a.key ? SCENES[a.key].grade : NEUTRAL,
+    );
     (u.uRes!.value as THREE.Vector2).set(size.width, size.height);
   }, PRIORITY.compositor);
 

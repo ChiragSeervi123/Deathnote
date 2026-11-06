@@ -18,7 +18,13 @@ export interface SceneEntry {
   grade: Grade;
 }
 
-const neutral: Grade = { exposure: 1, contrast: 1, saturation: 1, tint: [1, 1, 1], lift: [0, 0, 0] };
+const neutral: Grade = {
+  exposure: 1,
+  contrast: 1,
+  saturation: 1,
+  tint: [1, 1, 1],
+  lift: [0, 0, 0],
+};
 
 /**
  * Scene catalogue. A scene is listed with `Component: null` until it is
@@ -28,11 +34,23 @@ const neutral: Grade = { exposure: 1, contrast: 1, saturation: 1, tint: [1, 1, 1
 export const SCENES: Record<SceneKey, SceneEntry> = {
   prologue: {
     Component: lazy(() => import('./prologue/PrologueScene')),
-    grade: { exposure: 1, contrast: 1.06, saturation: 0.85, tint: [0.98, 1, 1.03], lift: [0.004, 0.004, 0.006] },
+    grade: {
+      exposure: 1,
+      contrast: 1.06,
+      saturation: 0.85,
+      tint: [0.98, 1, 1.03],
+      lift: [0.004, 0.004, 0.006],
+    },
   },
   notebook: {
     Component: lazy(() => import('./notebook/NotebookScene')),
-    grade: { exposure: 1, contrast: 1.08, saturation: 0.95, tint: [1.02, 1, 0.97], lift: [0.003, 0.002, 0.002] },
+    grade: {
+      exposure: 1,
+      contrast: 1.08,
+      saturation: 0.95,
+      tint: [1.02, 1, 0.97],
+      lift: [0.003, 0.002, 0.002],
+    },
   },
   realm: { Component: null, grade: neutral },
   light: { Component: null, grade: neutral },

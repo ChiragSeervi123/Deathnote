@@ -26,19 +26,25 @@ export function SceneLayer({ sceneKey }: { sceneKey: SceneKey }) {
   const dpr = useThree((s) => s.viewport.dpr);
   const tier = useRuntime((s) => s.tier);
   const setSceneStatus = useRuntime((s) => s.setSceneStatus);
-  const samples = dpr > 1.3 ? Math.min(2, QUALITY_PROFILES[tier].msaa) : QUALITY_PROFILES[tier].msaa;
+  const samples =
+    dpr > 1.3 ? Math.min(2, QUALITY_PROFILES[tier].msaa) : QUALITY_PROFILES[tier].msaa;
 
-  const target = useFBO(Math.max(1, Math.round(size.width * dpr)), Math.max(1, Math.round(size.height * dpr)), {
-    type: THREE.HalfFloatType,
-    samples,
-    depthBuffer: true,
-    stencilBuffer: false,
-  });
+  const target = useFBO(
+    Math.max(1, Math.round(size.width * dpr)),
+    Math.max(1, Math.round(size.height * dpr)),
+    {
+      type: THREE.HalfFloatType,
+      samples,
+      depthBuffer: true,
+      stencilBuffer: false,
+    },
+  );
 
   useLayoutEffect(() => {
     stageState.textures.set(sceneKey, target.texture);
     return () => {
-      if (stageState.textures.get(sceneKey) === target.texture) stageState.textures.delete(sceneKey);
+      if (stageState.textures.get(sceneKey) === target.texture)
+        stageState.textures.delete(sceneKey);
     };
   }, [sceneKey, target]);
 
@@ -89,7 +95,13 @@ function StatusSignal({ sceneKey, status }: { sceneKey: SceneKey; status: 'ready
 }
 
 /** Renders the portal scene into its target when it contributes to the frame. */
-function LayerRenderer({ sceneKey, target }: { sceneKey: SceneKey; target: THREE.WebGLRenderTarget }) {
+function LayerRenderer({
+  sceneKey,
+  target,
+}: {
+  sceneKey: SceneKey;
+  target: THREE.WebGLRenderTarget;
+}) {
   const warmed = useRef(false);
 
   useFrame((state) => {

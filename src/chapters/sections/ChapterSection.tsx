@@ -57,7 +57,11 @@ export function ChapterSection({ chapter, children }: Props) {
       aria-labelledby={titleId}
       data-chapter={chapter.id}
     >
-      <div ref={trackRef} className="chapter__track" style={{ '--len': chapter.length } as CSSProperties}>
+      <div
+        ref={trackRef}
+        className="chapter__track"
+        style={{ '--len': chapter.length } as CSSProperties}
+      >
         <div ref={stageRef} className="chapter__stage">
           <p className="visually-hidden">Scene: {chapter.sceneDescription}</p>
           {chapter.beats.map((beat, i) => (
@@ -128,7 +132,9 @@ function BeatView({
         {beat.meta || beat.canon ? (
           <p className="beat__meta mono-label">
             {beat.meta}
-            {beat.canon ? <span className={`canon-badge canon-badge--${beat.canon}`}>{beat.canon} only</span> : null}
+            {beat.canon ? (
+              <span className={`canon-badge canon-badge--${beat.canon}`}>{beat.canon} only</span>
+            ) : null}
           </p>
         ) : null}
         <p className="beat__text">{beat.text}</p>

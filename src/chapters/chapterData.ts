@@ -879,7 +879,8 @@ export const CHAPTERS: readonly ChapterDef[] = [
     scene: 'legacy',
     transition: 'close',
     palette: 'obsidian',
-    sceneDescription: 'The notebook closes slowly on a dark desk. Ash settles. A single page of light remains.',
+    sceneDescription:
+      'The notebook closes slowly on a dark desk. Ash settles. A single page of light remains.',
     beats: [],
   },
 ];

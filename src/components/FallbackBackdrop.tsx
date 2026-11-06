@@ -3,7 +3,15 @@ import type { Palette } from '@/chapters/types';
 import { useRuntime } from '@/state/runtime';
 import './FallbackBackdrop.css';
 
-const PALETTES: readonly Palette[] = ['obsidian', 'ash', 'crimson', 'cold', 'paper', 'dusk', 'gold'];
+const PALETTES: readonly Palette[] = [
+  'obsidian',
+  'ash',
+  'crimson',
+  'cold',
+  'paper',
+  'dusk',
+  'gold',
+];
 
 /**
  * Designed 2D backdrop (SPEC §11.4): shown behind the canvas while scenes
@@ -20,7 +28,9 @@ export function FallbackBackdrop() {
       {PALETTES.map((p) => (
         <div key={p} className={`backdrop__layer backdrop__layer--${p}`} data-on={p === palette} />
       ))}
-      {chapter ? <div className="backdrop__numeral">{formatChapterNumber(chapter.number)}</div> : null}
+      {chapter ? (
+        <div className="backdrop__numeral">{formatChapterNumber(chapter.number)}</div>
+      ) : null}
       <div className="backdrop__grain" />
       <div className="backdrop__vignette" />
     </div>

@@ -4,6 +4,7 @@ import { SiteFooter } from '@/components/SiteFooter';
 import { SoundToggle } from '@/components/navigation/SoundToggle';
 import { useAmbientAudio } from '@/audio/useAmbientAudio';
 import { useReducedMotion } from '@/state/runtime';
+import { CreatorFacts, WorkFacts } from './TributeFacts';
 import './Tribute.css';
 
 /**
@@ -76,19 +77,21 @@ export function Tribute() {
           </header>
           <div className="t-prose">
             <p data-reveal>
-              A notebook that kills is a simple idea. What makes <cite>Death Note</cite> unforgettable is everything
-              built on top of it: a set of rules precise enough to be argued like law, and two minds that can only see
-              each other through deduction.
+              A notebook that kills is a simple idea. What makes <cite>Death Note</cite>{' '}
+              unforgettable is everything built on top of it: a set of rules precise enough to be
+              argued like law, and two minds that can only see each other through deduction.
             </p>
             <p data-reveal>
-              The story never tells us who is right. It hands us a judge and a detective, lets each make the strongest
-              case for himself, and leaves the verdict with the reader. Every rule introduced becomes a weapon, an
-              alibi or a trap — and every chapter turns on what someone knows, and what they can prove.
+              The story never tells us who is right. It hands us a judge and a detective, lets each
+              make the strongest case for himself, and leaves the verdict with the reader. Every
+              rule introduced becomes a weapon, an alibi or a trap — and every chapter turns on what
+              someone knows, and what they can prove.
             </p>
             <p data-reveal>
-              It is a thriller made of conversations, bluffs and patience, and it still feels like a game of chess in
-              which both players are sure they have already won.
+              It is a thriller made of conversations, bluffs and patience, and it still feels like a
+              game of chess in which both players are sure they have already won.
             </p>
+            <CreatorFacts id="ohba" />
           </div>
         </section>
 
@@ -101,14 +104,16 @@ export function Tribute() {
           </header>
           <div className="t-prose">
             <p data-reveal>
-              The art gives the ideas a body. Faces carry the drama: a calm expression that hides a calculation, a
-              stare that already suspects, a smile seen only by the reader.
+              The art gives the ideas a body. Faces carry the drama: a calm expression that hides a
+              calculation, a stare that already suspects, a smile seen only by the reader.
             </p>
             <p data-reveal>
-              Its gods of death are strange and specific; its humans are elegant, tired, proud and afraid. Deep blacks,
-              sharp lines and careful compositions turn rooms, rooftops and rain into places of tension — so that a
-              scene of two people talking can feel like a duel.
+              Its gods of death are strange and specific; its humans are elegant, tired, proud and
+              afraid. Deep blacks, sharp lines and careful compositions turn rooms, rooftops and
+              rain into places of tension — so that a scene of two people talking can feel like a
+              duel.
             </p>
+            <CreatorFacts id="obata" />
           </div>
         </section>
 
@@ -121,15 +126,18 @@ export function Tribute() {
           </header>
           <div className="t-prose">
             <p data-reveal>
-              On the page, the writing and the drawing are impossible to separate. Dense reasoning becomes readable
-              because it is staged; quiet panels become unbearable because of what the words have made us expect.
+              On the page, the writing and the drawing are impossible to separate. Dense reasoning
+              becomes readable because it is staged; quiet panels become unbearable because of what
+              the words have made us expect.
             </p>
             <p data-reveal>
-              Story and art meet in the same place a name meets the notebook — on paper — and the result has stayed
-              with readers long after the final page.
+              Story and art meet in the same place a name meets the notebook — on paper — and the
+              result has stayed with readers long after the final page.
             </p>
           </div>
         </section>
+
+        <WorkFacts />
 
         <section className="t-final" aria-labelledby="t-final-title">
           <h2 id="t-final-title" className="visually-hidden">

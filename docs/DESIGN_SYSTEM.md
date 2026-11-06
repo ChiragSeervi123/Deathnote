@@ -12,7 +12,7 @@ explains intent. Colour supports narrative meaning (SPEC §5.2), never decoratio
 | `--c-graphite` | `#232323` | Hairlines on dark, inactive ticks |
 | `--c-crimson` | `#4a0a10` | Kira atmosphere, deep shadows of judgment |
 | `--c-blood` | `#9f171f` | Accent: active state, the written name, emphasis (sparingly) |
-| `--c-blood-bright` | `#c92a32` | Accent text on obsidian where contrast must reach AA |
+| `--c-blood-bright` | `#e2525a` | Accent text (AA: 4.9:1 on charcoal, 5.3:1 on obsidian — raised from #c92a32 after an axe audit) |
 | `--c-paper` | `#e8e3d8` | Primary text on dark; notebook pages |
 | `--c-paper-dim` | `#b9b3a7` | Secondary text on dark (AA on obsidian) |
 | `--c-ash` | `#858585` | Tertiary labels, metadata (AA 5.4:1 on obsidian) |

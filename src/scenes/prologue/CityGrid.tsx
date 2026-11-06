@@ -11,7 +11,10 @@ function buildingMaterial(): THREE.MeshStandardMaterial {
   const m = new THREE.MeshStandardMaterial({ color: '#16171b', roughness: 0.82, metalness: 0.1 });
   m.onBeforeCompile = (shader) => {
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec3 vWPos;\nvarying vec3 vWNorm;\nvarying float vSeed;')
+      .replace(
+        '#include <common>',
+        '#include <common>\nvarying vec3 vWPos;\nvarying vec3 vWNorm;\nvarying float vSeed;',
+      )
       .replace(
         '#include <worldpos_vertex>',
         `#include <worldpos_vertex>
@@ -80,7 +83,10 @@ function groundMaterial(): THREE.MeshStandardMaterial {
   m.onBeforeCompile = (shader) => {
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', '#include <common>\nvarying vec3 vWPos;')
-      .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+      .replace(
+        '#include <worldpos_vertex>',
+        '#include <worldpos_vertex>\nvWPos = (modelMatrix * vec4(transformed, 1.0)).xyz;',
+      );
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>\nvarying vec3 vWPos;`)
       .replace(
@@ -120,9 +126,13 @@ export function CityGrid({ density = 1 }: { density?: number }) {
     const half = Math.round(9 * Math.sqrt(density) + 4);
 
     // The school: long, low, three floors — instance 0.
-    transforms.push(m.clone().compose(new THREE.Vector3(0, 0, -30), q, new THREE.Vector3(70, 13, 16)));
+    transforms.push(
+      m.clone().compose(new THREE.Vector3(0, 0, -30), q, new THREE.Vector3(70, 13, 16)),
+    );
     // A gymnasium block.
-    transforms.push(m.clone().compose(new THREE.Vector3(42, 0, 8), q, new THREE.Vector3(26, 10, 34)));
+    transforms.push(
+      m.clone().compose(new THREE.Vector3(42, 0, 8), q, new THREE.Vector3(26, 10, 34)),
+    );
 
     for (let i = -half; i <= half; i++) {
       for (let j = -half; j <= half; j++) {
@@ -131,7 +141,8 @@ export function CityGrid({ density = 1 }: { density?: number }) {
         if (Math.abs(cx) < 75 && Math.abs(cz) < 65) continue; // keep the school grounds open
         // Low residential district around the school; the skyline rises far to the north.
         const dist = Math.hypot(cx, cz);
-        const downtown = Math.exp(-Math.pow((cz + 640) / 300, 2)) * Math.exp(-Math.pow(cx / 520, 2));
+        const downtown =
+          Math.exp(-Math.pow((cz + 640) / 300, 2)) * Math.exp(-Math.pow(cx / 520, 2));
         const near = 1 - Math.exp(-Math.pow(dist / 260, 2));
         const n = 1 + Math.floor(rnd() * 3);
         for (let k = 0; k < n; k++) {
@@ -141,7 +152,15 @@ export function CityGrid({ density = 1 }: { density?: number }) {
           const z = cz + (rnd() - 0.5) * 4;
           const h = 7 + Math.pow(rnd(), 2.2) * (14 + 30 * near) + downtown * (50 + rnd() * 150);
           q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), (rnd() < 0.15 ? 0.2 : 0) * (rnd() - 0.5));
-          transforms.push(m.clone().compose(new THREE.Vector3(x, 0, z), q.clone(), new THREE.Vector3(Math.max(6, w), Math.max(6, h), Math.max(8, d))));
+          transforms.push(
+            m
+              .clone()
+              .compose(
+                new THREE.Vector3(x, 0, z),
+                q.clone(),
+                new THREE.Vector3(Math.max(6, w), Math.max(6, h), Math.max(8, d)),
+              ),
+          );
         }
       }
     }
@@ -162,7 +181,10 @@ export function CityGrid({ density = 1 }: { density?: number }) {
     grass.onBeforeCompile = (shader) => {
       shader.vertexShader = shader.vertexShader
         .replace('#include <common>', '#include <common>\nvarying vec3 vGPos;')
-        .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvGPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+        .replace(
+          '#include <worldpos_vertex>',
+          '#include <worldpos_vertex>\nvGPos = (modelMatrix * vec4(transformed, 1.0)).xyz;',
+        );
       shader.fragmentShader = shader.fragmentShader
         .replace('#include <common>', `#include <common>\nvarying vec3 vGPos;\n${NOISE_GLSL}`)
         .replace(

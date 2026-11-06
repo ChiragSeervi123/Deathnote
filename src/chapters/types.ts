@@ -24,15 +24,7 @@ export type SceneKey =
 
 /** Signature transitions (SPEC §9.2), assigned by narrative context. */
 export type TransitionKind =
-  | 'cut'
-  | 'fade'
-  | 'ink'
-  | 'smoke'
-  | 'pageTurn'
-  | 'redToBlue'
-  | 'silhouette'
-  | 'close'
-  | 'split';
+  'cut' | 'fade' | 'ink' | 'smoke' | 'pageTurn' | 'redToBlue' | 'silhouette' | 'close' | 'split';
 
 /** Narrative palette — used by the 2D fallback, UI accents and grading. */
 export type Palette = 'obsidian' | 'crimson' | 'cold' | 'paper' | 'ash' | 'dusk' | 'gold';

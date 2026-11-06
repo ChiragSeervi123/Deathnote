@@ -64,7 +64,17 @@ interface Props {
 }
 
 /** Dust, ash or snow motes. Additive points; optionally lit only inside a light cone. */
-export function Motes({ count, box, position, color = '#ffd9a8', size = 26, opacity = 1, beam, drift = [0, 0, 0], seed = 1 }: Props) {
+export function Motes({
+  count,
+  box,
+  position,
+  color = '#ffd9a8',
+  size = 26,
+  opacity = 1,
+  beam,
+  drift = [0, 0, 0],
+  seed = 1,
+}: Props) {
   const assets = useMemo(() => {
     const rnd = mulberry32(seed);
     const pos = new Float32Array(count * 3);
@@ -116,7 +126,14 @@ export function Motes({ count, box, position, color = '#ffd9a8', size = 26, opac
     assets.material.uniforms.uTime!.value += Math.min(dt, 0.1);
   });
 
-  return <points geometry={assets.geometry} material={assets.material} position={position} frustumCulled={false} />;
+  return (
+    <points
+      geometry={assets.geometry}
+      material={assets.material}
+      position={position}
+      frustumCulled={false}
+    />
+  );
 }
 
 /** Imperative access to a Motes material (e.g. to fade opacity per frame). */

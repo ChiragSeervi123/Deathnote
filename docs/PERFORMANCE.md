@@ -31,4 +31,16 @@ Chrome 156, Windows 11.
 
 ## Measurements log
 
-_No measurements yet._
+| Date | Scene / page | Tier | FPS | Draw calls | Triangles | Notes |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2026-11-07 | Ch 01 notebook | high | 120 (vsync cap) | 44–55 | ~10k | MSAA 4, bloom, shadows 2048 |
+| 2026-11-07 | Ch 00 prologue (realm, fall, city, landing) | high | 120 (vsync cap) | 38–64 | 135–171k | ~1.6k instanced towers, 1.4k rain streaks |
+| 2026-11-07 | DOM-only chapters | — | canvas idle | 0 | 0 | FrameDriver skips `advance()` when nothing is visible |
+
+Measured with `?debug` in Chrome 156 (headless new, ANGLE D3D11 on the RTX 3050). Frame rate is
+capped by vsync, so these show headroom, not the ceiling; a headed CPU/GPU-throttled run
+(`scripts/perf.mjs`, not yet written) is still required before calling performance verified
+on lower-end hardware.
+
+Bundle sizes (gzip, 2026-11-07): app shell 102 kB · main route 85 kB · stage chunk 276 kB
+(loaded only with WebGL2) · prologue 9 kB · notebook 29 kB · tribute 3 kB.

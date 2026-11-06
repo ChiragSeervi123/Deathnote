@@ -8,7 +8,7 @@ function makeNoise(seed: number) {
   const rnd = mulberry32(seed);
   const perm = new Float32Array(512);
   for (let i = 0; i < 512; i++) perm[i] = rnd();
-  const h = (x: number, y: number) => perm[((x & 255) + ((y & 255) * 31)) & 511]!;
+  const h = (x: number, y: number) => perm[((x & 255) + (y & 255) * 31) & 511]!;
   const n = (x: number, y: number) => {
     const xi = Math.floor(x);
     const yi = Math.floor(y);
@@ -75,14 +75,21 @@ export function RealmTerrain({ density = 1 }: { density?: number }) {
     }
     geometry.computeVertexNormals();
 
-    const material = new THREE.MeshStandardMaterial({ color: '#4a4741', roughness: 1, metalness: 0 });
+    const material = new THREE.MeshStandardMaterial({
+      color: '#4a4741',
+      roughness: 1,
+      metalness: 0,
+    });
     material.onBeforeCompile = (shader) => {
       shader.uniforms.uHole = { value: WORLD.holeRadius };
       shader.vertexShader = shader.vertexShader
         .replace('#include <common>', '#include <common>\nvarying vec3 vLocal;')
         .replace('#include <begin_vertex>', '#include <begin_vertex>\nvLocal = position;');
       shader.fragmentShader = shader.fragmentShader
-        .replace('#include <common>', '#include <common>\nvarying vec3 vLocal;\nuniform float uHole;')
+        .replace(
+          '#include <common>',
+          '#include <common>\nvarying vec3 vLocal;\nuniform float uHole;',
+        )
         .replace(
           '#include <clipping_planes_fragment>',
           `#include <clipping_planes_fragment>
@@ -194,11 +201,17 @@ export function RealmTerrain({ density = 1 }: { density?: number }) {
       <primitive object={a.rocks} />
       {/* The hole's throat: a rock wall dropping into the dark, so it reads as a void, not a pool. */}
       <mesh position={[0, -4.6, 0]}>
-        <cylinderGeometry args={[WORLD.holeRadius + 0.35, WORLD.holeRadius + 0.15, 9.5, 40, 1, true]} />
+        <cylinderGeometry
+          args={[WORLD.holeRadius + 0.35, WORLD.holeRadius + 0.15, 9.5, 40, 1, true]}
+        />
         <meshStandardMaterial color="#121110" roughness={1} side={1} />
       </mesh>
       {/* The rock Ryuk sits on. */}
-      <mesh position={[WORLD.ryuk[0] - 0.35, 0.45, WORLD.ryuk[2]]} scale={[1.3, 0.95, 1.1]} rotation={[0.2, 0.5, 0.1]}>
+      <mesh
+        position={[WORLD.ryuk[0] - 0.35, 0.45, WORLD.ryuk[2]]}
+        scale={[1.3, 0.95, 1.1]}
+        rotation={[0.2, 0.5, 0.1]}
+      >
         <icosahedronGeometry args={[1, 1]} />
         <meshStandardMaterial color="#1c1b19" roughness={1} />
       </mesh>

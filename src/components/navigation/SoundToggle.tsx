@@ -18,7 +18,9 @@ export function SoundToggle({ className = '' }: { className?: string }) {
       onClick={() => setSound(!on)}
     >
       <SoundIcon on={on} />
-      <span className="chrome-button__label">{audioError ? 'Sound unavailable' : on ? 'Sound on' : 'Sound off'}</span>
+      <span className="chrome-button__label">
+        {audioError ? 'Sound unavailable' : on ? 'Sound on' : 'Sound off'}
+      </span>
     </button>
   );
 }

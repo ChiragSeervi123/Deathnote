@@ -9,7 +9,7 @@ not yet reviewed) · `done` (implemented + browser-tested + reviewed).
 
 ---
 
-## 00 · Prologue — A World of Boredom  · scene `prologue` · Status: spec
+## 00 · Prologue — A World of Boredom  · scene `prologue` · Status: built (browser-reviewed, first quality pass)
 
 **Idea:** one unbroken vertical shot. The camera begins in the realm of the gods of death,
 watches a bored Ryuk let a notebook fall through a hole in the ground, and follows it down
@@ -32,7 +32,7 @@ city — sodium/amber windows vs cold blue sky. Particles: ash (realm), cloud pl
 Reduced motion: camera path replaced by 4 held compositions cross-faded by beat.
 Mobile: same path, performance tier, fewer instances, no rain on `performance`.
 
-## 01 · The Death Note · scene `notebook` · Status: spec
+## 01 · The Death Note · scene `notebook` · Status: built (browser-reviewed; inspect mode pending)
 
 **Idea:** the notebook as an artefact under a desk lamp — the most detailed object on the site.
 Environment: dark bedroom desk, warm lamp pool, rain-streaked window with city bokeh, an apple,
@@ -48,74 +48,74 @@ a pencil. Notebook: black cover with leather grain and worn edges, gothic cover 
 
 Inspect mode: drag/arrow keys/buttons turn pages; focusable DOM controls; Esc exits.
 
-## 02 · The Shinigami Realm · scene `realm` · Status: spec
+## 02 · The Shinigami Realm · scene `realm` · Status: not started (2D backdrop)
 Wide desolate plain; Shinigami silhouettes gambling with bones around a fire-less pit; Ryuk full
 reveal (scale against camera, wings, grin, eyes) and Rem's pale stillness; lifespan numerals
 floating above distant human silhouettes seen through the hole (Eyes concept, explained in Ch 17).
 Transition in: smoke.
 
-## 03 · Light Yagami · scene `light` · Status: spec
+## 03 · Light Yagami · scene `light` · Status: not started (2D backdrop)
 Light's room by day (paper-white, warm) → night (red). Ink-figure Light with 4 expression
 states: ordinary student → calculating → public mask vs private Kira → (collapse reserved for
 Ch 15). Turning point: the first name written; the room's light turns from white to crimson.
 Transition in: page turn.
 
-## 04 · Birth of Kira · scene `kira` · Status: spec
+## 04 · Birth of Kira · scene `kira` · Status: not started (2D backdrop)
 Night city canyon of screens: news tickers, death counter, split public opinion. Event timeline
 rail (DOM) synced to the camera dolly. Red ink spreads across screens. Transition in: ink.
 
-## 05 · L · scene `l-room` · Status: spec
+## 05 · L · scene `l-room` · Status: not started (2D backdrop)
 Dark investigation room, wall of monitors (cold blue), sugar cubes stacked, negative space.
 Ink-figure L crouched on a chair, thumb to lip; stillness, gaze that tracks the visitor.
 Transition in: red→blue.
 
-## 06 · First Battle · scene `investigation` · Status: spec
+## 06 · First Battle · scene `investigation` · Status: not started (2D backdrop)
 Evidence board assembles itself: Lind L. Tailor broadcast, Kanto map narrowing, FBI agent
 files, surveillance camera grid, To-Oh University. Light and L as opposing chess-like columns.
 Transition in: evidence-board assembly.
 
-## 07 · Misa Amane · scene `misa` · Status: spec
+## 07 · Misa Amane · scene `misa` · Status: not started (2D backdrop)
 Gothic monochrome stage; Misa figure (gothic lolita silhouette, cross motifs), Rem looming pale
 behind; Eyes deal visualised as names/numerals appearing over crowd silhouettes.
 Transition in: silhouette reveal.
 
-## 08 · Confinement & Memory · scene `confinement` · Status: spec
+## 08 · Confinement & Memory · scene `confinement` · Status: not started (2D backdrop)
 Three monitored cells; ownership chain diagram (notebook → Light → Misa → buried → Higuchi);
 memories dissolving as ink washes off pages. Transition in: smoke.
 
-## 09 · Yotsuba · scene `yotsuba` · Status: spec
+## 09 · Yotsuba · scene `yotsuba` · Status: not started (2D backdrop)
 Glass boardroom high above the city; eight chairs, one weekly "Kira meeting"; Higuchi's chair
 lit red. Light and L handcuffed (silhouette of the chain). Transition in: camera through glass.
 
-## 10 · The End of L · scene `rain` · Status: spec
+## 10 · The End of L · scene `rain` · Status: not started (2D backdrop)
 Restraint: rain on a rooftop, church bells implied by rhythm (no audio clip), L barefoot in the
 rain, Rem's dust. Minimal motion; long holds; muted palette. Transition in: slow fade.
 
-## 11 · Successors · scene `wammy` · Status: spec
+## 11 · Successors · scene `wammy` · Status: not started (2D backdrop)
 Split composition: Near (white, puzzle pieces, controlled) vs Mello (black, chocolate foil,
 high contrast). Wammy's House window light. Transition in: split wipe.
 
-## 12 · The New Kira Era · scene `new-kira` · Status: spec
+## 12 · The New Kira Era · scene `new-kira` · Status: not started (2D backdrop)
 Kira's Kingdom broadcast studio, crowds, Mikami's pen strokes ("delete"), Takada's broadcasts.
 Transition in: ink.
 
-## 13 · Final Strategy · scene `strategy` · Status: spec
+## 13 · Final Strategy · scene `strategy` · Status: not started (2D backdrop)
 Two notebooks (real/fake) under scanning light; relationship graph of plans; Mello's move with
 Takada. Transition in: evidence.
 
-## 14 · Final Confrontation · scene `warehouse` · Status: spec
+## 14 · Final Confrontation · scene `warehouse` · Status: not started (2D backdrop)
 Yellow Box warehouse (original design): corrugated walls, high windows, dust in light shafts,
 a door ajar. Light, Near and the task force; the notebook reveal. Transition in: camera through door.
 
-## 15 · The Fall of Kira · scene `fall` · Status: spec
+## 15 · The Fall of Kira · scene `fall` · Status: not started (2D backdrop)
 Dusk stairs; Ryuk writing; time dilates; the world after Kira. Closing composition.
 Transition in: smoke → close.
 
-## 16–19 · Encyclopedia · scenes `archive`, `eyes`, `legacy` · Status: spec
+## 16–19 · Encyclopedia · scenes `archive`, `eyes`, `legacy` · Status: not started (2D backdrop)
 Calm ambient backdrops behind DOM-first interfaces (text never over busy scenes). 19 ends with
 the notebook closing (signature transition) and the tribute invitation.
 
-## Tribute · scene `tribute` (separate route) · Status: spec
+## Tribute · scene `tribute` (separate route) · Status: DOM version built; 3D scene not started
 Blank manga page on a drafting table, pencil, morning-paper light, slow dust. Sections:
 blank page → story (words branching like plot lines) → art (ink strokes becoming forms, no
 copied panels) → collaboration (word + line converge) → thank-you (notebook closes, quiet).

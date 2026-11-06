@@ -38,11 +38,19 @@ function spike(base: P, angle: number, len: number, width: number, bend = 0): TH
   const px = -sa;
   const py = ca;
   const tip: P = [base[0] + ca * len + px * bend, base[1] + sa * len + py * bend];
-  const mid: P = [base[0] + ca * len * 0.5 + px * bend * 0.6, base[1] + sa * len * 0.5 + py * bend * 0.6];
+  const mid: P = [
+    base[0] + ca * len * 0.5 + px * bend * 0.6,
+    base[1] + sa * len * 0.5 + py * bend * 0.6,
+  ];
   const s = new THREE.Shape();
   s.moveTo(base[0] + px * width, base[1] + py * width);
   s.quadraticCurveTo(mid[0] + px * width * 0.55, mid[1] + py * width * 0.55, tip[0], tip[1]);
-  s.quadraticCurveTo(mid[0] - px * width * 0.45, mid[1] - py * width * 0.45, base[0] - px * width, base[1] - py * width);
+  s.quadraticCurveTo(
+    mid[0] - px * width * 0.45,
+    mid[1] - py * width * 0.45,
+    base[0] - px * width,
+    base[1] - py * width,
+  );
   s.closePath();
   return s;
 }
@@ -58,7 +66,14 @@ export const RYUK_PIVOTS = {
 };
 
 /** A folded bat wing: bones + scalloped membrane. */
-function wing(root: P, elbow: P, wrist: P, tips: readonly P[], lowerBack: P, centre: P): THREE.Shape[] {
+function wing(
+  root: P,
+  elbow: P,
+  wrist: P,
+  tips: readonly P[],
+  lowerBack: P,
+  centre: P,
+): THREE.Shape[] {
   const s = new THREE.Shape();
   s.moveTo(root[0], root[1]);
   s.quadraticCurveTo(elbow[0] - 0.04, elbow[1], elbow[0], elbow[1]);
@@ -72,14 +87,21 @@ function wing(root: P, elbow: P, wrist: P, tips: readonly P[], lowerBack: P, cen
     else s.quadraticCurveTo(cx, cy, t[0], t[1]);
     prev = t;
   }
-  s.quadraticCurveTo((prev[0] + lowerBack[0]) / 2 + 0.06, (prev[1] + lowerBack[1]) / 2 + 0.12, lowerBack[0], lowerBack[1]);
+  s.quadraticCurveTo(
+    (prev[0] + lowerBack[0]) / 2 + 0.06,
+    (prev[1] + lowerBack[1]) / 2 + 0.12,
+    lowerBack[0],
+    lowerBack[1],
+  );
   s.closePath();
   const parts: THREE.Shape[] = [s];
   parts.push(...capsule(root, elbow, 0.05, 0.035));
   parts.push(...capsule(elbow, wrist, 0.035, 0.026));
   for (const t of tips) parts.push(...capsule(wrist, t, 0.022, 0.006));
   // Wrist claw.
-  parts.push(spike(wrist, Math.atan2(wrist[1] - elbow[1], wrist[0] - elbow[0]) + 0.25, 0.14, 0.022, -0.03));
+  parts.push(
+    spike(wrist, Math.atan2(wrist[1] - elbow[1], wrist[0] - elbow[0]) + 0.25, 0.14, 0.022, -0.03),
+  );
   return parts;
 }
 
@@ -87,8 +109,34 @@ export function ryukBodyShapes(): THREE.Shape[] {
   const shapes: THREE.Shape[] = [];
 
   // Far wing first (behind), then the near wing.
-  shapes.push(...wing([0.06, 1.02], [-0.18, 1.68], [-0.02, 2.2], [[-0.52, 1.98], [-0.7, 1.5], [-0.48, 0.98]], [-0.06, 0.62], [-0.22, 1.5]));
-  shapes.push(...wing([-0.02, 0.98], [-0.34, 1.6], [-0.2, 2.1], [[-0.76, 1.84], [-0.92, 1.28], [-0.64, 0.7]], [-0.14, 0.42], [-0.4, 1.32]));
+  shapes.push(
+    ...wing(
+      [0.06, 1.02],
+      [-0.18, 1.68],
+      [-0.02, 2.2],
+      [
+        [-0.52, 1.98],
+        [-0.7, 1.5],
+        [-0.48, 0.98],
+      ],
+      [-0.06, 0.62],
+      [-0.22, 1.5],
+    ),
+  );
+  shapes.push(
+    ...wing(
+      [-0.02, 0.98],
+      [-0.34, 1.6],
+      [-0.2, 2.1],
+      [
+        [-0.76, 1.84],
+        [-0.92, 1.28],
+        [-0.64, 0.7],
+      ],
+      [-0.14, 0.42],
+      [-0.4, 1.32],
+    ),
+  );
 
   // Hunched torso: one smooth outline.
   const t = new THREE.Shape();
@@ -177,7 +225,8 @@ export function ryukArmShapes(): THREE.Shape[] {
     [-38, 0.19],
     [-58, 0.16],
   ];
-  for (const [deg, len] of fingers) shapes.push(spike(h, THREE.MathUtils.degToRad(deg), len, 0.017, -0.04));
+  for (const [deg, len] of fingers)
+    shapes.push(spike(h, THREE.MathUtils.degToRad(deg), len, 0.017, -0.04));
   shapes.push(spike(h, THREE.MathUtils.degToRad(48), 0.11, 0.015, 0.02));
   return shapes;
 }

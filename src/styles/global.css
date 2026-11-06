@@ -161,6 +161,39 @@ button {
   text-decoration: underline;
 }
 
+/* Shared chrome button (used by both routes) ------------------------------------------------ */
+
+.chrome-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  min-height: 40px;
+  padding: 0.45em 0.9em;
+  border: 1px solid transparent;
+  background: rgb(8 8 8 / 0.35);
+  color: var(--c-paper-dim);
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) linear,
+    border-color var(--dur-fast) linear;
+}
+.chrome-button:hover {
+  color: var(--c-paper);
+  border-color: var(--c-line);
+}
+.chrome-button[aria-pressed='true'] {
+  color: var(--c-paper);
+}
+.chrome-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

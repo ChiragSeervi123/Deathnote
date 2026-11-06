@@ -19,8 +19,20 @@ everything else in this repo.
 | Everything | `npm run check` |
 | Visual review | `node scripts/shoot.mjs <url-path> [options]` — screenshots into `.artifacts/` (see script header) |
 
-Debug overlay: append `?debug` to any URL (FPS, draw calls, geometries/textures, quality tier).
-Force a fallback: `?webgl=0`. Force a quality tier: `?quality=high|balanced|performance`.
+Debug overlay: append `?debug` to any URL (FPS, draw calls, geometries/textures, quality tier;
+the prologue also publishes `window.__DN_CAM__`). Force a fallback: `?webgl=0`. Force a quality
+tier: `?quality=high|balanced|performance`. Disable film grain: `?grain=0`.
+
+Screenshots: build, run `npx vite preview --port 4173`, then e.g.
+`MSYS_NO_PATHCONV=1 node scripts/shoot.mjs --path /tribute --query gate=0 --shots top,y:1200`.
+In Git Bash, `MSYS_NO_PATHCONV=1` is required or `/paths` are rewritten to Windows paths.
+
+Gotchas learned the hard way:
+- The post-processing composer turns `renderer.autoClear` off; `SceneLayer` clears its target
+  explicitly. Don't remove that clear.
+- Never hash an interpolated varying (e.g. an instance id) without `floor(x + 0.5)` first —
+  interpolation error becomes per-pixel static.
+- Files differing only in case collide on Windows (`ryukShapes.ts` vs `RyukSilhouette.tsx`).
 
 ## Stack (verified 2026-11-06)
 

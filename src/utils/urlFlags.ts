@@ -20,7 +20,9 @@ export interface UrlFlags {
 
 function read(): UrlFlags {
   const p =
-    typeof window === 'undefined' ? new URLSearchParams() : new URLSearchParams(window.location.search);
+    typeof window === 'undefined'
+      ? new URLSearchParams()
+      : new URLSearchParams(window.location.search);
   const q = p.get('quality');
   const m = p.get('motion');
   return {

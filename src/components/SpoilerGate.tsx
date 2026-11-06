@@ -26,7 +26,13 @@ export function SpoilerGate() {
   }, []);
 
   return (
-    <div className="gate" role="dialog" aria-modal="true" aria-labelledby={titleId} aria-describedby={descId}>
+    <div
+      className="gate"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={titleId}
+      aria-describedby={descId}
+    >
       <div className="gate__panel">
         <p className="mono-label gate__kicker">Before you enter</p>
         <h2 id={titleId} className="gate__title">
@@ -34,12 +40,12 @@ export function SpoilerGate() {
         </h2>
         <div id={descId} className="gate__text">
           <p>
-            <strong>DEATH NOTE — The Judgment</strong> is an unofficial fan tribute that follows the complete anime,
-            including its ending and every major twist.
+            <strong>DEATH NOTE — The Judgment</strong> is an unofficial fan tribute that follows the
+            complete anime, including its ending and every major twist.
           </p>
           <p className="gate__fine">
-            Sound is off. You can turn it on, reduce motion, or change visual quality at any time from the notebook
-            index.
+            Sound is off. You can turn it on, reduce motion, or change visual quality at any time
+            from the notebook index.
           </p>
         </div>
         <div className="gate__actions">
@@ -51,8 +57,8 @@ export function SpoilerGate() {
           </Link>
         </div>
         <p className="gate__disclaimer">
-          Made by fans. Not affiliated with or endorsed by Tsugumi Ohba, Takeshi Obata, Shueisha, Madhouse or any
-          rights holder.
+          Made by fans. Not affiliated with or endorsed by Tsugumi Ohba, Takeshi Obata, Shueisha,
+          Madhouse or any rights holder.
         </p>
       </div>
     </div>

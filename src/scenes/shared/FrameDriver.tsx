@@ -29,7 +29,8 @@ export function FrameDriver({ wrapperRef }: { wrapperRef: RefObject<HTMLDivEleme
     let lastOpacity = -1;
     return addFrameCallback((now) => {
       snaps.length = 0;
-      for (const t of scrollState.tracks) snaps.push({ id: t.id, enter: t.state.enter, exit: t.state.exit });
+      for (const t of scrollState.tracks)
+        snaps.push({ id: t.id, enter: t.state.enter, exit: t.state.exit });
       const s = computeSchedule(snaps, CHAPTER_BY_ID);
       Object.assign(stageState.a, s.a);
       Object.assign(stageState.b, s.b);

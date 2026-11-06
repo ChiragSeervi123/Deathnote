@@ -19,7 +19,9 @@ export function probeWebGL2(): WebGLSupport {
     const renderer = ext
       ? String(gl.getParameter(ext.UNMASKED_RENDERER_WEBGL))
       : String(gl.getParameter(gl.RENDERER));
-    const hasFloatRT = !!gl.getExtension('EXT_color_buffer_float') || !!gl.getExtension('EXT_color_buffer_half_float');
+    const hasFloatRT =
+      !!gl.getExtension('EXT_color_buffer_float') ||
+      !!gl.getExtension('EXT_color_buffer_half_float');
     gl.getExtension('WEBGL_lose_context')?.loseContext();
     cached = hasFloatRT
       ? { ok: true, renderer }

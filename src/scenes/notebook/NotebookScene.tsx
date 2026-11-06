@@ -57,7 +57,11 @@ const LAMP_POS: V3 = [-2.2, 4.3, 1.5];
 const LAMP_TARGET: V3 = [0.4, 0, -0.15];
 const MOTE_BOX: [number, number, number] = [3.2, 3.2, 2.6];
 const MOTE_POS: [number, number, number] = [-0.6, 1.8, 0.4];
-const MOTE_BEAM = { pos: [...LAMP_POS] as [number, number, number], target: [...LAMP_TARGET] as [number, number, number], angle: 0.55 };
+const MOTE_BEAM = {
+  pos: [...LAMP_POS] as [number, number, number],
+  target: [...LAMP_TARGET] as [number, number, number],
+  angle: 0.55,
+};
 const MOTE_DRIFT: [number, number, number] = [0.004, -0.006, 0];
 
 function woodTexture(): THREE.CanvasTexture {
@@ -72,7 +76,8 @@ function woodTexture(): THREE.CanvasTexture {
     const amp = 2 + rnd() * 10;
     const freq = 0.002 + rnd() * 0.01;
     const ph = rnd() * 10;
-    ctx.strokeStyle = rnd() < 0.5 ? `rgba(70,44,28,${0.08 + rnd() * 0.18})` : `rgba(8,5,3,${0.1 + rnd() * 0.25})`;
+    ctx.strokeStyle =
+      rnd() < 0.5 ? `rgba(70,44,28,${0.08 + rnd() * 0.18})` : `rgba(8,5,3,${0.1 + rnd() * 0.25})`;
     ctx.lineWidth = 0.6 + rnd() * 2.4;
     ctx.beginPath();
     for (let x = 0; x <= w; x += 16) {
@@ -155,14 +160,34 @@ export default function NotebookScene() {
 
   return (
     <>
-      <PerspectiveCamera ref={camRef} makeDefault fov={34} near={0.05} far={60} position={[1, 3, 1]} />
+      <PerspectiveCamera
+        ref={camRef}
+        makeDefault
+        fov={34}
+        near={0.05}
+        far={60}
+        position={[1, 3, 1]}
+      />
       <color attach="background" args={['#050506']} />
       <fogExp2 attach="fog" args={['#07080b', 0.045]} />
 
       <Environment resolution={128} frames={1}>
-        <Lightformer form="rect" intensity={1.4} color="#7f97c7" scale={[5, 3, 1]} position={[0, 2, -6]} />
+        <Lightformer
+          form="rect"
+          intensity={1.4}
+          color="#7f97c7"
+          scale={[5, 3, 1]}
+          position={[0, 2, -6]}
+        />
         <Lightformer form="circle" intensity={3} color="#ffcf96" scale={2} position={[-3, 4, 2]} />
-        <Lightformer form="rect" intensity={0.3} color="#ffffff" scale={[10, 1, 1]} position={[0, 6, 0]} rotation-x={Math.PI / 2} />
+        <Lightformer
+          form="rect"
+          intensity={0.3}
+          color="#ffffff"
+          scale={[10, 1, 1]}
+          position={[0, 6, 0]}
+          rotation-x={Math.PI / 2}
+        />
       </Environment>
 
       <hemisphereLight args={['#2a3348', '#0c0806', 0.3]} />
@@ -181,7 +206,12 @@ export default function NotebookScene() {
       />
       <directionalLight position={[2, 2.5, -5]} color="#6f86b8" intensity={0.9} />
 
-      <mesh geometry={desk.geometry} material={desk.material} position={[0, -0.1, 0]} receiveShadow />
+      <mesh
+        geometry={desk.geometry}
+        material={desk.material}
+        position={[0, -0.1, 0]}
+        receiveShadow
+      />
 
       <NotebookModel state={state} textureSize={profile.textureSize} castShadow={profile.shadows} />
 

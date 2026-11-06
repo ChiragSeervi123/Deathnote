@@ -35,7 +35,9 @@ export function Rulebook() {
         if (canon === 'fake' && !r.fake) return false;
         if ((canon === 'both' || canon === 'manga') && (r.fake || r.canon !== canon)) return false;
         if (!q) return true;
-        return `${r.title} ${r.plain} ${r.detail ?? ''} ${r.storyRelevance ?? ''} ${r.ref}`.toLowerCase().includes(q);
+        return `${r.title} ${r.plain} ${r.detail ?? ''} ${r.storyRelevance ?? ''} ${r.ref}`
+          .toLowerCase()
+          .includes(q);
       }),
     [category, canon, q],
   );
@@ -44,9 +46,10 @@ export function Rulebook() {
     <div className="rulebook">
       <div className="rulebook__intro lf-intro">
         <p>
-          The notebook comes with instructions. Some appear on screen in the anime; many more exist only in the manga
-          and its official guidebook. Each rule below is paraphrased in plain language, labelled by where it appears,
-          and linked to its sources. Two of them were never true.
+          The notebook comes with instructions. Some appear on screen in the anime; many more exist
+          only in the manga and its official guidebook. Each rule below is paraphrased in plain
+          language, labelled by where it appears, and linked to its sources. Two of them were never
+          true.
         </p>
       </div>
 
@@ -68,14 +71,24 @@ export function Rulebook() {
         <fieldset className="chips">
           <legend className="mono-label">Topic</legend>
           <label className="chip">
-            <input type="radio" name={groupName} checked={category === 'all'} onChange={() => setCategory('all')} />
+            <input
+              type="radio"
+              name={groupName}
+              checked={category === 'all'}
+              onChange={() => setCategory('all')}
+            />
             <span>All ({RULES.length})</span>
           </label>
           {(Object.keys(RULE_CATEGORIES) as RuleCategory[])
             .filter((c) => c !== 'fake')
             .map((c) => (
               <label key={c} className="chip">
-                <input type="radio" name={groupName} checked={category === c} onChange={() => setCategory(c)} />
+                <input
+                  type="radio"
+                  name={groupName}
+                  checked={category === c}
+                  onChange={() => setCategory(c)}
+                />
                 <span>
                   {RULE_CATEGORIES[c].label} ({counts.get(c) ?? 0})
                 </span>
@@ -87,7 +100,12 @@ export function Rulebook() {
           <legend className="mono-label">Source</legend>
           {CANON_FILTERS.map(([v, label]) => (
             <label key={v} className="chip">
-              <input type="radio" name={canonName} checked={canon === v} onChange={() => setCanon(v)} />
+              <input
+                type="radio"
+                name={canonName}
+                checked={canon === v}
+                onChange={() => setCanon(v)}
+              />
               <span>{label}</span>
             </label>
           ))}
@@ -98,7 +116,9 @@ export function Rulebook() {
         Showing {results.length} of {RULES.length} rules
       </p>
 
-      {category !== 'all' ? <p className="rulebook__catdesc">{RULE_CATEGORIES[category].description}</p> : null}
+      {category !== 'all' ? (
+        <p className="rulebook__catdesc">{RULE_CATEGORIES[category].description}</p>
+      ) : null}
 
       <ol className="rules">
         {results.map((r) => (
@@ -121,7 +141,9 @@ export function Rulebook() {
           </li>
         ))}
       </ol>
-      {results.length === 0 ? <p className="rulebook__empty">No rule matches. Try another word or topic.</p> : null}
+      {results.length === 0 ? (
+        <p className="rulebook__empty">No rule matches. Try another word or topic.</p>
+      ) : null}
     </div>
   );
 }

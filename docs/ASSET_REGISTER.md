@@ -24,13 +24,17 @@ All created for this project in code (procedural) unless listed otherwise.
 
 | Asset | Type | Origin | Rights | Status |
 | --- | --- | --- | --- | --- |
-| Notebook (cover, pages, lettering) | Procedural geometry + canvas textures | Original, this repo | Project-owned | in development |
-| Apple, pencil, desk, lamp | Procedural geometry | Original | Project-owned | in development |
-| Shinigami realm terrain, bone spires, ash | Procedural geometry/shaders | Original | Project-owned | in development |
-| City (towers, windows, rain), clouds | Procedural/instanced + shaders | Original | Project-owned | in development |
-| Character figures (Light, L, Ryuk, …) | Original 2.5D vector illustration (fan art of the characters) | Original, this repo | Fan work; character designs © Tsugumi Ohba, Takeshi Obata / Shueisha — used non-commercially in a clearly unofficial tribute | in development |
-| Sound design (drone, wind, rain, paper, pencil, close) | WebAudio synthesis at runtime | Original | Project-owned | in development |
+| Notebook: leather normal/roughness, cover lettering, inside cover, ruled paper, ink atlas, page curl (`src/scenes/props/notebook`) | Procedural geometry + canvas/data textures | Original, this repo | Project-owned | final (v1) |
+| Apple, pencil, desk wood, rain-window shader, dust motes (`src/scenes/props`, `notebook/`) | Procedural geometry/shaders | Original | Project-owned | final (v1) |
+| Realm terrain, hole, bone spires, boulders, ash, sky dome, cloud decks (`src/scenes/prologue`) | Procedural geometry/shaders | Original | Project-owned | final (v1) |
+| Night city: instanced towers, window shader, sodium streets, school, courtyard, rain | Procedural/instanced + shaders | Original | Project-owned | final (v1) |
+| Ryuk silhouette (`src/characters/ryuk`) | Original vector silhouette (fan art of the character design) | Original, this repo | Fan work; character design © Tsugumi Ohba, Takeshi Obata / Shueisha — non-commercial, clearly unofficial tribute | final for the prologue silhouette shot |
+| Other character figures (Light, L, Misa, Rem, Near, Mello, Mikami…) | Planned 2.5D vector illustration | — | Fan work (as above) | not started |
+| Eyes diagrams, closing notebook, tribute page/pencil (DOM/SVG/CSS) | Original SVG/CSS | Original | Project-owned | final (v1) |
+| Sound design (drone, wind, rain, room, hum, page/pencil/close cues) | WebAudio synthesis at runtime | Original | Project-owned | final (v1) |
 | Favicon | SVG | Original | Project-owned | final |
+
+Factual text comes from the sources listed in `docs/content/*`; all prose is original wording.
 
 ## Third-party code (runtime)
 

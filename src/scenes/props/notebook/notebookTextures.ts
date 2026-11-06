@@ -27,7 +27,10 @@ export const PAGE_RULES: readonly string[] = [
   'Once the cause is written, the details of the death may be written within the next six minutes and forty seconds.',
 ];
 
-export function createLeatherMaps(size: number): { normal: THREE.CanvasTexture; rough: THREE.CanvasTexture } {
+export function createLeatherMaps(size: number): {
+  normal: THREE.CanvasTexture;
+  rough: THREE.CanvasTexture;
+} {
   const h = leatherHeight(size, Math.round(size / 14), 7);
   const normal = canvasTexture(heightToNormalCanvas(h, size, 2.2), { srgb: false, repeat: 3 });
   const { canvas, ctx } = makeCanvas(size, size);

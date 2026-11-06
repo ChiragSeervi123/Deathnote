@@ -3,7 +3,8 @@ import type { Canon, SourceRef } from '@/data/types';
 /** Canon label: never colour alone — always text (SPEC §12). */
 export function CanonBadge({ canon, fake = false }: { canon: Canon; fake?: boolean }) {
   if (fake) return <span className="canon-badge canon-badge--fake">Fake rule</span>;
-  const label = canon === 'both' ? 'Anime & manga' : canon === 'manga' ? 'Manga only' : 'Anime only';
+  const label =
+    canon === 'both' ? 'Anime & manga' : canon === 'manga' ? 'Manga only' : 'Anime only';
   return <span className={`canon-badge canon-badge--${canon}`}>{label}</span>;
 }
 

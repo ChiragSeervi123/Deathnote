@@ -15,11 +15,16 @@ export function RouteError() {
       <p className="mono-label">Case file corrupted</p>
       <h1 className="notfound__title">This page could not be written.</h1>
       <p className="notfound__text">
-        Something failed while loading this part of the experience. The rest of the site is unaffected.
+        Something failed while loading this part of the experience. The rest of the site is
+        unaffected.
       </p>
       <p className="notfound__detail mono-label">{detail}</p>
       <div className="notfound__actions">
-        <button className="button button--primary" type="button" onClick={() => window.location.reload()}>
+        <button
+          className="button button--primary"
+          type="button"
+          onClick={() => window.location.reload()}
+        >
           Reload
         </button>
         <Link className="button" to="/">

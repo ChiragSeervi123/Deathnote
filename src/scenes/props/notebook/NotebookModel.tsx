@@ -60,7 +60,12 @@ function leatherMaterial(normal: THREE.Texture, rough: THREE.Texture): THREE.Mes
   return m;
 }
 
-function pageFrontMaterial(paper: THREE.Texture, ink: THREE.Texture, channel: number, lines: number) {
+function pageFrontMaterial(
+  paper: THREE.Texture,
+  ink: THREE.Texture,
+  channel: number,
+  lines: number,
+) {
   const uniforms = {
     uInk: { value: ink },
     uChannel: { value: new THREE.Vector4(...[0, 1, 2, 3].map((i) => (i === channel ? 1 : 0))) },
@@ -126,7 +131,12 @@ function createPageGeometry(): THREE.BufferGeometry {
  * Integrates the page along its width: the hinge sits at the spine, the free
  * edge lags behind mid-turn so the sheet bends like paper.
  */
-function updatePageCurl(g: THREE.BufferGeometry, turn: number, yRight: number, yLeft: number): void {
+function updatePageCurl(
+  g: THREE.BufferGeometry,
+  turn: number,
+  yRight: number,
+  yLeft: number,
+): void {
   const pos = g.getAttribute('position') as THREE.BufferAttribute;
   const arr = pos.array as Float32Array;
   const t = smoothstep(0, 1, turn);
@@ -192,10 +202,18 @@ export function NotebookModel({ state, textureSize = 2048, castShadow = true }: 
     });
     const insideMat = new THREE.MeshStandardMaterial({ map: inside, roughness: 0.82 });
     const paperMat = new THREE.MeshStandardMaterial({ map: paper, roughness: 0.88 });
-    const backMat = new THREE.MeshStandardMaterial({ map: paper, roughness: 0.88, side: THREE.BackSide });
+    const backMat = new THREE.MeshStandardMaterial({
+      map: paper,
+      roughness: 0.88,
+      side: THREE.BackSide,
+    });
     const edgeTexX = edge.clone();
     edgeTexX.repeat.set(1, 1);
-    const edgeMat = new THREE.MeshStandardMaterial({ map: edgeTexX, roughness: 0.95, color: '#ddd4c2' });
+    const edgeMat = new THREE.MeshStandardMaterial({
+      map: edgeTexX,
+      roughness: 0.95,
+      color: '#ddd4c2',
+    });
 
     const pages = state.pages.map((_, i) => {
       const rule = i < PAGE_RULES.length ? i : -1;
@@ -215,8 +233,23 @@ export function NotebookModel({ state, textureSize = 2048, castShadow = true }: 
 
     return {
       textures: [leather.normal, leather.rough, title, inside, paper, ink.texture, edge, edgeTexX],
-      materials: [leatherMat, titleMat, insideMat, paperMat, backMat, edgeMat, ...pages.flatMap((p) => (p.front.uniforms ? [p.front.material] : []))],
-      geometries: [coverGeo, spineGeo, blockGeo, titleGeo, insideGeo, ...pages.map((p) => p.geometry)],
+      materials: [
+        leatherMat,
+        titleMat,
+        insideMat,
+        paperMat,
+        backMat,
+        edgeMat,
+        ...pages.flatMap((p) => (p.front.uniforms ? [p.front.material] : [])),
+      ],
+      geometries: [
+        coverGeo,
+        spineGeo,
+        blockGeo,
+        titleGeo,
+        insideGeo,
+        ...pages.map((p) => p.geometry),
+      ],
       leatherMat,
       titleMat,
       insideMat,
@@ -279,32 +312,67 @@ export function NotebookModel({ state, textureSize = 2048, castShadow = true }: 
   return (
     <group>
       {/* Back cover */}
-      <mesh geometry={assets.coverGeo} material={assets.leatherMat} position={[W / 2, C / 2, 0]} castShadow={castShadow} receiveShadow />
+      <mesh
+        geometry={assets.coverGeo}
+        material={assets.leatherMat}
+        position={[W / 2, C / 2, 0]}
+        castShadow={castShadow}
+        receiveShadow
+      />
       {/* Page block */}
       <mesh
         geometry={assets.blockGeo}
-        material={[assets.edgeMat, assets.edgeMat, assets.paperMat, assets.edgeMat, assets.edgeMat, assets.edgeMat]}
+        material={[
+          assets.edgeMat,
+          assets.edgeMat,
+          assets.paperMat,
+          assets.edgeMat,
+          assets.edgeMat,
+          assets.edgeMat,
+        ]}
         position={[W / 2 + 0.008, C + P / 2, 0]}
         castShadow={castShadow}
         receiveShadow
       />
       {/* Spine */}
-      <mesh ref={spineRef} geometry={assets.spineGeo} material={assets.leatherMat} position={[-0.006, C + P / 2, 0]} castShadow={castShadow} />
+      <mesh
+        ref={spineRef}
+        geometry={assets.spineGeo}
+        material={assets.leatherMat}
+        position={[-0.006, C + P / 2, 0]}
+        castShadow={castShadow}
+      />
       {/* Front cover on its hinge */}
       <group ref={coverPivot} position={[0, C + P + 0.009, 0]}>
-        <mesh geometry={assets.coverGeo} material={assets.leatherMat} position={[W / 2, C / 2, 0]} castShadow={castShadow} receiveShadow />
+        <mesh
+          geometry={assets.coverGeo}
+          material={assets.leatherMat}
+          position={[W / 2, C / 2, 0]}
+          castShadow={castShadow}
+          receiveShadow
+        />
         <mesh
           geometry={assets.titleGeo}
           material={assets.titleMat}
           position={[W / 2 + 0.01, C + 0.0015, -H * 0.2]}
           rotation={[-Math.PI / 2, 0, 0]}
         />
-        <mesh geometry={assets.insideGeo} material={assets.insideMat} position={[W / 2, -0.0012, 0]} rotation={[Math.PI / 2, 0, Math.PI]} />
+        <mesh
+          geometry={assets.insideGeo}
+          material={assets.insideMat}
+          position={[W / 2, -0.0012, 0]}
+          rotation={[Math.PI / 2, 0, Math.PI]}
+        />
       </group>
       {/* Pages */}
       {assets.pages.map((p, i) => (
         <group key={i}>
-          <mesh geometry={p.geometry} material={p.front.material} castShadow={castShadow} receiveShadow />
+          <mesh
+            geometry={p.geometry}
+            material={p.front.material}
+            castShadow={castShadow}
+            receiveShadow
+          />
           <mesh geometry={p.geometry} material={p.back} receiveShadow />
         </group>
       ))}

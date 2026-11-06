@@ -21,14 +21,18 @@
 .backdrop__layer--obsidian {
   background:
     radial-gradient(ellipse 55% 45% at 30% 72%, rgb(200 149 90 / 0.16), transparent 70%),
-    radial-gradient(ellipse 80% 60% at 80% 10%, rgb(82 106 145 / 0.08), transparent 70%),
-    #090909;
+    radial-gradient(ellipse 80% 60% at 80% 10%, rgb(82 106 145 / 0.08), transparent 70%), #090909;
 }
 
 /* Shinigami realm: dead sun behind haze, grey dust. */
 .backdrop__layer--ash {
   background:
-    radial-gradient(circle at 68% 30%, rgb(215 210 196 / 0.16) 0 3.5%, rgb(215 210 196 / 0.05) 9%, transparent 26%),
+    radial-gradient(
+      circle at 68% 30%,
+      rgb(215 210 196 / 0.16) 0 3.5%,
+      rgb(215 210 196 / 0.05) 9%,
+      transparent 26%
+    ),
     radial-gradient(ellipse 120% 50% at 50% 100%, rgb(70 68 64 / 0.55), transparent 70%),
     linear-gradient(to bottom, #121212, #1b1a18 60%, #0d0d0c);
 }
@@ -37,8 +41,7 @@
 .backdrop__layer--crimson {
   background:
     radial-gradient(ellipse 50% 70% at 88% 45%, rgb(159 23 31 / 0.42), transparent 70%),
-    radial-gradient(ellipse 70% 90% at 70% 60%, rgb(74 10 16 / 0.6), transparent 75%),
-    #080606;
+    radial-gradient(ellipse 70% 90% at 70% 60%, rgb(74 10 16 / 0.6), transparent 75%), #080606;
 }
 
 /* L / investigation: cold monitor glow from the left. */
@@ -52,7 +55,12 @@
 /* Near / paper: a pale vertical shaft. */
 .backdrop__layer--paper {
   background:
-    linear-gradient(90deg, rgb(232 227 216 / 0.13) 0 22%, rgb(232 227 216 / 0.04) 34%, transparent 46%),
+    linear-gradient(
+      90deg,
+      rgb(232 227 216 / 0.13) 0 22%,
+      rgb(232 227 216 / 0.04) 34%,
+      transparent 46%
+    ),
     #0a0a0a;
 }
 
@@ -67,8 +75,7 @@
 .backdrop__layer--gold {
   background:
     linear-gradient(115deg, transparent 40%, rgb(200 149 90 / 0.12) 52%, transparent 64%),
-    radial-gradient(ellipse 60% 50% at 70% 20%, rgb(200 149 90 / 0.14), transparent 70%),
-    #0a0907;
+    radial-gradient(ellipse 60% 50% at 70% 20%, rgb(200 149 90 / 0.14), transparent 70%), #0a0907;
 }
 
 .backdrop__numeral {

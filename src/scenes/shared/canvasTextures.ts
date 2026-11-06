@@ -3,7 +3,10 @@ import { mulberry32 } from '@/utils/math';
 
 /** Small helpers to build procedural textures on a 2D canvas. */
 
-export function makeCanvas(w: number, h: number): { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D } {
+export function makeCanvas(
+  w: number,
+  h: number,
+): { canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D } {
   const canvas = document.createElement('canvas');
   canvas.width = w;
   canvas.height = h;
@@ -68,16 +71,26 @@ export function leatherHeight(size: number, cells: number, seed: number): Float3
 }
 
 /** Height field → tangent-space normal map canvas (Sobel). */
-export function heightToNormalCanvas(h: Float32Array, size: number, strength: number): HTMLCanvasElement {
+export function heightToNormalCanvas(
+  h: Float32Array,
+  size: number,
+  strength: number,
+): HTMLCanvasElement {
   const { canvas, ctx } = makeCanvas(size, size);
   const img = ctx.createImageData(size, size);
   const at = (x: number, y: number) => h[((y + size) % size) * size + ((x + size) % size)]!;
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size; x++) {
       const dx =
-        at(x + 1, y - 1) + 2 * at(x + 1, y) + at(x + 1, y + 1) - (at(x - 1, y - 1) + 2 * at(x - 1, y) + at(x - 1, y + 1));
+        at(x + 1, y - 1) +
+        2 * at(x + 1, y) +
+        at(x + 1, y + 1) -
+        (at(x - 1, y - 1) + 2 * at(x - 1, y) + at(x - 1, y + 1));
       const dy =
-        at(x - 1, y + 1) + 2 * at(x, y + 1) + at(x + 1, y + 1) - (at(x - 1, y - 1) + 2 * at(x, y - 1) + at(x + 1, y - 1));
+        at(x - 1, y + 1) +
+        2 * at(x, y + 1) +
+        at(x + 1, y + 1) -
+        (at(x - 1, y - 1) + 2 * at(x, y - 1) + at(x + 1, y - 1));
       let nx = -dx * strength;
       let ny = -dy * strength;
       let nz = 1;
@@ -97,7 +110,13 @@ export function heightToNormalCanvas(h: Float32Array, size: number, strength: nu
 }
 
 /** Fine paper fibres and mottling drawn over an existing context. */
-export function paperGrain(ctx: CanvasRenderingContext2D, w: number, h: number, seed: number, alpha = 0.05): void {
+export function paperGrain(
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  seed: number,
+  alpha = 0.05,
+): void {
   const rnd = mulberry32(seed);
   ctx.save();
   for (let i = 0; i < (w * h) / 900; i++) {

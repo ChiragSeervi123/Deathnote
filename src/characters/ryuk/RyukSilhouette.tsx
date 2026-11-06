@@ -16,83 +16,93 @@ export interface RyukSilhouetteHandle {
  * This is a silhouette treatment by design (SCENE_SPECIFICATIONS §00); the
  * full character presentation is a separate system (characters/, M5).
  */
-export const RyukSilhouette = forwardRef<RyukSilhouetteHandle, { rimColor?: string }>(function RyukSilhouette(
-  { rimColor = '#6f6a62' },
-  ref,
-) {
-  const rootRef = useRef<THREE.Group>(null);
-  const headRef = useRef<THREE.Group>(null);
-  const armRef = useRef<THREE.Group>(null);
-  const handRef = useRef<THREE.Object3D>(null);
+export const RyukSilhouette = forwardRef<RyukSilhouetteHandle, { rimColor?: string }>(
+  function RyukSilhouette({ rimColor = '#6f6a62' }, ref) {
+    const rootRef = useRef<THREE.Group>(null);
+    const headRef = useRef<THREE.Group>(null);
+    const armRef = useRef<THREE.Group>(null);
+    const handRef = useRef<THREE.Object3D>(null);
 
-  const a = useMemo(() => {
-    const body = new THREE.ShapeGeometry(ryukBodyShapes(), 6);
-    const head = new THREE.ShapeGeometry(ryukHeadShapes(), 6);
-    const arm = new THREE.ShapeGeometry(ryukArmShapes(), 6);
-    const ink = new THREE.MeshBasicMaterial({ color: '#040404', side: THREE.DoubleSide });
-    const rim = new THREE.MeshBasicMaterial({ color: rimColor, side: THREE.DoubleSide, fog: true });
-    const eye = new THREE.MeshBasicMaterial({ color: new THREE.Color(5.5, 3.6, 0.35), toneMapped: false, fog: false });
-    const pupil = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.9, 0.02, 0.02), toneMapped: false });
-    const eyeGeo = new THREE.CircleGeometry(0.038, 24);
-    const pupilGeo = new THREE.CircleGeometry(0.009, 10);
-    return { body, head, arm, ink, rim, eye, pupil, eyeGeo, pupilGeo };
-  }, [rimColor]);
+    const a = useMemo(() => {
+      const body = new THREE.ShapeGeometry(ryukBodyShapes(), 6);
+      const head = new THREE.ShapeGeometry(ryukHeadShapes(), 6);
+      const arm = new THREE.ShapeGeometry(ryukArmShapes(), 6);
+      const ink = new THREE.MeshBasicMaterial({ color: '#040404', side: THREE.DoubleSide });
+      const rim = new THREE.MeshBasicMaterial({
+        color: rimColor,
+        side: THREE.DoubleSide,
+        fog: true,
+      });
+      const eye = new THREE.MeshBasicMaterial({
+        color: new THREE.Color(5.5, 3.6, 0.35),
+        toneMapped: false,
+        fog: false,
+      });
+      const pupil = new THREE.MeshBasicMaterial({
+        color: new THREE.Color(0.9, 0.02, 0.02),
+        toneMapped: false,
+      });
+      const eyeGeo = new THREE.CircleGeometry(0.038, 24);
+      const pupilGeo = new THREE.CircleGeometry(0.009, 10);
+      return { body, head, arm, ink, rim, eye, pupil, eyeGeo, pupilGeo };
+    }, [rimColor]);
 
-  useEffect(
-    () => () => {
-      Object.values(a).forEach((v) => (v as { dispose: () => void }).dispose());
-    },
-    [a],
-  );
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      get root() {
-        return rootRef.current!;
+    useEffect(
+      () => () => {
+        Object.values(a).forEach((v) => (v as { dispose: () => void }).dispose());
       },
-      pose(time, headTilt, armLift, eyes) {
-        const breath = Math.sin(time * 1.1) * 0.012;
-        if (rootRef.current) rootRef.current.scale.y = 1 + breath;
-        if (headRef.current) headRef.current.rotation.z = headTilt + Math.sin(time * 0.6) * 0.02;
-        if (armRef.current) armRef.current.rotation.z = armLift + Math.sin(time * 0.9 + 1) * 0.01;
-        a.eye.color.setRGB(5.5 * eyes, 3.6 * eyes, 0.35 * eyes);
-      },
-      handWorld(out) {
-        return handRef.current ? handRef.current.getWorldPosition(out) : out;
-      },
-    }),
-    [a],
-  );
+      [a],
+    );
 
-  const parts = (geo: THREE.ShapeGeometry) => (
-    <>
-      {/* Rim copy, nudged up and back so the light catches the top edges. */}
-      <mesh geometry={geo} material={a.rim} position={[-0.008, 0.01, -0.02]} />
-      <mesh geometry={geo} material={a.ink} />
-    </>
-  );
+    useImperativeHandle(
+      ref,
+      () => ({
+        get root() {
+          return rootRef.current!;
+        },
+        pose(time, headTilt, armLift, eyes) {
+          const breath = Math.sin(time * 1.1) * 0.012;
+          if (rootRef.current) rootRef.current.scale.y = 1 + breath;
+          if (headRef.current) headRef.current.rotation.z = headTilt + Math.sin(time * 0.6) * 0.02;
+          if (armRef.current) armRef.current.rotation.z = armLift + Math.sin(time * 0.9 + 1) * 0.01;
+          a.eye.color.setRGB(5.5 * eyes, 3.6 * eyes, 0.35 * eyes);
+        },
+        handWorld(out) {
+          return handRef.current ? handRef.current.getWorldPosition(out) : out;
+        },
+      }),
+      [a],
+    );
 
-  const [nx, ny] = RYUK_PIVOTS.neck;
-  const [sx, sy] = RYUK_PIVOTS.shoulder;
-  const [hx, hy] = RYUK_PIVOTS.hand;
+    const parts = (geo: THREE.ShapeGeometry) => (
+      <>
+        {/* Rim copy, nudged up and back so the light catches the top edges. */}
+        <mesh geometry={geo} material={a.rim} position={[-0.008, 0.01, -0.02]} />
+        <mesh geometry={geo} material={a.ink} />
+      </>
+    );
 
-  return (
-    <group ref={rootRef}>
-      {parts(a.body)}
-      <group ref={armRef} position={[sx, sy, 0.03]}>
-        {parts(a.arm)}
-        <object3D ref={handRef} position={[hx - sx, hy - sy - 0.05, 0]} />
+    const [nx, ny] = RYUK_PIVOTS.neck;
+    const [sx, sy] = RYUK_PIVOTS.shoulder;
+    const [hx, hy] = RYUK_PIVOTS.hand;
+
+    return (
+      <group ref={rootRef}>
+        {parts(a.body)}
+        <group ref={armRef} position={[sx, sy, 0.03]}>
+          {parts(a.arm)}
+          <object3D ref={handRef} position={[hx - sx, hy - sy - 0.05, 0]} />
+        </group>
+        <group ref={headRef} position={[nx, ny, 0.01]}>
+          {parts(a.head)}
+          {RYUK_PIVOTS.eyes.map(([ex, ey], i) => (
+            <group key={i} position={[ex - nx, ey - ny, 0.02]}>
+              <mesh geometry={a.eyeGeo} material={a.eye} />
+              <mesh geometry={a.pupilGeo} material={a.pupil} position={[0.006, -0.002, 0.002]} />
+            </group>
+          ))}
+        </group>
       </group>
-      <group ref={headRef} position={[nx, ny, 0.01]}>
-        {parts(a.head)}
-        {RYUK_PIVOTS.eyes.map(([ex, ey], i) => (
-          <group key={i} position={[ex - nx, ey - ny, 0.02]}>
-            <mesh geometry={a.eyeGeo} material={a.eye} />
-            <mesh geometry={a.pupilGeo} material={a.pupil} position={[0.006, -0.002, 0.002]} />
-          </group>
-        ))}
-      </group>
-    </group>
-  );
-});
+    );
+  },
+);

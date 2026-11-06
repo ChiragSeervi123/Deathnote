@@ -42,8 +42,9 @@ export function Legacy() {
     <div className="legacy">
       <div className="lf-intro">
         <p>
-          Death Note asks a question it never fully answers: if you could punish the guilty without consequence, should
-          you? Its power lies less in the notebook than in the people who argue over it.
+          Death Note asks a question it never fully answers: if you could punish the guilty without
+          consequence, should you? Its power lies less in the notebook than in the people who argue
+          over it.
         </p>
       </div>
 
@@ -59,22 +60,24 @@ export function Legacy() {
         <section className="essay">
           <h3 className="essay__title">Anime and manga</h3>
           <p>
-            The anime follows the manga closely but differs in its final chapters. In the anime, Light escapes the
-            warehouse and dies alone on a stairway, seeing L; in the manga, he dies on the warehouse floor. Mikami
-            stabs himself in the anime and dies later in prison in the manga. The anime adds the rooftop scene in the
-            rain before L’s death, and sets its calendar three years later than the manga’s.
+            The anime follows the manga closely but differs in its final chapters. In the anime,
+            Light escapes the warehouse and dies alone on a stairway, seeing L; in the manga, he
+            dies on the warehouse floor. Mikami stabs himself in the anime and dies later in prison
+            in the manga. The anime adds the rooftop scene in the rain before L’s death, and sets
+            its calendar three years later than the manga’s.
           </p>
           <p>
-            The manga’s epilogue includes Matsuda wondering whether Near tampered with Mikami’s notebook — speculation
-            voiced by a character, never confirmed.
+            The manga’s epilogue includes Matsuda wondering whether Near tampered with Mikami’s
+            notebook — speculation voiced by a character, never confirmed.
           </p>
         </section>
         <section className="essay">
           <h3 className="essay__title">Why it stays with us</h3>
           <p>
-            Because it refuses to make the choice easy. It gives its most dangerous idea to its most persuasive
-            character, lets the people who stop him be flawed, and ends without telling us what to feel. Long after the
-            last page, the question remains — and so does the notebook.
+            Because it refuses to make the choice easy. It gives its most dangerous idea to its most
+            persuasive character, lets the people who stop him be flawed, and ends without telling
+            us what to feel. Long after the last page, the question remains — and so does the
+            notebook.
           </p>
         </section>
       </div>
@@ -89,8 +92,8 @@ export function Legacy() {
           The story belongs to the people who made it.
         </h3>
         <p className="closing__text">
-          This experience ends with a separate page — a thank-you to Tsugumi Ohba and Takeshi Obata, who created Death
-          Note.
+          This experience ends with a separate page — a thank-you to Tsugumi Ohba and Takeshi Obata,
+          who created Death Note.
         </p>
         <Link className="button button--primary closing__cta" to="/tribute">
           Visit the tribute to its creators

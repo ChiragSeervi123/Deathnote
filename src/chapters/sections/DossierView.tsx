@@ -20,7 +20,8 @@ export function DossierView({ chapter, dossier }: { chapter: ChapterDef; dossier
           ))}
           {dossier.canonNote ? (
             <p className="dossier__canon">
-              <span className="canon-badge canon-badge--manga">Anime / manga</span> {dossier.canonNote}
+              <span className="canon-badge canon-badge--manga">Anime / manga</span>{' '}
+              {dossier.canonNote}
             </p>
           ) : null}
         </div>

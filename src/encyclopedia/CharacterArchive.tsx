@@ -22,7 +22,10 @@ const ARC_LABEL: Record<ArcId, string> = {
 const BY_ID = new Map<CharacterId, CharacterProfile>(CHARACTERS.map((c) => [c.id, c]));
 
 function initials(name: string): string {
-  const parts = name.replace(/[^A-Za-z .-]/g, '').split(/[\s.-]+/).filter(Boolean);
+  const parts = name
+    .replace(/[^A-Za-z .-]/g, '')
+    .split(/[\s.-]+/)
+    .filter(Boolean);
   if (parts.length === 1) return parts[0]!.slice(0, 1);
   return `${parts[0]![0]}${parts[parts.length - 1]![0]}`;
 }
@@ -35,8 +38,8 @@ export function CharacterArchive() {
     <div className="archive">
       <div className="lf-intro">
         <p>
-          Detectives, gods of death, believers and bystanders. Each profile follows a person through the story — who
-          they were, what they wanted, and what the notebook made of them.
+          Detectives, gods of death, believers and bystanders. Each profile follows a person through
+          the story — who they were, what they wanted, and what the notebook made of them.
         </p>
       </div>
       <div className="tabs" role="tablist" aria-label="Archive views">
@@ -72,7 +75,11 @@ function People() {
 
   const list = useMemo(
     () =>
-      CHARACTERS.filter((c) => (tier === 0 || c.tier === tier) && (!q || `${c.name} ${(c.aliases ?? []).join(' ')} ${c.role}`.toLowerCase().includes(q))),
+      CHARACTERS.filter(
+        (c) =>
+          (tier === 0 || c.tier === tier) &&
+          (!q || `${c.name} ${(c.aliases ?? []).join(' ')} ${c.role}`.toLowerCase().includes(q)),
+      ),
     [q, tier],
   );
 
@@ -83,13 +90,25 @@ function People() {
           <label htmlFor={searchId} className="mono-label">
             Search by name, alias or role
           </label>
-          <input id={searchId} type="search" className="field__input" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="e.g. Ryuzaki, SPK, prosecutor" />
+          <input
+            id={searchId}
+            type="search"
+            className="field__input"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="e.g. Ryuzaki, SPK, prosecutor"
+          />
         </div>
         <fieldset className="chips">
           <legend className="mono-label">Show</legend>
           {([0, 1, 2, 3] as const).map((t) => (
             <label key={t} className="chip">
-              <input type="radio" name={tierName} checked={tier === t} onChange={() => setTier(t)} />
+              <input
+                type="radio"
+                name={tierName}
+                checked={tier === t}
+                onChange={() => setTier(t)}
+              />
               <span>{t === 0 ? 'Everyone' : TIER_LABEL[t]}</span>
             </label>
           ))}
@@ -101,7 +120,12 @@ function People() {
       <ul className="plates">
         {list.map((c) => (
           <li key={c.id}>
-            <button type="button" className={`plate plate--${c.affiliation} plate--t${c.tier}`} onClick={() => setOpenId(c.id)} aria-haspopup="dialog">
+            <button
+              type="button"
+              className={`plate plate--${c.affiliation} plate--t${c.tier}`}
+              onClick={() => setOpenId(c.id)}
+              aria-haspopup="dialog"
+            >
               <span className="plate__mono" aria-hidden="true">
                 {initials(c.name)}
               </span>
@@ -117,7 +141,15 @@ function People() {
   );
 }
 
-function ProfileDialog({ id, onClose, onNavigate }: { id: CharacterId | null; onClose: () => void; onNavigate: (id: CharacterId) => void }) {
+function ProfileDialog({
+  id,
+  onClose,
+  onNavigate,
+}: {
+  id: CharacterId | null;
+  onClose: () => void;
+  onNavigate: (id: CharacterId) => void;
+}) {
   const ref = useRef<HTMLDialogElement>(null);
   const [reveal, setReveal] = useState(false);
   const headingId = useId();
@@ -143,7 +175,9 @@ function ProfileDialog({ id, onClose, onNavigate }: { id: CharacterId | null; on
             <div>
               <p className="mono-label">
                 {TIER_LABEL[c.tier]} · First appears in episode {c.introduced.episode}
-                {CHAPTER_BY_ID.get(c.introduced.chapter) ? ` · Chapter ${String(CHAPTER_BY_ID.get(c.introduced.chapter)!.number).padStart(2, '0')}` : ''}
+                {CHAPTER_BY_ID.get(c.introduced.chapter)
+                  ? ` · Chapter ${String(CHAPTER_BY_ID.get(c.introduced.chapter)!.number).padStart(2, '0')}`
+                  : ''}
               </p>
               <h3 id={headingId} className="profile__name">
                 {c.name}
@@ -154,7 +188,9 @@ function ProfileDialog({ id, onClose, onNavigate }: { id: CharacterId | null; on
                 ) : null}
               </h3>
               <p className="profile__role">{c.role}</p>
-              {c.aliases?.length ? <p className="profile__aliases">Also known as {c.aliases.join(', ')}</p> : null}
+              {c.aliases?.length ? (
+                <p className="profile__aliases">Also known as {c.aliases.join(', ')}</p>
+              ) : null}
             </div>
             <button type="button" className="notebook-page__close profile__close" onClick={onClose}>
               <span aria-hidden="true">×</span>
@@ -194,13 +230,20 @@ function ProfileDialog({ id, onClose, onNavigate }: { id: CharacterId | null; on
                     return (
                       <li key={`${r.to}-${r.kind}`}>
                         {other ? (
-                          <button type="button" className="link-button" onClick={() => onNavigate(r.to)}>
+                          <button
+                            type="button"
+                            className="link-button"
+                            onClick={() => onNavigate(r.to)}
+                          >
                             {other.name}
                           </button>
                         ) : (
                           r.to
                         )}{' '}
-                        <span className="profile__relkind mono-label">{r.kind.replace('-', ' ')}</span> — {r.label}
+                        <span className="profile__relkind mono-label">
+                          {r.kind.replace('-', ' ')}
+                        </span>{' '}
+                        — {r.label}
                       </li>
                     );
                   })}
@@ -242,8 +285,8 @@ function Timeline() {
   return (
     <div className="timeline">
       <p className="timeline__note">
-        Dates follow the manga’s calendar; the anime places the same events three years later. Undated events are
-        ordered by episode.
+        Dates follow the manga’s calendar; the anime places the same events three years later.
+        Undated events are ordered by episode.
       </p>
       {groups.map(([arc, events]) => (
         <section key={arc} className="timeline__arc" aria-labelledby={`arc-${arc}`}>

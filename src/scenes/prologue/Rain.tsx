@@ -56,7 +56,10 @@ export function Rain({ count, opacityRef }: { count: number; opacityRef: { curre
       }
     }
     const geometry = new THREE.BufferGeometry();
-    geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(count * 2 * 3), 3));
+    geometry.setAttribute(
+      'position',
+      new THREE.BufferAttribute(new Float32Array(count * 2 * 3), 3),
+    );
     geometry.setAttribute('aBase', new THREE.BufferAttribute(base, 3));
     geometry.setAttribute('aEnd', new THREE.BufferAttribute(end, 1));
     geometry.setAttribute('aSpeed', new THREE.BufferAttribute(speed, 1));

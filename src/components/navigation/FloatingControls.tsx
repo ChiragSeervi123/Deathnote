@@ -12,7 +12,11 @@ export function FloatingControls() {
   return (
     <div className="floating">
       {active === 'prologue' ? (
-        <button type="button" className="chrome-button" onClick={() => void scrollToChapter('notebook')}>
+        <button
+          type="button"
+          className="chrome-button"
+          onClick={() => void scrollToChapter('notebook')}
+        >
           <span className="chrome-button__label">Skip intro</span>
         </button>
       ) : (

@@ -87,7 +87,13 @@ function Choice<T extends string>({
       <div className="choice__options">
         {options.map(([v, label]) => (
           <label key={v} className="choice__option">
-            <input type="radio" name={name} value={v} checked={value === v} onChange={() => onChange(v)} />
+            <input
+              type="radio"
+              name={name}
+              value={v}
+              checked={value === v}
+              onChange={() => onChange(v)}
+            />
             <span>{label}</span>
           </label>
         ))}

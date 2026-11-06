@@ -25,7 +25,8 @@ interface RuntimeState {
 }
 
 const systemReduce =
-  typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  typeof window !== 'undefined' &&
+  !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
 export const useRuntime = create<RuntimeState>()((set) => ({
   webgl: 'pending',
@@ -44,7 +45,10 @@ export const useRuntime = create<RuntimeState>()((set) => ({
 }));
 
 /** Effective reduced-motion flag, combining the system setting and the visitor override. */
-export function resolveReducedMotion(motion: 'system' | 'reduce' | 'full', system: boolean): boolean {
+export function resolveReducedMotion(
+  motion: 'system' | 'reduce' | 'full',
+  system: boolean,
+): boolean {
   return motion === 'reduce' || (motion === 'system' && system);
 }
 
@@ -56,7 +60,10 @@ export function useReducedMotion(): boolean {
 
 /** Non-reactive read for frame loops. */
 export function isReducedMotion(): boolean {
-  return resolveReducedMotion(useSettings.getState().motion, useRuntime.getState().systemReducedMotion);
+  return resolveReducedMotion(
+    useSettings.getState().motion,
+    useRuntime.getState().systemReducedMotion,
+  );
 }
 
 if (typeof window !== 'undefined' && window.matchMedia) {

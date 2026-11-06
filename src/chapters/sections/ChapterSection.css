@@ -259,7 +259,13 @@
 .dossier {
   position: relative;
   padding: var(--space-3xl) var(--gutter);
-  background: linear-gradient(to bottom, rgb(8 8 8 / 0), rgb(8 8 8 / 0.92) 18%, rgb(8 8 8 / 0.92) 82%, rgb(8 8 8 / 0));
+  background: linear-gradient(
+    to bottom,
+    rgb(8 8 8 / 0),
+    rgb(8 8 8 / 0.92) 18%,
+    rgb(8 8 8 / 0.92) 82%,
+    rgb(8 8 8 / 0)
+  );
 }
 .dossier__inner {
   display: grid;

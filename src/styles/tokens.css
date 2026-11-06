@@ -12,7 +12,8 @@
   --c-smoke: #2e2e2e;
   --c-crimson: #4a0a10;
   --c-blood: #9f171f;
-  --c-blood-bright: #c92a32;
+  /* AA for small text: 4.9:1 on charcoal, 5.3:1 on obsidian (axe-verified). */
+  --c-blood-bright: #e2525a;
   --c-paper: #e8e3d8;
   --c-paper-dim: #b9b3a7;
   --c-ash: #858585;
@@ -31,8 +32,8 @@
   --c-focus: var(--c-paper);
 
   /* Typography */
-  --font-display: 'Cormorant Garamond Variable', 'Cormorant Garamond', 'Iowan Old Style', Georgia,
-    serif;
+  --font-display:
+    'Cormorant Garamond Variable', 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
   --font-body: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
   --font-hand: 'Nothing You Could Do', 'Caveat Variable', cursive;

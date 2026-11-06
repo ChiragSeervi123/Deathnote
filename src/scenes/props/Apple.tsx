@@ -23,11 +23,19 @@ function appleSkin(seed: number): THREE.CanvasTexture {
     const x = rnd() * w;
     const y0 = h * (0.08 + rnd() * 0.3);
     const len = h * (0.35 + rnd() * 0.5);
-    ctx.strokeStyle = rnd() < 0.7 ? `rgba(180,40,30,${0.12 + rnd() * 0.18})` : `rgba(60,0,6,${0.15 + rnd() * 0.2})`;
+    ctx.strokeStyle =
+      rnd() < 0.7 ? `rgba(180,40,30,${0.12 + rnd() * 0.18})` : `rgba(60,0,6,${0.15 + rnd() * 0.2})`;
     ctx.lineWidth = 1 + rnd() * 4;
     ctx.beginPath();
     ctx.moveTo(x, h - y0);
-    ctx.bezierCurveTo(x + (rnd() - 0.5) * 10, h - y0 - len * 0.4, x + (rnd() - 0.5) * 10, h - y0 - len * 0.7, x + (rnd() - 0.5) * 6, h - y0 - len);
+    ctx.bezierCurveTo(
+      x + (rnd() - 0.5) * 10,
+      h - y0 - len * 0.4,
+      x + (rnd() - 0.5) * 10,
+      h - y0 - len * 0.7,
+      x + (rnd() - 0.5) * 6,
+      h - y0 - len,
+    );
     ctx.stroke();
   }
   for (let i = 0; i < 900; i++) {

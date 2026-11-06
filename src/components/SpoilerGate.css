@@ -11,8 +11,7 @@ html.is-gated body {
   place-items: center;
   padding: var(--gutter);
   background:
-    radial-gradient(ellipse at 50% 120%, rgb(74 10 16 / 0.35), transparent 60%),
-    rgb(6 6 6 / 0.86);
+    radial-gradient(ellipse at 50% 120%, rgb(74 10 16 / 0.35), transparent 60%), rgb(6 6 6 / 0.86);
   animation: fade-in var(--dur-slow) var(--ease-out);
 }
 

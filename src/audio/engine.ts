@@ -10,7 +10,11 @@ export type BedMix = Partial<Record<Bed, number>>;
 
 const BEDS: readonly Bed[] = ['drone', 'wind', 'rain', 'room', 'hum'];
 
-function noiseBuffer(ctx: AudioContext, seconds: number, color: 'white' | 'pink' | 'brown'): AudioBuffer {
+function noiseBuffer(
+  ctx: AudioContext,
+  seconds: number,
+  color: 'white' | 'pink' | 'brown',
+): AudioBuffer {
   const len = Math.floor(ctx.sampleRate * seconds);
   const buf = ctx.createBuffer(2, len, ctx.sampleRate);
   for (let ch = 0; ch < 2; ch++) {
@@ -53,7 +57,9 @@ export class AudioEngine {
   /** Throws if WebAudio is unavailable; callers surface the error. */
   private ensure(): AudioContext {
     if (this.ctx) return this.ctx;
-    const Ctor = window.AudioContext ?? (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    const Ctor =
+      window.AudioContext ??
+      (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (!Ctor) throw new Error('Web Audio is not supported in this browser.');
     const ctx = new Ctor({ latencyHint: 'playback' });
     const comp = ctx.createDynamicsCompressor();
@@ -129,7 +135,10 @@ export class AudioEngine {
       bp.Q.value = 0.9;
       const amp = ctx.createGain();
       amp.gain.value = 0.5;
-      this.loop(ctx, noiseBuffer(ctx, 6, 'pink')).connect(bp).connect(amp).connect(g);
+      this.loop(ctx, noiseBuffer(ctx, 6, 'pink'))
+        .connect(bp)
+        .connect(amp)
+        .connect(g);
       this.lfo(ctx, 0.07, 260, bp.frequency);
       this.lfo(ctx, 0.11, 0.25, amp.gain);
     }
@@ -145,7 +154,11 @@ export class AudioEngine {
       lp.frequency.value = 6500;
       const amp = ctx.createGain();
       amp.gain.value = 0.35;
-      this.loop(ctx, noiseBuffer(ctx, 5, 'white')).connect(hp).connect(lp).connect(amp).connect(g);
+      this.loop(ctx, noiseBuffer(ctx, 5, 'white'))
+        .connect(hp)
+        .connect(lp)
+        .connect(amp)
+        .connect(g);
       this.lfo(ctx, 0.3, 0.05, amp.gain);
     }
 
@@ -157,7 +170,10 @@ export class AudioEngine {
       lp.frequency.value = 180;
       const amp = ctx.createGain();
       amp.gain.value = 0.9;
-      this.loop(ctx, noiseBuffer(ctx, 6, 'brown')).connect(lp).connect(amp).connect(g);
+      this.loop(ctx, noiseBuffer(ctx, 6, 'brown'))
+        .connect(lp)
+        .connect(amp)
+        .connect(g);
     }
 
     // Electrical hum: monitors and fluorescent rooms.

@@ -30,7 +30,10 @@ describe('computeSchedule', () => {
   });
 
   it('does not transition between chapters that share a scene', () => {
-    const s = computeSchedule([t('prologue', 1, 1), t('notebook', 1, 1), t('shinigami', 1), t('light', 0.5)], defs);
+    const s = computeSchedule(
+      [t('prologue', 1, 1), t('notebook', 1, 1), t('shinigami', 1), t('light', 0.5)],
+      defs,
+    );
     expect(s.b.key).toBe('realm');
     expect(s.mix).toBe(1);
   });

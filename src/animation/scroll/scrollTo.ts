@@ -58,7 +58,10 @@ export async function scrollToY(y: number): Promise<void> {
   await fadeVeil(0, isReducedMotion() ? 160 : 520);
 }
 
-export async function scrollToChapter(id: ChapterId, opts: { focus?: boolean } = {}): Promise<void> {
+export async function scrollToChapter(
+  id: ChapterId,
+  opts: { focus?: boolean } = {},
+): Promise<void> {
   const el = trackElement(id) ?? document.getElementById(`chapter-${id}`);
   if (!el) return;
   const top = el.getBoundingClientRect().top + window.scrollY;

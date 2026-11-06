@@ -22,7 +22,8 @@ export interface BeatVisual {
 export function beatVisual(beat: Pick<Beat, 'at'>, f: BeatFrame, fade = 0.03): BeatVisual {
   const [a, b] = beat.at;
   const fadeIn = a <= 0 ? smoothstep(0.35, 0.95, f.enter) : smoothstep(a, a + fade, f.progress);
-  const fadeOut = b >= 1 ? 1 - smoothstep(0.08, 0.55, f.exit) : 1 - smoothstep(b - fade, b, f.progress);
+  const fadeOut =
+    b >= 1 ? 1 - smoothstep(0.08, 0.55, f.exit) : 1 - smoothstep(b - fade, b, f.progress);
   const opacity = Math.max(0, Math.min(fadeIn, fadeOut));
   const offset = fadeIn < 1 ? 1 - fadeIn : fadeOut < 1 ? -(1 - fadeOut) : 0;
   return { opacity, offset };

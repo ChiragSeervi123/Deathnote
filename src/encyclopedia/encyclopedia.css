@@ -176,7 +176,13 @@
   position: relative;
   z-index: var(--z-content);
   padding: var(--space-2xl) var(--gutter) var(--space-3xl);
-  background: linear-gradient(to bottom, rgb(8 8 8 / 0), rgb(8 8 8 / 0.93) 7rem, rgb(8 8 8 / 0.93) calc(100% - 7rem), rgb(8 8 8 / 0));
+  background: linear-gradient(
+    to bottom,
+    rgb(8 8 8 / 0),
+    rgb(8 8 8 / 0.93) 7rem,
+    rgb(8 8 8 / 0.93) calc(100% - 7rem),
+    rgb(8 8 8 / 0)
+  );
 }
 .record__inner {
   display: grid;

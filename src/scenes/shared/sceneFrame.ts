@@ -71,7 +71,11 @@ export function useSceneFrame(cb: (f: SceneFrame, state: RootState) => void, alw
 
     const { a, b } = stageState;
     const chapter =
-      b.key === key && b.chapter ? b.chapter : a.key === key && a.chapter ? a.chapter : (owned.current?.[0] ?? f.chapter);
+      b.key === key && b.chapter
+        ? b.chapter
+        : a.key === key && a.chapter
+          ? a.chapter
+          : (owned.current?.[0] ?? f.chapter);
     const s = getChapterScroll(chapter);
     f.chapter = chapter;
     f.progress = s.progress;

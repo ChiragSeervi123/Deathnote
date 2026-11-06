@@ -109,7 +109,14 @@ export function CloudLayers({ quality = 1 }: { quality?: number }) {
   return (
     <group>
       {a.layers.map((l) => (
-        <mesh key={l.y} geometry={a.geometry} material={l.material} position={[0, l.y, 0]} renderOrder={2} frustumCulled={false} />
+        <mesh
+          key={l.y}
+          geometry={a.geometry}
+          material={l.material}
+          position={[0, l.y, 0]}
+          renderOrder={2}
+          frustumCulled={false}
+        />
       ))}
     </group>
   );

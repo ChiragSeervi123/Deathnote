@@ -11,7 +11,9 @@ export function NotFound() {
     <main className="notfound" id="content" tabIndex={-1}>
       <p className="mono-label">Error 404 · Name not found</p>
       <h1 className="notfound__title">No name is written on this page.</h1>
-      <p className="notfound__text">The page you were looking for does not exist — or was never written.</p>
+      <p className="notfound__text">
+        The page you were looking for does not exist — or was never written.
+      </p>
       <div className="notfound__actions">
         <Link className="button button--primary" to="/">
           Enter the main experience

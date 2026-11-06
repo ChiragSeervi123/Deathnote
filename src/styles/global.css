@@ -1,0 +1,170 @@
+@import './tokens.css';
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  background: var(--c-bg);
+  scrollbar-color: var(--c-smoke) var(--c-obsidian);
+}
+
+/* Lenis owns smoothing; native smooth-behaviour would fight it. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+body {
+  margin: 0;
+  min-height: 100svh;
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  font-size: var(--step-0);
+  line-height: 1.6;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+
+img,
+svg,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: var(--c-blood);
+  color: var(--c-paper);
+}
+
+:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 3px;
+}
+
+/* Utilities */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: var(--step--2);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c-text-3);
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75em;
+  min-height: 44px;
+  padding: 0.7em 1.4em;
+  border: 1px solid var(--c-line-strong);
+  border-radius: 0;
+  background: transparent;
+  color: var(--c-paper);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) linear,
+    border-color var(--dur-fast) linear,
+    color var(--dur-fast) linear;
+}
+.button:hover {
+  border-color: var(--c-paper);
+  background: rgb(232 227 216 / 0.06);
+}
+.button--primary {
+  background: var(--c-paper);
+  color: var(--c-ink);
+  border-color: var(--c-paper);
+}
+.button--primary:hover {
+  background: #fff;
+  color: var(--c-ink);
+}
+.button--ghost {
+  border-color: transparent;
+  padding-inline: 0.4em;
+}
+.button--ghost:hover {
+  border-color: transparent;
+  background: transparent;
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}

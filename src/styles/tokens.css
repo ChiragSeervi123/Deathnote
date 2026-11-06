@@ -1,0 +1,86 @@
+/*
+ * Design tokens — DEATH NOTE: THE JUDGMENT
+ * Intent and usage rules: docs/DESIGN_SYSTEM.md
+ */
+:root {
+  color-scheme: dark;
+
+  /* Colour — narrative meaning first (SPEC §5.2) */
+  --c-obsidian: #080808;
+  --c-charcoal: #151515;
+  --c-graphite: #232323;
+  --c-smoke: #2e2e2e;
+  --c-crimson: #4a0a10;
+  --c-blood: #9f171f;
+  --c-blood-bright: #c92a32;
+  --c-paper: #e8e3d8;
+  --c-paper-dim: #b9b3a7;
+  --c-ash: #858585;
+  --c-cold: #526a91;
+  --c-cold-bright: #8ea6cf;
+  --c-ink: #0d0c0b;
+  --c-ink-soft: #3a3631;
+  --c-amber: #c8955a;
+
+  --c-bg: var(--c-obsidian);
+  --c-text: var(--c-paper);
+  --c-text-2: var(--c-paper-dim);
+  --c-text-3: var(--c-ash);
+  --c-line: rgb(232 227 216 / 0.14);
+  --c-line-strong: rgb(232 227 216 / 0.32);
+  --c-focus: var(--c-paper);
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond Variable', 'Cormorant Garamond', 'Iowan Old Style', Georgia,
+    serif;
+  --font-body: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  --font-hand: 'Nothing You Could Do', 'Caveat Variable', cursive;
+  --font-annot: 'Caveat Variable', 'Nothing You Could Do', cursive;
+  --font-gothic: 'UnifrakturMaguntia', 'Cormorant Garamond Variable', serif;
+  --font-jp: 'Noto Serif JP Variable', 'Noto Serif JP', 'Yu Mincho', serif;
+
+  /* Fluid type scale: 1.25 @ 360px → 1.333 @ 1440px */
+  --step--2: clamp(0.69rem, 0.68rem + 0.05vw, 0.72rem);
+  --step--1: clamp(0.8rem, 0.78rem + 0.1vw, 0.86rem);
+  --step-0: clamp(1rem, 0.96rem + 0.18vw, 1.125rem);
+  --step-1: clamp(1.25rem, 1.18rem + 0.33vw, 1.5rem);
+  --step-2: clamp(1.56rem, 1.44rem + 0.56vw, 2rem);
+  --step-3: clamp(1.95rem, 1.74rem + 0.92vw, 2.67rem);
+  --step-4: clamp(2.44rem, 2.1rem + 1.48vw, 3.55rem);
+  --step-5: clamp(3.05rem, 2.52rem + 2.33vw, 4.74rem);
+  --step-6: clamp(3.81rem, 3rem + 3.6vw, 6.31rem);
+  --step-7: clamp(4.77rem, 3.54rem + 5.46vw, 8.42rem);
+  --step-8: clamp(5.96rem, 4.12rem + 8.2vw, 11.22rem);
+
+  /* Space */
+  --space-3xs: clamp(0.25rem, 0.24rem + 0.05vw, 0.31rem);
+  --space-2xs: clamp(0.5rem, 0.48rem + 0.1vw, 0.56rem);
+  --space-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.88rem);
+  --space-s: clamp(1rem, 0.96rem + 0.18vw, 1.13rem);
+  --space-m: clamp(1.5rem, 1.43rem + 0.33vw, 1.69rem);
+  --space-l: clamp(2rem, 1.91rem + 0.43vw, 2.25rem);
+  --space-xl: clamp(3rem, 2.87rem + 0.65vw, 3.38rem);
+  --space-2xl: clamp(4rem, 3.65rem + 1.52vw, 5.06rem);
+  --space-3xl: clamp(6rem, 5.3rem + 3vw, 8rem);
+  --space-4xl: clamp(8rem, 6.6rem + 6vw, 12rem);
+
+  --gutter: clamp(1rem, 0.5rem + 2.6vw, 3.5rem);
+  --measure: 66ch;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --dur-fast: 160ms;
+  --dur-med: 420ms;
+  --dur-slow: 900ms;
+
+  /* Layers */
+  --z-stage: 0;
+  --z-content: 10;
+  --z-chrome: 40;
+  --z-dialog: 60;
+  --z-gate: 80;
+  --z-skip: 100;
+}

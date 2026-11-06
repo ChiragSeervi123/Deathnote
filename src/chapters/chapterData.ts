@@ -550,27 +550,34 @@ export const CHAPTERS: readonly ChapterDef[] = [
     sceneDescription:
       'Rain falls on a grey rooftop. A barefoot figure stands alone, listening. Pale dust drifts where a Shinigami once stood.',
     beats: [
-      { at: [0, 0.11], anchor: 'left', kind: 'title', text: 'The End of L' },
+      { at: [0, 0.1], anchor: 'left', kind: 'title', text: 'The End of L' },
       {
-        at: [0.15, 0.27],
+        at: [0.12, 0.22],
         anchor: 'right',
         kind: 'line',
         text: 'A rule in the notebook clears Light and Misa. L wants to test it.',
       },
       {
-        at: [0.31, 0.43],
+        at: [0.26, 0.36],
         anchor: 'left',
         kind: 'line',
         text: 'The rule is fake. If it is tested, Misa will be exposed — and Rem knows it.',
       },
       {
-        at: [0.47, 0.6],
+        at: [0.4, 0.5],
         anchor: 'right',
-        kind: 'statement',
-        text: 'To save Misa, Rem writes two names. A Shinigami who kills to extend a human’s life dies — and Rem turns to dust.',
+        kind: 'line',
+        canon: 'anime',
+        text: 'Before the end, L stands alone on a rooftop in the rain.',
       },
       {
-        at: [0.66, 0.8],
+        at: [0.54, 0.66],
+        anchor: 'left',
+        kind: 'statement',
+        text: 'To save Misa, Rem writes two names: Watari’s, then L’s. A Shinigami who kills to extend a human’s life dies — and Rem turns to dust.',
+      },
+      {
+        at: [0.7, 0.84],
         anchor: 'center',
         kind: 'statement',
         text: 'L dies with his suspicion confirmed.',
@@ -651,7 +658,7 @@ export const CHAPTERS: readonly ChapterDef[] = [
         at: [0.28, 0.39],
         anchor: 'left',
         kind: 'line',
-        text: 'Mello kidnaps Light’s sister to trade her for a notebook. Light’s father pays for her rescue with his life.',
+        text: 'Mello kidnaps Light’s sister and trades her back for a notebook. To recover it, Light’s father takes the Shinigami Eyes — and dies in the raid.',
       },
       {
         at: [0.42, 0.53],
@@ -804,7 +811,14 @@ export const CHAPTERS: readonly ChapterDef[] = [
         text: 'Ryuk writes a name. As he warned on the day they met, it is Light’s.',
       },
       {
-        at: [0.69, 0.8],
+        at: [0.68, 0.78],
+        anchor: 'left',
+        kind: 'line',
+        meta: 'Anime / manga',
+        text: 'In the anime, Light flees and dies alone on a warehouse stairway, seeing L. In the manga, he dies on the warehouse floor.',
+      },
+      {
+        at: [0.84, 1],
         anchor: 'center',
         kind: 'statement',
         text: 'Kira is gone. The world he built does not vanish with him.',

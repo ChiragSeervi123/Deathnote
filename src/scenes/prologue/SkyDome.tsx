@@ -24,8 +24,8 @@ ${NOISE_GLSL}
 
 vec3 realmSky(vec3 d) {
   float h = d.y;
-  vec3 zenith = vec3(0.022, 0.021, 0.02);
-  vec3 horizon = vec3(0.11, 0.1, 0.088);
+  vec3 zenith = vec3(0.008, 0.008, 0.0085);
+  vec3 horizon = vec3(0.05, 0.047, 0.042);
   vec3 col = mix(horizon, zenith, smoothstep(-0.05, 0.45, h));
   // Dead sun: a pale disc smothered in haze, never bright enough to warm anything.
   float s = max(dot(d, normalize(uSunDir)), 0.0);

@@ -1,1 +1,20 @@
 node_modules
+
+# Build output
+dist
+*.tsbuildinfo
+
+# Test and screenshot output
+.artifacts
+test-results
+playwright-report
+coverage
+
+# Local env and Vercel
+.env*
+!.env.example
+.vercel
+
+# Logs and OS files
+*.log
+.DS_Store

@@ -53,7 +53,7 @@ interface Layer {
 }
 
 const LAYERS: readonly Layer[] = [
-  { y: 293, cover: 0.62, scale: 0.035, top: '#16181d', bottom: '#2a201a', opacity: 0.95 },
+  { y: 293, cover: 0.62, scale: 0.035, top: '#0c0d0f', bottom: '#2a201a', opacity: 0.95 },
   { y: 284, cover: 0.58, scale: 0.028, top: '#1a1c22', bottom: '#2d2119', opacity: 0.92 },
   { y: 270, cover: 0.55, scale: 0.022, top: '#1b1d24', bottom: '#33241a', opacity: 0.9 },
   { y: 252, cover: 0.5, scale: 0.018, top: '#1d2027', bottom: '#3a291c', opacity: 0.85 },

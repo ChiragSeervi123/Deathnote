@@ -2,6 +2,7 @@ import { useEffect, useRef, type CSSProperties, type ReactNode } from 'react';
 import { registerTrack } from '@/animation/scroll/chapterTracker';
 import { formatChapterNumber } from '../chapterData';
 import type { Beat, ChapterDef } from '../types';
+import { ChapterRecord } from '@/encyclopedia/ChapterRecord';
 import { DossierView } from './DossierView';
 import { useBeatChoreography } from './useBeatChoreography';
 import './ChapterSection.css';
@@ -65,6 +66,7 @@ export function ChapterSection({ chapter, children }: Props) {
         </div>
       </div>
       {chapter.dossier ? <DossierView chapter={chapter} dossier={chapter.dossier} /> : null}
+      <ChapterRecord chapterId={chapter.id} title={chapter.title} />
     </section>
   );
 }

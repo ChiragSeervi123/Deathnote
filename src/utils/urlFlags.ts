@@ -14,6 +14,8 @@ export interface UrlFlags {
   quality: QualityTier | null;
   motion: 'reduce' | 'full' | null;
   gate: boolean;
+  /** `?grain=0` disables film grain (diagnostics). */
+  grain: boolean;
 }
 
 function read(): UrlFlags {
@@ -27,6 +29,7 @@ function read(): UrlFlags {
     quality: q === 'high' || q === 'balanced' || q === 'performance' ? q : null,
     motion: m === 'reduce' || m === 'full' ? m : null,
     gate: p.get('gate') !== '0',
+    grain: p.get('grain') !== '0',
   };
 }
 

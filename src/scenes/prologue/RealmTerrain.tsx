@@ -49,7 +49,7 @@ function terrainHeight(x: number, z: number, fbm: (x: number, y: number) => numb
 
 /** A bent, tapering spike (bone / horn) along +y. */
 function spireGeometry(): THREE.BufferGeometry {
-  const g = new THREE.CylinderGeometry(0.02, 1, 1, 7, 10, true);
+  const g = new THREE.CylinderGeometry(0.07, 1, 1, 8, 10, true);
   g.translate(0, 0.5, 0);
   const pos = g.getAttribute('position') as THREE.BufferAttribute;
   for (let i = 0; i < pos.count; i++) {
@@ -111,11 +111,23 @@ export function RealmTerrain({ density = 1 }: { density?: number }) {
     const e = new THREE.Euler();
     const s = new THREE.Vector3();
     const p = new THREE.Vector3();
+    // Keep the camera's flight corridor (from the north-west vantage to the hole) clear.
+    const corridor = (x: number, z: number) => {
+      const ax = -48;
+      const az = 74;
+      const t = Math.max(0, Math.min(1, (x * ax + z * az) / (ax * ax + az * az)));
+      return Math.hypot(x - ax * t, z - az * t) < 26;
+    };
     for (let i = 0; i < spireCount; i++) {
-      const ang = rnd() * Math.PI * 2;
-      const r = 22 + Math.pow(rnd(), 0.7) * 260;
-      const x = Math.cos(ang) * r;
-      const z = Math.sin(ang) * r;
+      let x = 0;
+      let z = 0;
+      for (let tries = 0; tries < 12; tries++) {
+        const ang = rnd() * Math.PI * 2;
+        const r = 26 + Math.pow(rnd(), 0.7) * 260;
+        x = Math.cos(ang) * r;
+        z = Math.sin(ang) * r;
+        if (!corridor(x, z)) break;
+      }
       const hgt = 3 + Math.pow(rnd(), 2) * 34;
       p.set(x, terrainHeight(x, z, fbm) - 0.5, z);
       e.set((rnd() - 0.5) * 0.5, rnd() * Math.PI * 2, (rnd() - 0.5) * 0.4);
@@ -126,20 +138,29 @@ export function RealmTerrain({ density = 1 }: { density?: number }) {
     spires.instanceMatrix.needsUpdate = true;
 
     const rockCount = Math.round(90 * density);
-    const rockGeo = new THREE.IcosahedronGeometry(1, 1);
+    // Weathered boulders: a displaced, smooth-shaded sphere (positions keyed by
+    // direction so seams stay closed).
+    const rockGeo = new THREE.IcosahedronGeometry(1, 3);
     const rpos = rockGeo.getAttribute('position') as THREE.BufferAttribute;
+    const v = new THREE.Vector3();
     for (let i = 0; i < rpos.count; i++) {
-      const k = 0.75 + rnd() * 0.5;
-      rpos.setXYZ(i, rpos.getX(i) * k, rpos.getY(i) * k * 0.7, rpos.getZ(i) * k);
+      v.fromBufferAttribute(rpos, i).normalize();
+      const k = 0.78 + fbm(v.x * 2.1 + 5, v.z * 2.1 + v.y * 1.7) * 0.5;
+      rpos.setXYZ(i, v.x * k, v.y * k * 0.62, v.z * k);
     }
     rockGeo.computeVertexNormals();
-    const rockMat = new THREE.MeshStandardMaterial({ color: '#2f2d2a', roughness: 1, flatShading: true });
+    const rockMat = new THREE.MeshStandardMaterial({ color: '#2a2825', roughness: 0.97 });
     const rocks = new THREE.InstancedMesh(rockGeo, rockMat, rockCount);
     for (let i = 0; i < rockCount; i++) {
-      const ang = rnd() * Math.PI * 2;
-      const r = 5 + Math.pow(rnd(), 1.4) * 120;
-      const x = Math.cos(ang) * r;
-      const z = Math.sin(ang) * r;
+      let x = 0;
+      let z = 0;
+      for (let tries = 0; tries < 12; tries++) {
+        const ang = rnd() * Math.PI * 2;
+        const r = 7 + Math.pow(rnd(), 1.4) * 120;
+        x = Math.cos(ang) * r;
+        z = Math.sin(ang) * r;
+        if (!corridor(x, z)) break;
+      }
       const sc = 0.3 + Math.pow(rnd(), 3) * 3;
       p.set(x, terrainHeight(x, z, fbm) - sc * 0.2, z);
       e.set(rnd() * 3, rnd() * 3, rnd() * 3);
@@ -171,10 +192,15 @@ export function RealmTerrain({ density = 1 }: { density?: number }) {
       <mesh geometry={a.geometry} material={a.material} receiveShadow />
       <primitive object={a.spires} />
       <primitive object={a.rocks} />
+      {/* The hole's throat: a rock wall dropping into the dark, so it reads as a void, not a pool. */}
+      <mesh position={[0, -4.6, 0]}>
+        <cylinderGeometry args={[WORLD.holeRadius + 0.35, WORLD.holeRadius + 0.15, 9.5, 40, 1, true]} />
+        <meshStandardMaterial color="#121110" roughness={1} side={1} />
+      </mesh>
       {/* The rock Ryuk sits on. */}
       <mesh position={[WORLD.ryuk[0] - 0.35, 0.45, WORLD.ryuk[2]]} scale={[1.3, 0.95, 1.1]} rotation={[0.2, 0.5, 0.1]}>
         <icosahedronGeometry args={[1, 1]} />
-        <meshStandardMaterial color="#1c1b19" roughness={1} flatShading />
+        <meshStandardMaterial color="#1c1b19" roughness={1} />
       </mesh>
     </group>
   );

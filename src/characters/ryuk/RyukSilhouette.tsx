@@ -17,7 +17,7 @@ export interface RyukSilhouetteHandle {
  * full character presentation is a separate system (characters/, M5).
  */
 export const RyukSilhouette = forwardRef<RyukSilhouetteHandle, { rimColor?: string }>(function RyukSilhouette(
-  { rimColor = '#9c968a' },
+  { rimColor = '#6f6a62' },
   ref,
 ) {
   const rootRef = useRef<THREE.Group>(null);
@@ -33,7 +33,7 @@ export const RyukSilhouette = forwardRef<RyukSilhouetteHandle, { rimColor?: stri
     const rim = new THREE.MeshBasicMaterial({ color: rimColor, side: THREE.DoubleSide, fog: true });
     const eye = new THREE.MeshBasicMaterial({ color: new THREE.Color(5.5, 3.6, 0.35), toneMapped: false, fog: false });
     const pupil = new THREE.MeshBasicMaterial({ color: new THREE.Color(0.9, 0.02, 0.02), toneMapped: false });
-    const eyeGeo = new THREE.CircleGeometry(0.034, 20);
+    const eyeGeo = new THREE.CircleGeometry(0.038, 24);
     const pupilGeo = new THREE.CircleGeometry(0.009, 10);
     return { body, head, arm, ink, rim, eye, pupil, eyeGeo, pupilGeo };
   }, [rimColor]);
@@ -68,7 +68,7 @@ export const RyukSilhouette = forwardRef<RyukSilhouetteHandle, { rimColor?: stri
   const parts = (geo: THREE.ShapeGeometry) => (
     <>
       {/* Rim copy, nudged up and back so the light catches the top edges. */}
-      <mesh geometry={geo} material={a.rim} position={[-0.012, 0.014, -0.02]} scale={1.012} />
+      <mesh geometry={geo} material={a.rim} position={[-0.008, 0.01, -0.02]} />
       <mesh geometry={geo} material={a.ink} />
     </>
   );

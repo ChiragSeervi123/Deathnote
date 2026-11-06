@@ -104,6 +104,11 @@ function LayerRenderer({ sceneKey, target }: { sceneKey: SceneKey; target: THREE
     const { gl, scene, camera } = state;
     const prev = gl.getRenderTarget();
     gl.setRenderTarget(target);
+    // The post-processing composer disables renderer.autoClear, so clear
+    // explicitly: otherwise scenes without a colour background accumulate stale
+    // pixels and depth from previous frames.
+    gl.setClearColor(0x000000, 1);
+    gl.clear(true, true, false);
     gl.render(scene, camera);
     gl.setRenderTarget(prev);
     warmed.current = true;

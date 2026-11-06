@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import * as THREE from 'three';
+import { NOISE_GLSL } from '@/shaders/noise.glsl.ts';
 import { mulberry32 } from '@/utils/math';
 
 const BLOCK = 46;
@@ -35,6 +36,9 @@ function buildingMaterial(): THREE.MeshStandardMaterial {
       .replace(
         '#include <emissivemap_fragment>',
         `#include <emissivemap_fragment>
+        // Interpolation perturbs the varying's last bits; hashing would turn that
+        // into per-pixel static, so snap the per-building seed to an integer.
+        float seed = floor(vSeed + 0.5);
         vec3 n = normalize(vWNorm);
         if (abs(n.y) < 0.5) {
           vec2 t = normalize(vec2(-n.z, n.x));
@@ -43,19 +47,25 @@ function buildingMaterial(): THREE.MeshStandardMaterial {
           vec2 cell = vec2(floor(u / 3.1), floor(v / 3.4));
           vec2 f = vec2(fract(u / 3.1), fract(v / 3.4));
           float win = step(0.18, f.x) * step(f.x, 0.82) * step(0.28, f.y) * step(f.y, 0.8);
-          float r = h21(cell + vSeed * 7.31);
-          float lit = step(r, 0.34) * step(1.2, v);
-          float warm = step(h21(cell * 1.7 + vSeed), 0.72);
+          float r = h21(cell + seed * 7.31);
+          float lit = step(r, 0.17) * step(1.2, v);
+          float warm = step(h21(cell * 1.7 + seed), 0.72);
           vec3 wc = mix(vec3(0.55, 0.7, 1.0) * 0.8, vec3(1.0, 0.66, 0.34), warm);
           // A few whole floors lit in cold office white.
-          float office = step(h21(vec2(cell.y, vSeed)), 0.06);
-          wc = mix(wc, vec3(0.85, 0.9, 1.0), office);
+          float office = step(h21(vec2(cell.y, seed)), 0.03);
+          wc = mix(wc, vec3(0.62, 0.66, 0.72), office);
           lit = max(lit, office * step(0.4, h21(cell)));
-          totalEmissiveRadiance += win * lit * wc * (0.9 + 0.6 * h21(cell + 3.0)) * 2.2;
-          diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.03, 0.035, 0.045), win * (1.0 - lit));
+          // Window cells shrink below a few pixels from altitude: blend to their
+          // average glow instead of aliasing into sparkle.
+          float fw = max(fwidth(u / 3.1), fwidth(v / 3.4));
+          float detail = 1.0 - smoothstep(0.18, 0.55, fw);
+          vec3 sharp = win * lit * wc * (0.9 + 0.6 * h21(cell + 3.0));
+          vec3 avg = vec3(1.0, 0.72, 0.45) * 0.07 * step(1.2, v);
+          totalEmissiveRadiance += mix(avg, sharp, detail) * 0.95;
+          diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.03, 0.035, 0.045), win * (1.0 - lit) * detail);
         } else if (n.y > 0.5) {
           // Rooftops: a rare steady red beacon (never flashing).
-          float beacon = step(0.985, h21(vec2(vSeed, 1.0)));
+          float beacon = step(0.985, h21(vec2(seed, 1.0)));
           vec2 c = vWPos.xz - floor(vWPos.xz / 6.0) * 6.0 - 3.0;
           totalEmissiveRadiance += vec3(1.0, 0.08, 0.05) * beacon * smoothstep(0.6, 0.0, length(c)) * 3.0;
         }`,
@@ -77,14 +87,17 @@ function groundMaterial(): THREE.MeshStandardMaterial {
         '#include <emissivemap_fragment>',
         `#include <emissivemap_fragment>
         float pitch = ${(BLOCK + STREET).toFixed(1)};
+        // Streets run along the block boundaries (integer multiples of the pitch).
         vec2 g = vWPos.xz / pitch;
-        vec2 d = abs(fract(g) - 0.5) * pitch;
+        vec2 d = (0.5 - abs(fract(g) - 0.5)) * pitch;
         float road = min(d.x, d.y);
-        float glow = exp(-road * road * 0.012);
-        float lamps = 0.5 + 0.5 * cos((vWPos.x + vWPos.z) * 0.35);
-        totalEmissiveRadiance += vec3(1.0, 0.55, 0.22) * glow * (0.12 + 0.1 * lamps);
-        float lane = smoothstep(0.35, 0.0, abs(road - 0.0)) ;
-        totalEmissiveRadiance += vec3(1.0, 0.75, 0.5) * lane * 0.06;`,
+        float glow = exp(-road * road * 0.03);
+        // Sodium lamp pools on both kerbs every 18 m.
+        float along = d.x < d.y ? vWPos.z : vWPos.x;
+        float a = mod(along, 18.0) - 9.0;
+        float across = road - 5.0;
+        float pool = exp(-(a * a + across * across) * 0.14);
+        totalEmissiveRadiance += vec3(1.0, 0.52, 0.2) * (0.012 * glow + 0.11 * pool);`,
       );
   };
   return m;
@@ -116,15 +129,17 @@ export function CityGrid({ density = 1 }: { density?: number }) {
         const cx = i * pitch + pitch / 2;
         const cz = j * pitch + pitch / 2;
         if (Math.abs(cx) < 75 && Math.abs(cz) < 65) continue; // keep the school grounds open
+        // Low residential district around the school; the skyline rises far to the north.
         const dist = Math.hypot(cx, cz);
-        const downtown = Math.exp(-Math.pow((cz + 320) / 260, 2)) * Math.exp(-Math.pow(cx / 420, 2));
+        const downtown = Math.exp(-Math.pow((cz + 640) / 300, 2)) * Math.exp(-Math.pow(cx / 520, 2));
+        const near = 1 - Math.exp(-Math.pow(dist / 260, 2));
         const n = 1 + Math.floor(rnd() * 3);
         for (let k = 0; k < n; k++) {
           const w = BLOCK / n - 2 - rnd() * 4;
           const d = BLOCK - 4 - rnd() * 10;
           const x = cx - BLOCK / 2 + (k + 0.5) * (BLOCK / n);
           const z = cz + (rnd() - 0.5) * 4;
-          const h = 9 + Math.pow(rnd(), 2.2) * 40 + downtown * (40 + rnd() * 120) - Math.min(dist / 120, 6);
+          const h = 7 + Math.pow(rnd(), 2.2) * (14 + 30 * near) + downtown * (50 + rnd() * 150);
           q.setFromAxisAngle(new THREE.Vector3(0, 1, 0), (rnd() < 0.15 ? 0.2 : 0) * (rnd() - 0.5));
           transforms.push(m.clone().compose(new THREE.Vector3(x, 0, z), q.clone(), new THREE.Vector3(Math.max(6, w), Math.max(6, h), Math.max(8, d))));
         }
@@ -142,7 +157,27 @@ export function CityGrid({ density = 1 }: { density?: number }) {
 
     const grassGeo = new THREE.PlaneGeometry(60, 40);
     grassGeo.rotateX(-Math.PI / 2);
-    const grass = new THREE.MeshStandardMaterial({ color: '#1d2a17', roughness: 0.95 });
+    const grass = new THREE.MeshStandardMaterial({ color: '#33402a', roughness: 0.9 });
+    // Wet, patchy lawn: world-space noise for colour and sheen (no texture).
+    grass.onBeforeCompile = (shader) => {
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec3 vGPos;')
+        .replace('#include <worldpos_vertex>', '#include <worldpos_vertex>\nvGPos = (modelMatrix * vec4(transformed, 1.0)).xyz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', `#include <common>\nvarying vec3 vGPos;\n${NOISE_GLSL}`)
+        .replace(
+          '#include <color_fragment>',
+          `#include <color_fragment>
+          float gn = fbm(vGPos.xz * 1.7);
+          float blades = vnoise(vGPos.xz * 60.0);
+          diffuseColor.rgb *= 0.45 + 0.75 * gn + 0.25 * blades;`,
+        )
+        .replace(
+          '#include <roughnessmap_fragment>',
+          `#include <roughnessmap_fragment>
+          roughnessFactor = mix(0.35, 0.95, smoothstep(0.35, 0.6, fbm(vGPos.xz * 0.6 + 4.0)));`,
+        );
+    };
 
     return { boxGeo, material, towers, groundGeo, ground, grassGeo, grass };
   }, [density]);
@@ -184,7 +219,7 @@ export function CityGrid({ density = 1 }: { density?: number }) {
         ))}
       </group>
       {/* Courtyard lamp */}
-      <group position={[3.2, 0, -2.2]}>
+      <group position={[2.2, 0, -1.0]}>
         <mesh position={[0, 2.4, 0]}>
           <cylinderGeometry args={[0.05, 0.07, 4.8, 6]} />
           <meshStandardMaterial color="#202024" roughness={0.6} metalness={0.5} />

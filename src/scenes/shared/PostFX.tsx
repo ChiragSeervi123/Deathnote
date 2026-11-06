@@ -2,6 +2,7 @@ import { Bloom, EffectComposer, Noise, ToneMapping, Vignette } from '@react-thre
 import { BlendFunction, ToneMappingMode } from 'postprocessing';
 import { HalfFloatType } from 'three';
 import { useRuntime } from '@/state/runtime';
+import { urlFlags } from '@/utils/urlFlags';
 import { QUALITY_PROFILES } from './quality';
 import { PRIORITY } from './sceneFrame';
 
@@ -27,7 +28,7 @@ export function PostFX() {
     ) : null,
     <ToneMapping key="tonemap" mode={ToneMappingMode.AGX} />,
     <Vignette key="vignette" offset={0.28} darkness={0.66} />,
-    p.grain ? <Noise key="grain" premultiply blendFunction={BlendFunction.SCREEN} opacity={0.32} /> : null,
+    p.grain && urlFlags.grain ? <Noise key="grain" blendFunction={BlendFunction.SOFT_LIGHT} opacity={0.22} /> : null,
   ].filter((e): e is NonNullable<typeof e> => e !== null);
 
   return (

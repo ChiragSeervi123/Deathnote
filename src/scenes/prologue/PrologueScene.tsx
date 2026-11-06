@@ -31,16 +31,16 @@ const RY = WORLD.ryuk;
 const REALM_POS: ReadonlyArray<{ t: number; v: V3 }> = [
   { t: 0.0, v: [-40, R + 16, 62] },
   { t: 0.12, v: [-34, R + 12, 48] },
-  { t: 0.28, v: [-16, R + 5.5, 17] },
-  { t: 0.4, v: [-7.6, R + 3.1, 5.6] },
-  { t: 0.46, v: [-5.4, R + 3.3, 3.4] },
+  { t: 0.28, v: [-17, R + 5.5, 19] },
+  { t: 0.4, v: [-10.5, R + 3.4, 8.4] },
+  { t: 0.46, v: [-8.2, R + 3.9, 6.2] },
 ];
 const REALM_TGT: ReadonlyArray<{ t: number; v: V3 }> = [
   { t: 0.0, v: [-8, R + 12, -90] },
   { t: 0.12, v: [-6, R + 4, -20] },
-  { t: 0.28, v: [-3.6, R + 2.2, -1] },
-  { t: 0.4, v: [-3.4, R + 2.0, -0.6] },
-  { t: 0.46, v: [-2.6, R + 1.2, -0.5] },
+  { t: 0.28, v: [-2.6, R + 2.2, -1] },
+  { t: 0.4, v: [-2.4, R + 1.9, -0.6] },
+  { t: 0.46, v: [-1.8, R + 1.1, -0.5] },
 ];
 
 /** Notebook altitude during the fall (linear segments: it never stops). */
@@ -55,12 +55,12 @@ const FALL_Y: ReadonlyArray<{ t: number; v: number }> = [
 
 /** Camera offset from the notebook during the fall. */
 const FALL_OFFSET: ReadonlyArray<{ t: number; v: V3 }> = [
-  { t: 0.46, v: [-1.6, 2.4, 2.6] },
-  { t: 0.5, v: [0.6, 2.6, 1.2] },
-  { t: 0.62, v: [1.2, 3.4, 2.0] },
-  { t: 0.78, v: [5, 9, 9] },
-  { t: 0.88, v: [3.2, 2.6, 5.2] },
-  { t: 1.0, v: [2.1, 0.9, 3.0] },
+  { t: 0.46, v: [-2.2, 2.2, 3.4] },
+  { t: 0.5, v: [0.3, 1.1, 0.7] },
+  { t: 0.62, v: [0.35, 0.95, 0.85] },
+  { t: 0.76, v: [0.6, 1.3, 1.6] },
+  { t: 0.88, v: [1.0, 0.9, 1.7] },
+  { t: 1.0, v: [0.42, 0.17, 0.62] },
 ];
 
 const REDUCED_ANCHORS = [0.04, 0.2, 0.34, 0.44, 0.6, 0.8, 0.97];
@@ -146,15 +146,21 @@ export default function PrologueScene() {
     } else {
       const off = keyframes(FALL_OFFSET, p);
       tmp.cam.set(nb.position.x + off[0], nb.position.y + off[1], nb.position.z + off[2]);
-      const look = 1 - smoothstep(0.82, 0.93, p);
-      tmp.tgt.set(nb.position.x, nb.position.y - 12 * look, nb.position.z);
+      // Look past the notebook, down and ahead, so the city has a horizon; settle on it at the end.
+      const look = 1 - smoothstep(0.84, 0.94, p);
+      const settle = smoothstep(0.9, 1, p);
+      tmp.tgt.set(
+        nb.position.x - 1.5 * look - 0.35 * settle,
+        nb.position.y - 6 * look + 0.2 * settle,
+        nb.position.z - 7 * look - 0.75 * settle,
+      );
     }
     // Arrival from the gate / previous content: settle from slightly above.
     tmp.cam.y += (1 - f.enter) * 3;
     tmp.cam.x += f.pointer.x * 0.5;
     tmp.cam.y += f.pointer.y * 0.3;
     // Never let the camera sink into the ground at the landing.
-    tmp.cam.y = Math.max(tmp.cam.y, 0.35);
+    tmp.cam.y = Math.max(tmp.cam.y, 0.14);
     cam.position.copy(tmp.cam);
     cam.lookAt(tmp.tgt);
     if (urlFlags.debug) {
@@ -178,7 +184,7 @@ export default function PrologueScene() {
     if (realmHemi.current) realmHemi.current.intensity = 0.65 * (1 - w);
     if (nightHemi.current) nightHemi.current.intensity = 0.55 * w;
     if (moonRef.current) moonRef.current.intensity = 0.35 * w;
-    if (lampRef.current) lampRef.current.intensity = 60 * smoothstep(60, 8, cam.position.y);
+    if (lampRef.current) lampRef.current.intensity = 140 * smoothstep(60, 8, cam.position.y);
     if (realmLights.current) realmLights.current.visible = w < 0.999;
     state.scene.background = null;
   });
@@ -201,7 +207,7 @@ export default function PrologueScene() {
       <directionalLight ref={moonRef} position={[-40, 120, 60]} color="#7b8db5" intensity={0} />
       <pointLight
         ref={lampRef}
-        position={[3.2, 4.8, -2.2]}
+        position={[2.2, 4.6, -1.0]}
         color="#ffbf80"
         intensity={0}
         distance={30}

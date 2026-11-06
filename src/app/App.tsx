@@ -1,4 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router';
+import { RouteLoader } from '@/components/loading/RouteLoader';
 import { RootLayout } from './RootLayout';
 import { RouteError } from './RouteError';
 
@@ -10,6 +11,7 @@ const router = createBrowserRouter([
   {
     element: <RootLayout />,
     errorElement: <RouteError />,
+    hydrateFallbackElement: <RouteLoader />,
     children: [
       {
         index: true,

@@ -10,17 +10,11 @@ import { personParts } from '@/characters/shared/people';
 import { useRuntime } from '@/state/runtime';
 import { keyframes, range, smoothstep } from '@/utils/math';
 import { Motes } from '../props/Motes';
+import { glowTexture } from '../shared/canvasTextures';
 import { QUALITY_PROFILES } from '../shared/quality';
 import { useSceneFrame } from '../shared/sceneFrame';
 import { buildCrowd } from './crowd';
-import {
-  archesGeometry,
-  glowTexture,
-  labelAtlas,
-  tapeTexture,
-  tvFragment,
-  tvVertex,
-} from './stageAssets';
+import { archesGeometry, labelAtlas, tapeTexture, tvFragment, tvVertex } from './stageAssets';
 
 /**
  * Chapter 07 — Misa Amane. A gothic, monochrome stage: Misa in a pale

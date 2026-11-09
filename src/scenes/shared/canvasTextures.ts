@@ -160,3 +160,15 @@ export function wrapLines(ctx: CanvasRenderingContext2D, text: string, maxWidth:
   if (line) lines.push(line);
   return lines;
 }
+
+/** Soft radial glow (white, alpha falloff) for halos, light pools and backlight. */
+export function glowTexture(): THREE.CanvasTexture {
+  const { canvas, ctx } = makeCanvas(256, 256);
+  const g = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+  g.addColorStop(0, 'rgba(255,255,255,0.6)');
+  g.addColorStop(0.4, 'rgba(255,255,255,0.16)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 256, 256);
+  return canvasTexture(canvas);
+}

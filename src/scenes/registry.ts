@@ -97,7 +97,6 @@ export const SCENES: Record<SceneKey, SceneEntry> = {
  */
 export const WIP_SCENES: ReadonlySet<SceneKey> = new Set<SceneKey>([
   'misa',
-  'yotsuba',
   'wammy',
   'new-kira',
   'warehouse',

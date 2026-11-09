@@ -8,7 +8,13 @@ export interface Shot {
 }
 
 /** Frame a card so it sits opposite the side its beat text appears on. */
-export function focusCard(cards: readonly BoardCard[], id: string, textSide: 1 | -1, t: number, dist = 3.9): Shot {
+export function focusCard(
+  cards: readonly BoardCard[],
+  id: string,
+  textSide: 1 | -1,
+  t: number,
+  dist = 3.9,
+): Shot {
   const c = cards.find((x) => x.id === id);
   if (!c) throw new Error(`board card ${id} missing`);
   const tx = c.at[0] + textSide * 0.95;

@@ -14,13 +14,62 @@ import { useSceneFrame } from '../shared/sceneFrame';
  * light — one a forgery — and the web of moves that leads to the warehouse.
  */
 const CARDS: readonly BoardCard[] = [
-  { id: 'near', at: [-3.4, 1.0], width: 0.85, rot: 0.02, appear: 0.12, spec: { kind: 'portrait', name: 'Near', role: 'SPK', tone: 'light' } },
-  { id: 'light', at: [-1.7, 1.25], width: 0.85, rot: -0.03, appear: 0.17, spec: { kind: 'portrait', name: 'Light Yagami', role: 'suspect', tone: 'dark' } },
-  { id: 'mikami', at: [0.0, 0.9], width: 0.85, rot: 0.02, appear: 0.3, spec: { kind: 'portrait', name: 'Teru Mikami', role: 'prosecutor', tone: 'dark' } },
-  { id: 'forgery', at: [1.6, 1.15], width: 1.0, rot: -0.04, appear: 0.36, spec: { kind: 'stamp', text: 'FORGERY', sub: 'pages replaced' } },
-  { id: 'mello', at: [-2.2, -1.2], width: 0.85, rot: -0.02, appear: 0.47, spec: { kind: 'portrait', name: 'Mello', role: 'independent', tone: 'dark' } },
-  { id: 'takada', at: [-0.6, -1.15], width: 0.85, rot: 0.03, appear: 0.5, spec: { kind: 'portrait', name: 'Kiyomi Takada', role: 'spokesperson', tone: 'light' } },
-  { id: 'meet', at: [2.6, -0.9], width: 1.3, rot: 0.02, appear: 0.63, spec: { kind: 'note', text: 'They agree to meet. A warehouse. 28 January.' } },
+  {
+    id: 'near',
+    at: [-3.4, 1.0],
+    width: 0.85,
+    rot: 0.02,
+    appear: 0.12,
+    spec: { kind: 'portrait', name: 'Near', role: 'SPK', tone: 'light' },
+  },
+  {
+    id: 'light',
+    at: [-1.7, 1.25],
+    width: 0.85,
+    rot: -0.03,
+    appear: 0.17,
+    spec: { kind: 'portrait', name: 'Light Yagami', role: 'suspect', tone: 'dark' },
+  },
+  {
+    id: 'mikami',
+    at: [0.0, 0.9],
+    width: 0.85,
+    rot: 0.02,
+    appear: 0.3,
+    spec: { kind: 'portrait', name: 'Teru Mikami', role: 'prosecutor', tone: 'dark' },
+  },
+  {
+    id: 'forgery',
+    at: [1.6, 1.15],
+    width: 1.0,
+    rot: -0.04,
+    appear: 0.36,
+    spec: { kind: 'stamp', text: 'FORGERY', sub: 'pages replaced' },
+  },
+  {
+    id: 'mello',
+    at: [-2.2, -1.2],
+    width: 0.85,
+    rot: -0.02,
+    appear: 0.47,
+    spec: { kind: 'portrait', name: 'Mello', role: 'independent', tone: 'dark' },
+  },
+  {
+    id: 'takada',
+    at: [-0.6, -1.15],
+    width: 0.85,
+    rot: 0.03,
+    appear: 0.5,
+    spec: { kind: 'portrait', name: 'Kiyomi Takada', role: 'spokesperson', tone: 'light' },
+  },
+  {
+    id: 'meet',
+    at: [2.6, -0.9],
+    width: 1.3,
+    rot: 0.02,
+    appear: 0.63,
+    spec: { kind: 'note', text: 'They agree to meet. A warehouse. 28 January.' },
+  },
 ];
 
 const STRINGS: readonly BoardString[] = [
@@ -86,7 +135,12 @@ export default function StrategyScene() {
       <group position={[0.25, -2.44, 1.25]} rotation={[0, -0.04, 0]} scale={0.95}>
         <NotebookModel state={nbB} textureSize={1024} />
       </group>
-      <mesh ref={scanRef} position={[0, -2.25, 1.3]} rotation={[-Math.PI / 2, 0, 0]} material={scanMat}>
+      <mesh
+        ref={scanRef}
+        position={[0, -2.25, 1.3]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        material={scanMat}
+      >
         <planeGeometry args={[0.02, 2.4]} />
       </mesh>
     </>

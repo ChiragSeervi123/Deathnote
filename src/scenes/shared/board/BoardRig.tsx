@@ -32,13 +32,19 @@ export function BoardRig({
   }, [target]);
 
   useSceneFrame((f) => {
-    const p = f.reduced ? shots.reduce((a, s) => (f.progress >= s.t - 0.05 ? s.t : a), 0) : f.progress;
+    const p = f.reduced
+      ? shots.reduce((a, s) => (f.progress >= s.t - 0.05 ? s.t : a), 0)
+      : f.progress;
     const cam = camRef.current;
     if (!cam) return;
     const portrait = size.width / size.height < 0.9;
     const pos = keyframes(tracks.pos, p);
     const tgt = keyframes(tracks.tgt, p);
-    cam.position.set(pos[0] + f.pointer.x * 0.15, pos[1] + f.pointer.y * 0.1, pos[2] * (portrait ? 1.7 : 1));
+    cam.position.set(
+      pos[0] + f.pointer.x * 0.15,
+      pos[1] + f.pointer.y * 0.1,
+      pos[2] * (portrait ? 1.7 : 1),
+    );
     cam.lookAt(tgt[0], tgt[1] - (portrait ? 0.4 : 0), tgt[2]);
     target.position.set(tgt[0] - 0.4, tgt[1], tgt[2]);
     target.updateMatrixWorld();
@@ -47,7 +53,14 @@ export function BoardRig({
 
   return (
     <>
-      <PerspectiveCamera ref={camRef} makeDefault fov={36} near={0.05} far={60} position={[0, 0.3, 8.5]} />
+      <PerspectiveCamera
+        ref={camRef}
+        makeDefault
+        fov={36}
+        near={0.05}
+        far={60}
+        position={[0, 0.3, 8.5]}
+      />
       <color attach="background" args={[background]} />
       <fog attach="fog" args={[background, 6, 16]} />
       <ambientLight intensity={ambient} color="#8090b0" />

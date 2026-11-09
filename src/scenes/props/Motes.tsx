@@ -8,14 +8,15 @@ uniform float uTime;
 uniform float uSize;
 uniform float uPixelRatio;
 uniform vec3 uDrift;
+uniform vec3 uBox;
 attribute float aSeed;
 varying float vSeed;
 varying vec3 vWorld;
 void main() {
-  vec3 p = position;
+  // Drift, wrapped so the motes never leave their box however long the page is open.
+  vec3 p = mod(position + uDrift * uTime + uBox * 0.5, uBox) - uBox * 0.5;
   float t = uTime * (0.4 + aSeed * 0.6);
   p += vec3(sin(t + aSeed * 31.0), sin(t * 0.7 + aSeed * 17.0) * 0.6, cos(t * 0.8 + aSeed * 9.0)) * 0.08;
-  p += uDrift * uTime;
   vec4 world = modelMatrix * vec4(p, 1.0);
   vWorld = world.xyz;
   vSeed = aSeed;
@@ -105,6 +106,7 @@ export function Motes({
         uColor: { value: new THREE.Color(color) },
         uOpacity: { value: opacity },
         uDrift: { value: new THREE.Vector3(...drift) },
+        uBox: { value: new THREE.Vector3(...box) },
         uBeamPos: { value: new THREE.Vector3(...(beam?.pos ?? [0, 0, 0])) },
         uBeamDir: { value: dir },
         uBeamCos: { value: Math.cos(beam?.angle ?? 1) },

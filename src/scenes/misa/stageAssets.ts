@@ -59,9 +59,10 @@ export const LABEL_ROWS = 4;
 /**
  * What the Eyes show above each head: a name (redacted as a pale bar — the
  * crowd is anonymous) and a lifespan (invented numerals). Cell 0 is the one
- * notebook owner: his name is legible, his lifespan is blank.
+ * notebook owner: his name is legible (or redacted when `ownerName` is null),
+ * his lifespan is blank.
  */
-export function labelAtlas(ownerName: string): THREE.CanvasTexture {
+export function labelAtlas(ownerName: string | null): THREE.CanvasTexture {
   const cw = 256;
   const ch = 96;
   const { canvas, ctx } = makeCanvas(cw * LABEL_COLS, ch * LABEL_ROWS);
@@ -72,8 +73,10 @@ export function labelAtlas(ownerName: string): THREE.CanvasTexture {
     const y = Math.floor(i / LABEL_COLS) * ch;
     if (i === 0) {
       ctx.fillStyle = 'rgba(240,236,228,0.95)';
-      ctx.font = '500 30px "IBM Plex Mono", monospace';
-      ctx.fillText(ownerName, x + cw / 2, y + 38);
+      if (ownerName) {
+        ctx.font = '500 30px "IBM Plex Mono", monospace';
+        ctx.fillText(ownerName, x + cw / 2, y + 38);
+      } else ctx.fillRect(x + 70, y + 16, cw - 140, 18);
       ctx.strokeStyle = 'rgba(240,236,228,0.35)';
       ctx.setLineDash([6, 8]);
       ctx.strokeRect(x + 70, y + 54, cw - 140, 30);

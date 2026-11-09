@@ -95,7 +95,7 @@ export const SCENES: Record<SceneKey, SceneEntry> = {
  * building them); everyone else sees the designed 2D backdrop — never an empty
  * or half-built canvas. Remove a key when its scene is finished and reviewed.
  */
-export const WIP_SCENES: ReadonlySet<SceneKey> = new Set<SceneKey>(['archive', 'eyes', 'legacy']);
+export const WIP_SCENES: ReadonlySet<SceneKey> = new Set<SceneKey>([]);
 
 export function isSceneBuilt(key: SceneKey | null): key is SceneKey {
   if (!key || SCENES[key].Component === null) return false;

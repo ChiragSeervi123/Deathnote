@@ -106,6 +106,21 @@ test.describe('main experience', () => {
     await expect(dialog).toBeHidden();
   });
 
+  test('the notebook can be explored page by page from the keyboard', async ({ page }) => {
+    await page.goto('/?gate=0');
+    await scrollToChapter(page, 'notebook', 0.93);
+    const explore = page.getByRole('button', { name: 'Explore the notebook' });
+    await expect(explore).toBeVisible({ timeout: 15_000 });
+    await explore.click();
+    const count = page.locator('.inspector__count');
+    await expect(count).toHaveText('Page 1 / 5');
+    await page.keyboard.press('ArrowRight');
+    await page.keyboard.press('ArrowRight');
+    await expect(count).toHaveText('Page 3 / 5');
+    await page.keyboard.press('Escape');
+    await expect(explore).toBeVisible();
+  });
+
   test('no serious accessibility violations on first view', async ({ page }) => {
     await page.goto('/?gate=0&webgl=0');
     const results = await new AxeBuilder({ page }).disableRules(['region']).analyze();

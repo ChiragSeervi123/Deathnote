@@ -70,7 +70,12 @@ export function NotebookInspector() {
             <button type="button" className="button" onClick={prev} disabled={page === 0}>
               ← Previous
             </button>
-            <button type="button" className="button" onClick={next} disabled={page >= pageCount - 1}>
+            <button
+              type="button"
+              className="button"
+              onClick={next}
+              disabled={page >= pageCount - 1}
+            >
               Next →
             </button>
             <button type="button" className="button button--ghost" onClick={close}>

@@ -1,5 +1,6 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from 'react';
 import type { SceneKey } from '@/chapters/types';
+import { urlFlags } from '@/utils/urlFlags';
 import { grade as grade_realm } from './realm/grade';
 import { grade as grade_light } from './light/grade';
 import { grade as grade_kira } from './kira/grade';
@@ -65,21 +66,56 @@ export const SCENES: Record<SceneKey, SceneEntry> = {
   light: { Component: lazy(() => import('./light/LightScene')), grade: grade_light },
   kira: { Component: lazy(() => import('./kira/KiraScene')), grade: grade_kira },
   'l-room': { Component: lazy(() => import('./lroom/LRoomScene')), grade: grade_lroom },
-  investigation: { Component: lazy(() => import('./investigation/InvestigationScene')), grade: grade_investigation },
+  investigation: {
+    Component: lazy(() => import('./investigation/InvestigationScene')),
+    grade: grade_investigation,
+  },
   misa: { Component: lazy(() => import('./misa/MisaScene')), grade: grade_misa },
-  confinement: { Component: lazy(() => import('./confinement/ConfinementScene')), grade: grade_confinement },
+  confinement: {
+    Component: lazy(() => import('./confinement/ConfinementScene')),
+    grade: grade_confinement,
+  },
   yotsuba: { Component: lazy(() => import('./yotsuba/YotsubaScene')), grade: grade_yotsuba },
   rain: { Component: lazy(() => import('./rain/RainScene')), grade: grade_rain },
   wammy: { Component: lazy(() => import('./wammy/WammyScene')), grade: grade_wammy },
   'new-kira': { Component: lazy(() => import('./newkira/NewKiraScene')), grade: grade_newkira },
   strategy: { Component: lazy(() => import('./strategy/StrategyScene')), grade: grade_strategy },
-  warehouse: { Component: lazy(() => import('./warehouse/WarehouseScene')), grade: grade_warehouse },
+  warehouse: {
+    Component: lazy(() => import('./warehouse/WarehouseScene')),
+    grade: grade_warehouse,
+  },
   fall: { Component: lazy(() => import('./fall/FallScene')), grade: grade_fall },
   archive: { Component: lazy(() => import('./archive/ArchiveScene')), grade: grade_archive },
   eyes: { Component: lazy(() => import('./eyes/EyesScene')), grade: grade_eyes },
   legacy: { Component: lazy(() => import('./legacy/LegacyScene')), grade: grade_legacy },
 };
 
+/**
+ * Scenes still under construction. They render only with `?wip` (for the people
+ * building them); everyone else sees the designed 2D backdrop — never an empty
+ * or half-built canvas. Remove a key when its scene is finished and reviewed.
+ */
+export const WIP_SCENES: ReadonlySet<SceneKey> = new Set<SceneKey>([
+  'realm',
+  'light',
+  'kira',
+  'l-room',
+  'investigation',
+  'misa',
+  'confinement',
+  'yotsuba',
+  'rain',
+  'wammy',
+  'new-kira',
+  'strategy',
+  'warehouse',
+  'fall',
+  'archive',
+  'eyes',
+  'legacy',
+]);
+
 export function isSceneBuilt(key: SceneKey | null): key is SceneKey {
-  return !!key && SCENES[key].Component !== null;
+  if (!key || SCENES[key].Component === null) return false;
+  return !WIP_SCENES.has(key) || urlFlags.wip;
 }

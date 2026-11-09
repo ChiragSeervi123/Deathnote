@@ -16,6 +16,8 @@ export interface UrlFlags {
   gate: boolean;
   /** `?grain=0` disables film grain (diagnostics). */
   grain: boolean;
+  /** `?wip` renders scenes still under construction (scene builders only). */
+  wip: boolean;
 }
 
 function read(): UrlFlags {
@@ -32,6 +34,7 @@ function read(): UrlFlags {
     motion: m === 'reduce' || m === 'full' ? m : null,
     gate: p.get('gate') !== '0',
     grain: p.get('grain') !== '0',
+    wip: p.has('wip'),
   };
 }
 

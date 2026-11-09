@@ -21,6 +21,11 @@ const NEAR_AT: V3 = [1.3, 0, -0.3];
 const PUZZLE_AT: V3 = [1.3, 0, 0.42];
 const MELLO_AT: V3 = [-1.3, 0, -0.3];
 const MELLO_GONE: V3 = [-2.5, 0, -2.9];
+/** Contact shadows on the white floor: x, z, size, opacity. */
+const SHADOWS: ReadonlyArray<readonly [number, number, number, number]> = [
+  [NEAR_AT[0], NEAR_AT[2] + 0.05, 1.1, 0.55],
+  [PUZZLE_AT[0], PUZZLE_AT[2], 1.4, 0.3],
+];
 const WHITE = new THREE.Color('#cdc9c0');
 const WALL = new THREE.Color('#d9d5cd');
 const PIECE = new THREE.Color('#f6f4ef');
@@ -150,10 +155,7 @@ export default function WammyScene() {
         <meshBasicMaterial ref={wallMat} color={WALL} />
       </mesh>
       {/* Soft contact shadows on the white floor. */}
-      {[
-        [NEAR_AT[0], NEAR_AT[2] + 0.05, 1.1, 0.55],
-        [PUZZLE_AT[0], PUZZLE_AT[2], 1.4, 0.3],
-      ].map(([x, z, s, o], i) => (
+      {SHADOWS.map(([x, z, s, o], i) => (
         <mesh key={i} rotation={[-Math.PI / 2, 0, 0]} position={[x, 0.001, z]}>
           <planeGeometry args={[s, s * 0.6]} />
           <meshBasicMaterial

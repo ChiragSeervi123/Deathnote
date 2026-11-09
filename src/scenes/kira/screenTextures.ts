@@ -96,7 +96,10 @@ export function drawScreen(ctx: CanvasRenderingContext2D, kind: ScreenKind, coun
   }
 }
 
-export function screenTexture(kind: ScreenKind, count = 0): { texture: THREE.CanvasTexture; ctx: CanvasRenderingContext2D } {
+export function screenTexture(
+  kind: ScreenKind,
+  count = 0,
+): { texture: THREE.CanvasTexture; ctx: CanvasRenderingContext2D } {
   const { canvas, ctx } = makeCanvas(W, H);
   drawScreen(ctx, kind, count);
   return { texture: canvasTexture(canvas), ctx };

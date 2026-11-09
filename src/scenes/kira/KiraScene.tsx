@@ -36,13 +36,13 @@ const CAM_POS: ReadonlyArray<{ t: number; v: V3 }> = [
   { t: 0, v: [0, 3.2, 14] },
   { t: 0.5, v: [0.5, 3.6, -16] },
   { t: 0.76, v: [0, 4.2, -44] },
-  { t: 1, v: [0, 5.5, -58] },
+  { t: 1, v: [0, 9, -54] },
 ];
 const CAM_TGT: ReadonlyArray<{ t: number; v: V3 }> = [
   { t: 0, v: [-2, 6, -20] },
   { t: 0.5, v: [2, 7, -50] },
-  { t: 0.76, v: [0, 12, -90] },
-  { t: 1, v: [0, 14, -92] },
+  { t: 0.76, v: [0, 15, -95] },
+  { t: 1, v: [0, 22, -95] },
 ];
 
 const screenVertex = /* glsl */ `
@@ -143,11 +143,12 @@ export default function KiraScene() {
       });
       return { s, texture, ctx, mat };
     });
+    const finalKira = screenTexture('kira');
     const finalMat = new THREE.ShaderMaterial({
       vertexShader: screenVertex,
       fragmentShader: screenFragment,
       uniforms: {
-        map: { value: letter.texture },
+        map: { value: finalKira.texture },
         letter: { value: letter.texture },
         uInk: { value: 0 },
         uLetter: { value: 0 },
@@ -172,7 +173,22 @@ export default function KiraScene() {
       );
       crowd.setMatrixAt(i, m);
     }
-    return { box, towerMat, towers, endTower, groundGeo, ground, plane, letter, screens, finalMat, person, crowdMat, crowd };
+    return {
+      finalKira,
+      box,
+      towerMat,
+      towers,
+      endTower,
+      groundGeo,
+      ground,
+      plane,
+      letter,
+      screens,
+      finalMat,
+      person,
+      crowdMat,
+      crowd,
+    };
   }, [profile.particles]);
 
   useEffect(
@@ -189,6 +205,7 @@ export default function KiraScene() {
         s.mat.dispose();
       });
       a.finalMat.dispose();
+      a.finalKira.texture.dispose();
       a.person.dispose();
       a.crowdMat.dispose();
       a.crowd.dispose();
@@ -203,7 +220,11 @@ export default function KiraScene() {
     const portrait = size.width / size.height < 0.9;
     const pos = keyframes(CAM_POS, p);
     const tgt = keyframes(CAM_TGT, p);
-    cam.position.set(pos[0] + f.pointer.x * 0.6, pos[1] + f.pointer.y * 0.3 + (portrait ? 1 : 0), pos[2]);
+    cam.position.set(
+      pos[0] + f.pointer.x * 0.6,
+      pos[1] + f.pointer.y * 0.3 + (portrait ? 1 : 0),
+      pos[2],
+    );
     cam.lookAt(tgt[0], tgt[1], tgt[2]);
 
     // Climbing death counter (redrawn only when the number changes).
@@ -223,13 +244,22 @@ export default function KiraScene() {
       s.mat.uniforms.uInk!.value = ink;
       s.mat.uniforms.uLetter!.value = letter;
     }
-    a.finalMat.uniforms.uGain!.value = 0.2 + 1.1 * smoothstep(0.72, 0.86, p);
+    a.finalMat.uniforms.uGain!.value = 0.6 + 0.6 * smoothstep(0.72, 0.86, p);
+    a.finalMat.uniforms.uInk!.value = ink;
+    a.finalMat.uniforms.uLetter!.value = letter;
     rain.current = 0.8;
   });
 
   return (
     <>
-      <PerspectiveCamera ref={camRef} makeDefault fov={42} near={0.1} far={500} position={[0, 3, 14]} />
+      <PerspectiveCamera
+        ref={camRef}
+        makeDefault
+        fov={42}
+        near={0.1}
+        far={500}
+        position={[0, 3, 14]}
+      />
       <color attach="background" args={['#05060a']} />
       <fogExp2 attach="fog" args={['#0a0709', 0.016]} />
       <hemisphereLight args={['#2a2f42', '#0a0605', 0.5]} />
@@ -247,7 +277,12 @@ export default function KiraScene() {
           scale={[s.w, (s.w * 9) / 16, 1]}
         />
       ))}
-      <mesh geometry={a.plane} material={a.finalMat} position={[0, 26, -94.8]} scale={[26, (26 * 9) / 16, 1]} />
+      <mesh
+        geometry={a.plane}
+        material={a.finalMat}
+        position={[0, 26, -94.8]}
+        scale={[26, (26 * 9) / 16, 1]}
+      />
       <primitive object={a.crowd} />
       <Rain count={Math.round(1000 * profile.particles)} opacityRef={rain} />
     </>

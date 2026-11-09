@@ -26,7 +26,13 @@ export function Eraser(props: ThreeElements['group']) {
   );
   return (
     <group {...props}>
-      <mesh geometry={a.body} material={a.bodyMat} position={[0, 0.055, 0]} castShadow receiveShadow />
+      <mesh
+        geometry={a.body}
+        material={a.bodyMat}
+        position={[0, 0.055, 0]}
+        castShadow
+        receiveShadow
+      />
       <mesh geometry={a.sleeve} material={a.sleeveMat} position={[0.07, 0.055, 0]} castShadow />
     </group>
   );
@@ -53,7 +59,11 @@ export const DipPen = forwardRef<THREE.Group, ThreeElements['group']>(function D
       ferrule,
       nib,
       holderMat: new THREE.MeshStandardMaterial({ color: '#1b1a19', roughness: 0.38 }),
-      metalMat: new THREE.MeshStandardMaterial({ color: '#b8b2a6', roughness: 0.28, metalness: 0.9 }),
+      metalMat: new THREE.MeshStandardMaterial({
+        color: '#b8b2a6',
+        roughness: 0.28,
+        metalness: 0.9,
+      }),
     };
   }, []);
   useEffect(
@@ -80,7 +90,11 @@ export function InkBottle(props: ThreeElements['group']) {
     return {
       glass,
       cap,
-      glassMat: new THREE.MeshStandardMaterial({ color: '#16171a', roughness: 0.12, metalness: 0.1 }),
+      glassMat: new THREE.MeshStandardMaterial({
+        color: '#16171a',
+        roughness: 0.12,
+        metalness: 0.1,
+      }),
       capMat: new THREE.MeshStandardMaterial({ color: '#0f0e0d', roughness: 0.6 }),
     };
   }, []);
@@ -93,7 +107,13 @@ export function InkBottle(props: ThreeElements['group']) {
   );
   return (
     <group {...props}>
-      <mesh geometry={a.glass} material={a.glassMat} position={[0, 0.15, 0]} castShadow receiveShadow />
+      <mesh
+        geometry={a.glass}
+        material={a.glassMat}
+        position={[0, 0.15, 0]}
+        castShadow
+        receiveShadow
+      />
       <mesh geometry={a.cap} material={a.capMat} position={[0, 0.35, 0]} castShadow />
     </group>
   );

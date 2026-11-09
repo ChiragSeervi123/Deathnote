@@ -96,7 +96,6 @@ export const SCENES: Record<SceneKey, SceneEntry> = {
  * or half-built canvas. Remove a key when its scene is finished and reviewed.
  */
 export const WIP_SCENES: ReadonlySet<SceneKey> = new Set<SceneKey>([
-  'investigation',
   'misa',
   'confinement',
   'yotsuba',

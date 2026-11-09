@@ -10,7 +10,8 @@ import { createNotebookState } from '../props/notebook/notebookState';
 import { Pencil } from '../props/Pencil';
 import { QUALITY_PROFILES, type QualityTier } from '../shared/quality';
 import { DipPen, Eraser, InkBottle } from './DeskProps';
-import { createPageInk, DraftingPage, PAGE_W, pageToWorld } from './DraftingPage';
+import { DraftingPage } from './DraftingPage';
+import { createPageInk, PAGE_W, pageToWorld } from './pageGeometry';
 import { penAt, type PenSample } from './inkLayer';
 import { buildArt, buildStory, buildTogether } from './pageLayers';
 import { boardWood, windowCookie } from './tributeTextures';
@@ -27,7 +28,8 @@ const PEN_REST = { tip: new THREE.Vector3(-1.55, 0.036, -0.4), yaw: -0.35 };
 
 const X = new THREE.Vector3(1, 0, 0);
 const restQuat = (yaw: number) => new THREE.Quaternion().setFromEuler(new THREE.Euler(0, yaw, 0));
-const writeQuat = (d: V3) => new THREE.Quaternion().setFromUnitVectors(X, new THREE.Vector3(...d).normalize());
+const writeQuat = (d: V3) =>
+  new THREE.Quaternion().setFromUnitVectors(X, new THREE.Vector3(...d).normalize());
 
 interface Props {
   tier: QualityTier;
@@ -44,7 +46,10 @@ interface Props {
 export function TributeScene({ tier, reduced, onReady }: Props) {
   use(fontsReady());
   const profile = QUALITY_PROFILES[tier];
-  const layers = useMemo(() => ({ story: buildStory(), art: buildArt(), together: buildTogether() }), []);
+  const layers = useMemo(
+    () => ({ story: buildStory(), art: buildArt(), together: buildTogether() }),
+    [],
+  );
   const ink = useMemo(createPageInk, []);
   const nb = useMemo(() => createNotebookState(1), []);
 
@@ -53,7 +58,11 @@ export function TributeScene({ tier, reduced, onReady }: Props) {
     const cookie = windowCookie();
     const tableGeo = new THREE.PlaneGeometry(26, 18);
     tableGeo.rotateX(-Math.PI / 2);
-    const tableMat = new THREE.MeshStandardMaterial({ map: wood, roughness: 0.82, color: '#efe6d6' });
+    const tableMat = new THREE.MeshStandardMaterial({
+      map: wood,
+      roughness: 0.82,
+      color: '#efe6d6',
+    });
     return { wood, cookie, tableGeo, tableMat };
   }, []);
   useEffect(
@@ -143,7 +152,8 @@ export function TributeScene({ tier, reduced, onReady }: Props) {
     const tog = layers.together.samples;
     if (T < 1.95) penAt(layers.story.samples, ink.story, tip);
     else if (T <= WINDOWS.art[1]) penAt(art, ink.art, tip);
-    else if (T < WINDOWS.together[0]) travel(art, tog, range01(T, WINDOWS.art[1], WINDOWS.together[0]), tip);
+    else if (T < WINDOWS.together[0])
+      travel(art, tog, range01(T, WINDOWS.art[1], WINDOWS.together[0]), tip);
     else penAt(tog, ink.together, tip);
 
     // Props follow the tip; rest on the table otherwise.
@@ -157,9 +167,10 @@ export function TributeScene({ tier, reduced, onReady }: Props) {
     rig.pos.set(...keyframes(keys.pos, Tc, easeInOutSine));
     rig.tgt.set(...keyframes(keys.tgt, Tc, easeInOutSine));
     // Portrait text covers the whole width, so the page is held whole instead.
-    const trackW = reduced || portrait
-      ? 0
-      : easeInOutSine(smoothstep(0.62, 1.04, T) * (1 - smoothstep(2.86, 3.12, T)));
+    const trackW =
+      reduced || portrait
+        ? 0
+        : easeInOutSine(smoothstep(0.62, 1.04, T) * (1 - smoothstep(2.86, 3.12, T)));
     if (trackW > 0) {
       pageToWorld(tip.x, tip.y, rig.v);
       if (!rig.trackInit) rig.track.copy(rig.v);
@@ -216,7 +227,14 @@ export function TributeScene({ tier, reduced, onReady }: Props) {
 
   return (
     <>
-      <PerspectiveCamera ref={cam} makeDefault fov={30} near={0.1} far={60} position={[0, 6.3, 2]} />
+      <PerspectiveCamera
+        ref={cam}
+        makeDefault
+        fov={30}
+        near={0.1}
+        far={60}
+        position={[0, 6.3, 2]}
+      />
       <color attach="background" args={['#cbbfa9']} />
       <fog attach="fog" args={['#cbbfa9', 9, 22]} />
       <hemisphereLight ref={hemi} args={['#fff6ea', '#b9a98f', 1.7]} />
@@ -235,7 +253,11 @@ export function TributeScene({ tier, reduced, onReady }: Props) {
         shadow-camera-far={22}
       />
       <mesh geometry={env.tableGeo} material={env.tableMat} receiveShadow />
-      <DraftingPage layers={layers} ink={ink} textureWidth={Math.round(profile.textureSize * 0.6)} />
+      <DraftingPage
+        layers={layers}
+        ink={ink}
+        textureWidth={Math.round(profile.textureSize * 0.6)}
+      />
       <group ref={pencil}>
         <Pencil position={[-1.0, 0, 0]} />
       </group>
@@ -244,7 +266,11 @@ export function TributeScene({ tier, reduced, onReady }: Props) {
       <InkBottle position={[-2.65, 0, -1.35]} rotation={[0, 0.3, 0]} />
       <group position={NOTEBOOK_POS} rotation={[0, -0.04, 0]}>
         <Suspense fallback={null}>
-          <NotebookModel state={nb} textureSize={Math.min(1024, profile.textureSize)} castShadow={profile.shadows} />
+          <NotebookModel
+            state={nb}
+            textureSize={Math.min(1024, profile.textureSize)}
+            castShadow={profile.shadows}
+          />
         </Suspense>
       </group>
       {reduced ? null : (
@@ -268,7 +294,11 @@ export function TributeScene({ tier, reduced, onReady }: Props) {
 
 const MOTE_BOX: [number, number, number] = [6, 3, 5];
 const MOTE_POS: [number, number, number] = [0.8, 1.6, -0.6];
-const MOTE_BEAM = { pos: [...KEY_POS] as [number, number, number], target: [0, 0, 0] as [number, number, number], angle: 0.42 };
+const MOTE_BEAM = {
+  pos: [...KEY_POS] as [number, number, number],
+  target: [0, 0, 0] as [number, number, number],
+  angle: 0.42,
+};
 const MOTE_DRIFT: [number, number, number] = [-0.006, -0.004, 0.003];
 
 const range01 = (v: number, a: number, b: number) => Math.min(1, Math.max(0, (v - a) / (b - a)));
@@ -279,7 +309,12 @@ function heldT(T: number): number {
 }
 
 /** Lifted travel from the end of one pen path to the start of the next. */
-function travel(a: readonly PenSample[], b: readonly PenSample[], f: number, out: { x: number; y: number; lift: number }) {
+function travel(
+  a: readonly PenSample[],
+  b: readonly PenSample[],
+  f: number,
+  out: { x: number; y: number; lift: number },
+) {
   const p = a[a.length - 1];
   const q = b[0];
   if (!p || !q) return;

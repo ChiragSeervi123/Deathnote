@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import type * as THREE from 'three';
 import { mulberry32 } from '@/utils/math';
 import { canvasTexture, makeCanvas, paperGrain } from '../shared/canvasTextures';
 import { PAGE_ASPECT } from './inkLayer';

@@ -2,31 +2,9 @@ import { useEffect, useMemo } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { canvasTexture } from '../shared/canvasTextures';
-import { PAGE_ASPECT, type InkLayer } from './inkLayer';
+import type { InkLayer } from './inkLayer';
+import { PAGE_H, PAGE_W, PAGE_Y, type PageInk } from './pageGeometry';
 import { contactBlot, manuscriptPaper, plainPaper } from './tributeTextures';
-
-/** Page size in scene units (≈ decimetres: a B4 sheet). */
-export const PAGE_W = 2.57;
-export const PAGE_H = PAGE_W * PAGE_ASPECT;
-export const PAGE_Y = 0.012;
-
-/** Page units (x 0..1, y 0..aspect down) → world xz on the table. */
-export function pageToWorld(x: number, y: number, out: THREE.Vector3): THREE.Vector3 {
-  return out.set((x - 0.5) * PAGE_W, PAGE_Y, (y / PAGE_ASPECT - 0.5) * PAGE_H);
-}
-
-/** Mutable ink state written by the scene each frame. */
-export interface PageInk {
-  story: number;
-  art: number;
-  together: number;
-  /** Opacity of the pencil layer (fades under the ink, returns for "Together"). */
-  pencil: number;
-  /** 1 = reduced motion: layers fade in whole instead of drawing. */
-  fade: number;
-}
-
-export const createPageInk = (): PageInk => ({ story: 0, art: 0, together: 0, pencil: 1, fade: 0 });
 
 interface Props {
   layers: { story: InkLayer; art: InkLayer; together: InkLayer };
@@ -96,7 +74,11 @@ export function DraftingPage({ layers, ink, textureWidth }: Props) {
         );
     };
     const under = plainPaper();
-    const underMat = new THREE.MeshStandardMaterial({ map: under, roughness: 0.95, color: '#f2ede4' });
+    const underMat = new THREE.MeshStandardMaterial({
+      map: under,
+      roughness: 0.95,
+      color: '#f2ede4',
+    });
     const blot = contactBlot();
     const blotMat = new THREE.MeshBasicMaterial({
       map: blot,
@@ -136,7 +118,12 @@ export function DraftingPage({ layers, ink, textureWidth }: Props) {
 
   return (
     <group>
-      <mesh geometry={assets.blotGeo} material={assets.blotMat} position={[0.06, 0.001, 0.08]} renderOrder={1} />
+      <mesh
+        geometry={assets.blotGeo}
+        material={assets.blotMat}
+        position={[0.06, 0.001, 0.08]}
+        renderOrder={1}
+      />
       <mesh
         geometry={assets.pageGeo}
         material={assets.underMat}
@@ -151,7 +138,12 @@ export function DraftingPage({ layers, ink, textureWidth }: Props) {
         rotation={[0, -0.03, 0]}
         receiveShadow
       />
-      <mesh geometry={assets.pageGeo} material={assets.pageMat} position={[0, PAGE_Y, 0]} receiveShadow />
+      <mesh
+        geometry={assets.pageGeo}
+        material={assets.pageMat}
+        position={[0, PAGE_Y, 0]}
+        receiveShadow
+      />
     </group>
   );
 }

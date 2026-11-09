@@ -26,8 +26,29 @@ export interface PenSample {
 type ClipFn = (ctx: CanvasRenderingContext2D, s: number) => void;
 
 type Prim =
-  | { k: 'seg'; t: number; x0: number; y0: number; x1: number; y1: number; w: number; a: number; clip: number }
-  | { k: 'text'; t: number; t1: number; text: string; x: number; y: number; size: number; font: string; a: number; clip: number };
+  | {
+      k: 'seg';
+      t: number;
+      x0: number;
+      y0: number;
+      x1: number;
+      y1: number;
+      w: number;
+      a: number;
+      clip: number;
+    }
+  | {
+      k: 'text';
+      t: number;
+      t1: number;
+      text: string;
+      x: number;
+      y: number;
+      size: number;
+      font: string;
+      a: number;
+      clip: number;
+    };
 
 export const HAND_FONT = '"Nothing You Could Do", "Caveat Variable", cursive';
 
@@ -84,7 +105,8 @@ export class InkLayer {
   }
 
   private begin(p: Pt): void {
-    if (this.last) this.t += 0.03 + Math.hypot(p[0] - this.last[0], p[1] - this.last[1]) * this.travel;
+    if (this.last)
+      this.t += 0.03 + Math.hypot(p[0] - this.last[0], p[1] - this.last[1]) * this.travel;
     this.id++;
   }
 
@@ -137,13 +159,30 @@ export class InkLayer {
   }
 
   /** Handwritten text, centred on (cx, baseline y). Written left → right. */
-  text(str: string, cx: number, y: number, size: number, o: { a?: number; speed?: number } = {}): number {
+  text(
+    str: string,
+    cx: number,
+    y: number,
+    size: number,
+    o: { a?: number; speed?: number } = {},
+  ): number {
     const width = measure(str, HAND_FONT) * size;
     const x = cx - width / 2;
     this.begin([x, y]);
     const dur = width * (o.speed ?? 1.4);
     const t0 = this.t;
-    this.prims.push({ k: 'text', t: t0, t1: t0 + dur, text: str, x, y, size, font: HAND_FONT, a: o.a ?? 1, clip: -1 });
+    this.prims.push({
+      k: 'text',
+      t: t0,
+      t1: t0 + dur,
+      text: str,
+      x,
+      y,
+      size,
+      font: HAND_FONT,
+      a: o.a ?? 1,
+      clip: -1,
+    });
     // The pen loops along the baseline like handwriting.
     const n = Math.max(4, Math.round(str.length * 1.5));
     for (let i = 0; i <= n; i++) {
@@ -183,7 +222,15 @@ export class InkLayer {
       const a = inside[0];
       const b = inside[inside.length - 1];
       if (!a || !b || b[2] - a[2] < 1e-4) continue;
-      const pts: Pt[] = flip ? [[b[0], b[1]], [a[0], a[1]]] : [[a[0], a[1]], [b[0], b[1]]];
+      const pts: Pt[] = flip
+        ? [
+            [b[0], b[1]],
+            [a[0], a[1]],
+          ]
+        : [
+            [a[0], a[1]],
+            [b[0], b[1]],
+          ];
       // Brush strokes after the first follow each other without a travel pause.
       if (started) this.last = null;
       started = true;
@@ -273,7 +320,11 @@ function timeGradient(
 }
 
 /** Where the tip is at reveal r, and how high it is lifted (page units). */
-export function penAt(samples: readonly PenSample[], r: number, out: { x: number; y: number; lift: number }): void {
+export function penAt(
+  samples: readonly PenSample[],
+  r: number,
+  out: { x: number; y: number; lift: number },
+): void {
   const n = samples.length;
   if (!n) return;
   if (r <= samples[0]!.t) {
@@ -301,5 +352,6 @@ export function penAt(samples: readonly PenSample[], r: number, out: { x: number
   const f = b.t > a.t ? (r - a.t) / (b.t - a.t) : 1;
   out.x = a.x + (b.x - a.x) * f;
   out.y = a.y + (b.y - a.y) * f;
-  out.lift = a.id !== b.id ? Math.sin(f * Math.PI) * (0.04 + Math.hypot(b.x - a.x, b.y - a.y) * 0.25) : 0;
+  out.lift =
+    a.id !== b.id ? Math.sin(f * Math.PI) * (0.04 + Math.hypot(b.x - a.x, b.y - a.y) * 0.25) : 0;
 }

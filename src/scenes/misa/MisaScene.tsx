@@ -158,12 +158,14 @@ export default function MisaScene() {
     const pos = keyframes(CAM_POS, p, (t) => t);
     const tgt = keyframes(CAM_TGT, p, (t) => t);
     const back = size.width / size.height < 0.9 ? 1.45 : 1;
+    // Portrait: text sits below the subject, so the title shot recentres on the stage.
+    const recentre = back > 1 ? -1.1 * (1 - smoothstep(0.11, 0.13, p)) : 0;
     cam.position.set(
-      tgt[0] + (pos[0] - tgt[0]) * back + f.pointer.x * 0.08,
+      tgt[0] + recentre + (pos[0] - tgt[0]) * back + f.pointer.x * 0.08,
       pos[1] + f.pointer.y * 0.04,
       tgt[2] + (pos[2] - tgt[2]) * back,
     );
-    cam.lookAt(tgt[0], tgt[1], tgt[2]);
+    cam.lookAt(tgt[0] + recentre, tgt[1], tgt[2]);
     const t = f.reduced ? 0 : f.time;
 
     // Misa breathes; her pigtails sway a beat behind her head.

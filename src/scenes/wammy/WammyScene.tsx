@@ -85,16 +85,18 @@ export default function WammyScene() {
     cam.lookAt(tgt[0], tgt[1], tgt[2]);
     const t = f.reduced ? 0 : f.time;
 
-    // The white side goes dark while Mello has the floor.
+    // The white side goes dark while Mello has the floor. On portrait screens the beat text
+    // sits low over the white floor, so the set is kept dim there (values are linear).
     const white = 1 - 0.93 * smoothstep(0.4, 0.43, p) * (1 - smoothstep(0.53, 0.56, p));
-    floorMat.current?.color.copy(WHITE).multiplyScalar(white);
-    wallMat.current?.color.copy(WALL).multiplyScalar(white);
-    a.puzzle.pieceMat.color.copy(PIECE).multiplyScalar(white);
+    const set = white * (back > 1 ? 0.1 : 1);
+    floorMat.current?.color.copy(WHITE).multiplyScalar(set);
+    wallMat.current?.color.copy(WALL).multiplyScalar(set);
+    a.puzzle.pieceMat.color.copy(PIECE).multiplyScalar(white * (back > 1 ? 0.35 : 1));
     a.puzzle.update(range(p, 0.06, 0.82));
 
     const n = nearRef.current;
     if (n) {
-      n.setTint(TINT.setScalar(white));
+      n.setTint(TINT.setScalar(white * (back > 1 ? 0.6 : 1)));
       const arm = n.part('forearmL');
       if (arm) arm.rotation.z = Math.sin(t * 1.6) * 0.07;
       const head = n.part('head');

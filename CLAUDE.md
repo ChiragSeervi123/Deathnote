@@ -33,6 +33,8 @@ Gotchas learned the hard way:
 - Never hash an interpolated varying (e.g. an instance id) without `floor(x + 0.5)` first —
   interpolation error becomes per-pixel static.
 - Files differing only in case collide on Windows (`ryukShapes.ts` vs `RyukSilhouette.tsx`).
+- Type-check with `npm run typecheck` (`tsc -b`). `tsc --noEmit -p .` only sees the root
+  config and silently skips `src/`.
 
 ## Stack (verified 2026-11-06)
 

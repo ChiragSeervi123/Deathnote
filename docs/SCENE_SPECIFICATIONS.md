@@ -32,7 +32,7 @@ city — sodium/amber windows vs cold blue sky. Particles: ash (realm), cloud pl
 Reduced motion: camera path replaced by 4 held compositions cross-faded by beat.
 Mobile: same path, performance tier, fewer instances, no rain on `performance`.
 
-## 01 · The Death Note · scene `notebook` · Status: built (browser-reviewed; inspect mode pending)
+## 01 · The Death Note · scene `notebook` · Status: built (browser-reviewed; explore mode built)
 
 **Idea:** the notebook as an artefact under a desk lamp — the most detailed object on the site.
 Environment: dark bedroom desk, warm lamp pool, rain-streaked window with city bokeh, an apple,
@@ -48,77 +48,93 @@ a pencil. Notebook: black cover with leather grain and worn edges, gothic cover 
 
 Inspect mode: drag/arrow keys/buttons turn pages; focusable DOM controls; Esc exits.
 
-## 02 · The Shinigami Realm · scene `realm` · Status: not started (2D backdrop)
+## 02 · The Shinigami Realm · scene `realm` · Status: built
 Wide desolate plain; Shinigami silhouettes gambling with bones around a fire-less pit; Ryuk full
 reveal (scale against camera, wings, grin, eyes) and Rem's pale stillness; lifespan numerals
 floating above distant human silhouettes seen through the hole (Eyes concept, explained in Ch 17).
 Transition in: smoke.
+As built: Ryuk full figure on the plateau (wings, grin, glowing eyes, apple), Rem with her pale halo, the hole with an Eyes vision texture (bars for names, invented numerals, one blank).
 
-## 03 · Light Yagami · scene `light` · Status: not started (2D backdrop)
+## 03 · Light Yagami · scene `light` · Status: built
 Light's room by day (paper-white, warm) → night (red). Ink-figure Light with 4 expression
 states: ordinary student → calculating → public mask vs private Kira → (collapse reserved for
 Ch 15). Turning point: the first name written; the room's light turns from white to crimson.
 Transition in: page turn.
+As built: Light bust with expression parts (eyes open/narrow, brows calm/sharp, mouth neutral/smirk, irises brown/red); room white → crimson; TV only lit in its beat.
 
-## 04 · Birth of Kira · scene `kira` · Status: not started (2D backdrop)
+## 04 · Birth of Kira · scene `kira` · Status: built
 Night city canyon of screens: news tickers, death counter, split public opinion. Event timeline
 rail (DOM) synced to the camera dolly. Red ink spreads across screens. Transition in: ink.
+As built: Street canyon of screens with news/counter textures, red ink spread, the final screen revealing the letter L.
 
-## 05 · L · scene `l-room` · Status: not started (2D backdrop)
+## 05 · L · scene `l-room` · Status: built
 Dark investigation room, wall of monitors (cold blue), sugar cubes stacked, negative space.
 Ink-figure L crouched on a chair, thumb to lip; stillness, gaze that tracks the visitor.
 Transition in: red→blue.
+As built: Crouched L before a monitor wall; gaze follows the visitor.
 
-## 06 · First Battle · scene `investigation` · Status: not started (2D backdrop)
+## 06 · First Battle · scene `investigation` · Status: built
 Evidence board assembles itself: Lind L. Tailor broadcast, Kanto map narrowing, FBI agent
 files, surveillance camera grid, To-Oh University. Light and L as opposing chess-like columns.
 Transition in: evidence-board assembly.
+As built: Evidence board (shared board kit: cards, pins, red strings, travelling spotlight).
 
-## 07 · Misa Amane · scene `misa` · Status: not started (2D backdrop)
+## 07 · Misa Amane · scene `misa` · Status: built
 Gothic monochrome stage; Misa figure (gothic lolita silhouette, cross motifs), Rem looming pale
 behind; Eyes deal visualised as names/numerals appearing over crowd silhouettes.
 Transition in: silhouette reveal.
+As built: Gothic stage with arches and a spotlight cone; original Misa figure (pigtails sway, red Eyes part); TV with the second Kira's tape; Rem lit in her beat; Misa's-eye view of a labelled crowd where one lifespan is blank; final three-figure tableau.
 
-## 08 · Confinement & Memory · scene `confinement` · Status: not started (2D backdrop)
+## 08 · Confinement & Memory · scene `confinement` · Status: built
 Three monitored cells; ownership chain diagram (notebook → Light → Misa → buried → Higuchi);
 memories dissolving as ink washes off pages. Transition in: smoke.
+As built: Ownership board on the shared board rig.
 
-## 09 · Yotsuba · scene `yotsuba` · Status: not started (2D backdrop)
+## 09 · Yotsuba · scene `yotsuba` · Status: built
 Glass boardroom high above the city; eight chairs, one weekly "Kira meeting"; Higuchi's chair
 lit red. Light and L handcuffed (silhouette of the chain). Transition in: camera through glass.
+As built: Glass boardroom, eight seated executives (yaw-billboarded), Higuchi's red rim and Eyes, the chained pair, the seized notebook.
 
-## 10 · The End of L · scene `rain` · Status: not started (2D backdrop)
+## 10 · The End of L · scene `rain` · Status: built
 Restraint: rain on a rooftop, church bells implied by rhythm (no audio clip), L barefoot in the
 rain, Rem's dust. Minimal motion; long holds; muted palette. Transition in: slow fade.
+As built: Grey rooftop in rain, the lone figure at the railing, pale dust, then absence.
 
-## 11 · Successors · scene `wammy` · Status: not started (2D backdrop)
+## 11 · Successors · scene `wammy` · Status: built
 Split composition: Near (white, puzzle pieces, controlled) vs Mello (black, chocolate foil,
 high contrast). Wammy's House window light. Transition in: split wipe.
+As built: White set on the right, black set on the left (DOM text always lands on dark). Near sits with a blank jigsaw that assembles with scroll; Mello snaps a square of chocolate, then walks out of the light; the white side dims during Mello's beat.
 
-## 12 · The New Kira Era · scene `new-kira` · Status: not started (2D backdrop)
+## 12 · The New Kira Era · scene `new-kira` · Status: built
 Kira's Kingdom broadcast studio, crowds, Mikami's pen strokes ("delete"), Takada's broadcasts.
 Transition in: ink.
+As built: Candle plaza (instanced crowd + candle points) under a KIRA screen; cut to Mikami writing at his desk; cut to Takada's studio.
 
-## 13 · Final Strategy · scene `strategy` · Status: not started (2D backdrop)
+## 13 · Final Strategy · scene `strategy` · Status: built
 Two notebooks (real/fake) under scanning light; relationship graph of plans; Mello's move with
 Takada. Transition in: evidence.
+As built: Strategy board with the forged notebook.
 
-## 14 · Final Confrontation · scene `warehouse` · Status: not started (2D backdrop)
+## 14 · Final Confrontation · scene `warehouse` · Status: built
 Yellow Box warehouse (original design): corrugated walls, high windows, dust in light shafts,
 a door ajar. Light, Near and the task force; the notebook reveal. Transition in: camera through door.
+As built: Corrugated warehouse, high windows with light shafts and dust, Near seated, both teams, Light apart (red rim in the proof beat), the door ajar with Mikami's silhouette in the gap, the forged notebook on the floor.
 
-## 15 · The Fall of Kira · scene `fall` · Status: not started (2D backdrop)
+## 15 · The Fall of Kira · scene `fall` · Status: built
 Dusk stairs; Ryuk writing; time dilates; the world after Kira. Closing composition.
 Transition in: smoke → close.
+As built: A dark room (Light bust: defiant → a single soft flash → shaken, looking up at Ryuk; Ryuk writes in his notebook) and an iron stairway at dusk (Light collapsed on the steps, a pale figure on the landing in the anime beat; city windows light up at the end). No blood is shown.
 
-## 16–19 · Encyclopedia · scenes `archive`, `eyes`, `legacy` · Status: not started (2D backdrop)
+## 16–19 · Encyclopedia · scenes `archive`, `eyes`, `legacy` · Status: built
 Calm ambient backdrops behind DOM-first interfaces (text never over busy scenes). 19 ends with
 the notebook closing (signature transition) and the tribute invitation.
+As built: Archive: records-room aisle, one beam, dust. Eyes: the labelled crowd under a red glow, drifting slowly. Legacy: the notebook closes as the page is read; ash; one loose page keeps its light.
 
-## Tribute · scene `tribute` (separate route) · Status: DOM version built; 3D scene not started
+## Tribute · scene `tribute` (separate route) · Status: built
 Blank manga page on a drafting table, pencil, morning-paper light, slow dust. Sections:
 blank page → story (words branching like plot lines) → art (ink strokes becoming forms, no
 copied panels) → collaboration (word + line converge) → thank-you (notebook closes, quiet).
+As built: DOM sections plus a 3D drafting-table layer.
 
 ---
 

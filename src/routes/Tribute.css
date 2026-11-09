@@ -282,3 +282,113 @@
 .t-work .t-facts {
   max-width: 40rem;
 }
+
+/* 3D drafting table (src/scenes/tribute) --------------------------------- */
+.t-stage {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 2.4s var(--ease-out);
+}
+.t-stage canvas {
+  display: block;
+}
+/* Soft paper vignette over the scene; keeps the edges quiet behind text. */
+.t-stage::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 85% 80% at 50% 45%, transparent 55%, rgb(60 48 32 / 0.16));
+}
+.tribute--3d .t-stage {
+  opacity: 1;
+}
+[data-motion='reduce'] .t-stage {
+  transition-duration: 0.6s;
+}
+.tribute__main {
+  position: relative;
+  z-index: 1;
+}
+/* When the 3D page is live, the CSS page art steps aside (it stays as the no-WebGL fallback). */
+.t-open__page,
+.t-final__book {
+  transition: opacity 1.6s var(--ease-out);
+}
+.tribute--3d .t-open__page,
+.tribute--3d .t-final__book {
+  opacity: 0;
+}
+.tribute--3d .t-final {
+  background: none;
+}
+/* Legibility over the drawing: text sits on a feathered sheet of vellum, so
+   the 3D page stays low-contrast behind every text block. */
+/* (Section heads keep their own sticky positioning on wide screens.) */
+@media (max-width: 899px) {
+  .tribute--3d .t-section__head {
+    position: relative;
+  }
+}
+.tribute--3d .t-prose,
+.tribute--3d .t-work > div,
+.tribute--3d .t-dedication {
+  position: relative;
+}
+.tribute--3d .t-section__head,
+.tribute--3d .t-prose,
+.tribute--3d .t-work > div,
+.tribute--3d .t-dedication {
+  isolation: isolate;
+}
+.tribute--3d .t-section__head::before,
+.tribute--3d .t-prose::before,
+.tribute--3d .t-work > div::before,
+.tribute--3d .t-dedication::before {
+  content: '';
+  position: absolute;
+  inset: -3.5rem -4.5rem;
+  z-index: -1;
+  background: radial-gradient(
+    closest-side,
+    rgb(241 237 229 / 0.76),
+    rgb(241 237 229 / 0.62) 55%,
+    rgb(241 237 229 / 0)
+  );
+  pointer-events: none;
+}
+.tribute--3d .t-dedication::before {
+  inset: -4rem -6rem;
+  opacity: 0.6;
+}
+/* Narrow screens: text spans the width, so the vellum is a full-width band. */
+@media (max-width: 899px) {
+  .tribute--3d .t-section__head::before,
+  .tribute--3d .t-prose::before,
+  .tribute--3d .t-work > div::before,
+  .tribute--3d .t-dedication::before {
+    inset: -1.5rem calc(-1 * var(--gutter));
+    opacity: 1;
+    background: linear-gradient(
+      to bottom,
+      rgb(241 237 229 / 0),
+      rgb(241 237 229 / 0.8) 1.5rem,
+      rgb(241 237 229 / 0.8) calc(100% - 1.5rem),
+      rgb(241 237 229 / 0)
+    );
+  }
+  /* The closing notebook takes the top of the screen; the dedication sits below it. */
+  .tribute--3d .t-final {
+    align-content: end;
+    padding-top: 34svh;
+  }
+}
+.tribute--3d .t-prose,
+.tribute--3d .t-section__head,
+.tribute--3d .t-work .t-facts,
+.tribute--3d .t-dedication,
+.tribute--3d .t-open > :not(.t-open__page) {
+  text-shadow: 0 0 0.6em rgb(244 240 232 / 0.8);
+}

@@ -1,20 +1,35 @@
-import { useEffect, useRef } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router';
+import { ErrorBoundary } from '@/app/ErrorBoundary';
 import { SiteFooter } from '@/components/SiteFooter';
 import { SoundToggle } from '@/components/navigation/SoundToggle';
 import { useAmbientAudio } from '@/audio/useAmbientAudio';
 import { useReducedMotion } from '@/state/runtime';
+import { urlFlags } from '@/utils/urlFlags';
+import { probeWebGL2 } from '@/utils/webgl';
 import { CreatorFacts, WorkFacts } from './TributeFacts';
 import './Tribute.css';
+
+/** The drafting-table 3D layer is its own lazy chunk so the page paints first. */
+const TributeStage = lazy(() => import('@/scenes/tribute/TributeStage'));
+
+type Stage3D = 'off' | 'loading' | 'on';
+const canUse3D = (): boolean => urlFlags.webgl && probeWebGL2().ok;
 
 /**
  * DEATH NOTE — A TRIBUTE TO ITS CREATORS (SPEC §8). A standalone page with its
  * own art direction: paper, graphite and ink instead of the main site's dark.
- * It depends on nothing from the main experience.
+ * It depends on nothing from the main experience. A quiet 3D drafting table
+ * (src/scenes/tribute) sits behind the text when WebGL2 is available; the CSS
+ * page art remains the fallback.
  */
 export function Tribute() {
   const rootRef = useRef<HTMLDivElement>(null);
+  const mainRef = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
+  const [stage, setStage] = useState<Stage3D>(() => (canUse3D() ? 'loading' : 'off'));
+  const onReady = useCallback(() => setStage((s) => (s === 'loading' ? 'on' : s)), []);
+  const onLost = useCallback(() => setStage('off'), []);
   useAmbientAudio('tribute');
 
   useEffect(() => {
@@ -41,7 +56,14 @@ export function Tribute() {
   }, [reduced]);
 
   return (
-    <div ref={rootRef} className="tribute">
+    <div ref={rootRef} className={stage === 'on' ? 'tribute tribute--3d' : 'tribute'}>
+      {stage === 'off' ? null : (
+        <ErrorBoundary fallback={null} onError={onLost}>
+          <Suspense fallback={null}>
+            <TributeStage mainRef={mainRef} reduced={reduced} onReady={onReady} onLost={onLost} />
+          </Suspense>
+        </ErrorBoundary>
+      )}
       <header className="tribute-bar">
         <Link className="tribute-bar__back" to="/">
           ← The main experience
@@ -49,7 +71,7 @@ export function Tribute() {
         <SoundToggle className="tribute-bar__sound" />
       </header>
 
-      <main id="content" tabIndex={-1} className="tribute__main">
+      <main ref={mainRef} id="content" tabIndex={-1} className="tribute__main">
         <section className="t-open" aria-labelledby="t-title">
           <div className="t-open__page" aria-hidden="true">
             <span className="t-open__pencil" />

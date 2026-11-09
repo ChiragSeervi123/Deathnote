@@ -4,6 +4,7 @@ import { formatChapterNumber } from '../chapterData';
 import type { Beat, ChapterDef } from '../types';
 import { ChapterRecord } from '@/encyclopedia/ChapterRecord';
 import { DossierView } from './DossierView';
+import { NotebookInspector } from './NotebookInspector';
 import { useBeatChoreography } from './useBeatChoreography';
 import './ChapterSection.css';
 
@@ -64,6 +65,7 @@ export function ChapterSection({ chapter, children }: Props) {
       >
         <div ref={stageRef} className="chapter__stage">
           <p className="visually-hidden">Scene: {chapter.sceneDescription}</p>
+          {chapter.id === 'notebook' ? <NotebookInspector /> : null}
           {chapter.beats.map((beat, i) => (
             <BeatView key={i} index={i} beat={beat} chapter={chapter} titleId={titleId} />
           ))}

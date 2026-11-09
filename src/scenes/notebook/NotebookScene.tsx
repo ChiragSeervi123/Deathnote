@@ -4,7 +4,7 @@ import { useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { audioCue } from '@/audio/engine';
 import { useRuntime } from '@/state/runtime';
-import { keyframes, mulberry32, range } from '@/utils/math';
+import { damp, keyframes, mulberry32, range } from '@/utils/math';
 import { Apple } from '../props/Apple';
 import { Motes } from '../props/Motes';
 import { NotebookModel } from '../props/notebook/NotebookModel';
@@ -12,6 +12,7 @@ import { createNotebookState } from '../props/notebook/notebookState';
 import { Pencil } from '../props/Pencil';
 import { RainWindow } from '../props/RainWindow';
 import { canvasTexture, makeCanvas } from '../shared/canvasTextures';
+import { useNotebookInspect } from './inspectStore';
 import { QUALITY_PROFILES } from '../shared/quality';
 import { useSceneFrame } from '../shared/sceneFrame';
 
@@ -125,27 +126,35 @@ export default function NotebookScene() {
   }, [target]);
 
   useSceneFrame((f) => {
-    const p = f.progress;
+    const inspect = useNotebookInspect.getState();
+    const p = inspect.active ? Math.max(f.progress, 0.86) : f.progress;
     // Notebook choreography (reversible: a pure function of progress).
     state.coverOpen = range(p, 0.16, 0.29);
     let turned = 0;
     RULE_WINDOWS.forEach(([a, b], i) => {
       const page = state.pages[i]!;
-      page.write = range(p, a - 0.005, a + 0.075);
-      page.turn = range(p, b + 0.004, b + 0.03);
+      if (inspect.active) {
+        // Explore mode: every rule is written; pages ease toward the chosen spread.
+        page.write = 1;
+        page.turn = damp(page.turn, i < inspect.page ? 1 : 0, 6, f.delta);
+        if (Math.abs(page.turn - Math.round(page.turn)) < 0.002) page.turn = Math.round(page.turn);
+      } else {
+        page.write = range(p, a - 0.005, a + 0.075);
+        page.turn = range(p, b + 0.004, b + 0.03);
+      }
       if (page.turn >= 1) turned++;
     });
-    if (turned !== lastTurned.current) {
+    if (!inspect.active && turned !== lastTurned.current) {
       audioCue('page');
-      lastTurned.current = turned;
     }
+    lastTurned.current = turned;
 
     // Camera: keyframed path + gentle parallax + arrival descent.
     const cam = camRef.current;
     if (!cam) return;
     const portrait = size.width / size.height < 0.9;
-    const pos = keyframes(CAM_POS, p);
-    const tgt = keyframes(CAM_TGT, p);
+    const pos = keyframes(CAM_POS, inspect.active ? 0.8 : p);
+    const tgt = keyframes(CAM_TGT, inspect.active ? 0.8 : p);
     const arrive = 1 - f.enter;
     const k = portrait ? 1.55 : 1;
     cam.position.set(

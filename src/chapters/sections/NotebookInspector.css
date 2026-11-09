@@ -1,0 +1,38 @@
+.inspector {
+  position: absolute;
+  right: calc(var(--gutter) + 2.5rem);
+  bottom: 11%;
+  z-index: 2;
+  max-width: 26rem;
+  pointer-events: auto;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+.inspector__panel {
+  display: grid;
+  gap: var(--space-xs);
+  padding: var(--space-m);
+  background: rgb(10 10 10 / 0.86);
+  border: 1px solid var(--c-line-strong);
+}
+.inspector__rule {
+  font-family: var(--font-display);
+  font-size: var(--step-1);
+  line-height: 1.3;
+}
+.inspector__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+}
+.inspector__hint {
+  font-size: var(--step--1);
+  color: var(--c-text-3);
+}
+@media (max-width: 760px) {
+  .inspector {
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: calc(10svh + 3.5rem);
+    max-width: none;
+  }
+}

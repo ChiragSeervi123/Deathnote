@@ -78,7 +78,8 @@ same working tree**. Follow this brief exactly.
 ## 8. Verification (required — iterate until it is genuinely good)
 1. Start your own dev server in the background: `npx vite --port <PORT> --strictPort`.
 2. Screenshot: `MSYS_NO_PATHCONV=1 node scripts/shoot.mjs --base http://localhost:<PORT> --shots
-   <chapterId>:0.02,<chapterId>:0.25,<chapterId>:0.5,<chapterId>:0.8 --prefix <yourprefix> --wait 2500`
+   <chapterId>:0.02,<chapterId>:0.25,<chapterId>:0.5,<chapterId>:0.8 --prefix <yourprefix> --wait 2500
+   --query "gate=0&debug&wip"` — **`wip` is required**: unfinished scenes only render with `?wip`.
    (`chapterId:progress`; add `--vw 390 --vh 844` for mobile). The script prints FPS/draw calls,
    camera debug and console problems. PNGs land in `.artifacts/`.
 3. **Look at every screenshot with the Read tool**, critique composition, lighting, character

@@ -37,7 +37,10 @@ export function spike(base: P, angle: number, len: number, width: number, bend =
   const px = -sa;
   const py = ca;
   const tip: P = [base[0] + ca * len + px * bend, base[1] + sa * len + py * bend];
-  const mid: P = [base[0] + ca * len * 0.5 + px * bend * 0.6, base[1] + sa * len * 0.5 + py * bend * 0.6];
+  const mid: P = [
+    base[0] + ca * len * 0.5 + px * bend * 0.6,
+    base[1] + sa * len * 0.5 + py * bend * 0.6,
+  ];
   const s = new THREE.Shape();
   s.moveTo(base[0] + px * width, base[1] + py * width);
   s.quadraticCurveTo(mid[0] + px * width * 0.55, mid[1] + py * width * 0.55, tip[0], tip[1]);

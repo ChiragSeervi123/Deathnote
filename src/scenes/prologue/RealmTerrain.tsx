@@ -35,6 +35,14 @@ function makeNoise(seed: number) {
   };
 }
 
+let sharedFbm: ((x: number, y: number) => number) | null = null;
+
+/** Ground height (relative to WORLD.realmY) at a point — for placing figures on the dunes. */
+export function realmHeight(x: number, z: number): number {
+  sharedFbm ??= makeNoise(13);
+  return terrainHeight(x, z, sharedFbm);
+}
+
 function terrainHeight(x: number, z: number, fbm: (x: number, y: number) => number): number {
   const r = Math.hypot(x, z);
   // Long dunes + rubble.

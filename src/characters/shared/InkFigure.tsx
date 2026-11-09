@@ -54,6 +54,10 @@ export interface InkFigureHandle {
   part: (id: string) => THREE.Group | undefined;
   /** Scale emissive layers (eye glow) 0..n. */
   setGlow: (k: number) => void;
+  /** Multiply every non-emissive layer by a colour (scene lighting mood). */
+  setTint: (c: THREE.Color) => void;
+  /** Change the rim-light colour. */
+  setRim: (c: THREE.Color) => void;
 }
 
 interface Built {
@@ -62,11 +66,23 @@ interface Built {
   pivot: P;
   z: number;
   ink: THREE.ShapeGeometry | null;
-  layers: { geo: THREE.ShapeGeometry; mat: THREE.MeshBasicMaterial; base: THREE.Color; emissive: number }[];
+  layers: {
+    geo: THREE.ShapeGeometry;
+    mat: THREE.MeshBasicMaterial;
+    base: THREE.Color;
+    emissive: number;
+  }[];
 }
 
 export const InkFigure = forwardRef<InkFigureHandle, InkFigureProps>(function InkFigure(
-  { parts, inkColor = '#050505', rimColor = '#6f6a62', rimOffset = [-0.008, 0.01], curveSegments = 8, fog = true },
+  {
+    parts,
+    inkColor = '#050505',
+    rimColor = '#6f6a62',
+    rimOffset = [-0.008, 0.01],
+    curveSegments = 8,
+    fog = true,
+  },
   ref,
 ) {
   const rootRef = useRef<THREE.Group>(null);
@@ -91,7 +107,12 @@ export const InkFigure = forwardRef<InkFigureHandle, InkFigureProps>(function In
           toneMapped: !(l.emissive && l.emissive > 1),
           fog: fog && !(l.emissive && l.emissive > 1),
         });
-        return { geo: new THREE.ShapeGeometry(l.shapes, curveSegments), mat, base, emissive: l.emissive ?? 1 };
+        return {
+          geo: new THREE.ShapeGeometry(l.shapes, curveSegments),
+          mat,
+          base,
+          emissive: l.emissive ?? 1,
+        };
       }),
     }));
     return { ink, rim, list };
@@ -119,6 +140,13 @@ export const InkFigure = forwardRef<InkFigureHandle, InkFigureProps>(function In
         return rootRef.current;
       },
       part: (id) => groups.current.get(id),
+      setTint: (c) => {
+        for (const b of built.list)
+          for (const l of b.layers) if (l.emissive <= 1) l.mat.color.copy(l.base).multiply(c);
+      },
+      setRim: (c) => {
+        built.rim.color.copy(c);
+      },
       setGlow: (k) => {
         for (const b of built.list)
           for (const l of b.layers)
@@ -142,7 +170,11 @@ export const InkFigure = forwardRef<InkFigureHandle, InkFigureProps>(function In
         >
           {b.ink ? (
             <>
-              <mesh geometry={b.ink} material={built.rim} position={[rimOffset[0], rimOffset[1], -0.002]} />
+              <mesh
+                geometry={b.ink}
+                material={built.rim}
+                position={[rimOffset[0], rimOffset[1], -0.002]}
+              />
               <mesh geometry={b.ink} material={built.ink} />
             </>
           ) : null}
